@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Gym Dashboard | Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f2f8;
+      color: #1a1f2e;
+      padding: 2rem;
+      line-height: 1.5;
+    }
+
+    /* dashboard container */
+    .dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* header / welcome area */
+    .welcome-header {
+      margin-bottom: 2rem;
+    }
+
+    .welcome-header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1e2a3e, #0f172a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .welcome-header p {
+      color: #5b6e8c;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    /* stats grid (4 cards) */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #5f7f9c;
+      margin-bottom: 0.7rem;
+    }
+
+    .stat-number {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #0a2540;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-trend {
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+
+    .trend-up {
+      color: #2c7a4d;
+      background: #e6f4ea;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+
+    .trend-neutral {
+      color: #5b6e8c;
+      background: #f0f2f5;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+
+    .stat-sub {
+      color: #6c7f9e;
+      font-size: 0.7rem;
+      margin-top: 0.4rem;
+    }
+
+    /* charts row: Member Growth (bar chart) + Membership Types (pie) */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+      border: 1px solid #edf2f7;
+      transition: all 0.2s;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chart-header h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .chart-header p {
+      font-size: 0.7rem;
+      color: #7e8aa2;
+      font-weight: 500;
+    }
+
+    /* bar chart container */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 1rem;
+      margin-top: 1rem;
+      min-height: 280px;
+    }
+
+    .bar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 70px;
+    }
+
+    .bar {
+      background: linear-gradient(180deg, #3b82f6, #1e40af);
+      width: 100%;
+      border-radius: 12px 12px 8px 8px;
+      transition: height 0.3s ease;
+      min-height: 4px;
+      box-shadow: 0 2px 6px rgba(59,130,246,0.2);
+    }
+
+    .bar-label {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .bar-value {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #3b82f6;
+      margin-top: 5px;
+    }
+
+    /* Pie chart (SVG + legend) */
+    .pie-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .pie-svg-wrapper {
+      flex: 1;
+      min-width: 160px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .pie-legend {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    .legend-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1f2a44;
+    }
+
+    .legend-percent {
+      margin-left: auto;
+      font-weight: 700;
+      color: #4b5b7c;
+    }
+
+    /* additional info / footer style */
+    .insight-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      flex: 1;
+      border: 1px solid #edf2f7;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .insight-icon {
+      width: 48px;
+      height: 48px;
+      background: #eef2ff;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #2563eb;
+    }
+
+    .insight-text h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4b556b;
+      margin-bottom: 0.2rem;
+    }
+
+    .insight-text p {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    hr {
+      margin: 1.5rem 0 0.5rem;
+      border: none;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 1000px) {
+      body { padding: 1.2rem; }
+      .stats-grid { gap: 1rem; }
+      .stat-number { font-size: 2rem; }
+    }
+
+    @media (max-width: 780px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .charts-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 500px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    .badge-icon {
+      font-size: 0.8rem;
+    }
+
+    .small-note {
+      font-size: 0.7rem;
+      color: #8b9ab0;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard">
+  <!-- Welcome header exactly as described -->
+  <div class="welcome-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back, Admin!</p>
+  </div>
+
+  <!-- 4 stat cards: Total Members, Classes Today, Active Trainers, Revenue -->
+  <div class="stats-grid">
+    <!-- Total Members -->
+    <div class="stat-card">
+      <div class="stat-title">Total Members</div>
+      <div class="stat-number">1,847</div>
+      <div class="stat-trend"><span class="trend-up"><i class="fas fa-arrow-up"></i> 12% from last month</span></div>
+      <div class="stat-sub"><i class="far fa-user"></i> Active memberships</div>
+    </div>
+    <!-- Classes Today -->
+    <div class="stat-card">
+      <div class="stat-title">Classes Today</div>
+      <div class="stat-number">24</div>
+      <div class="stat-trend"><span class="trend-neutral"><i class="fas fa-chalkboard-user"></i> 8 sessions ongoing</span></div>
+      <div class="stat-sub"><i class="far fa-clock"></i> 10:00 AM – 8:00 PM</div>
+    </div>
+    <!-- Active Trainers -->
+    <div class="stat-card">
+      <div class="stat-title">Active Trainers</div>
+      <div class="stat-number">28</div>
+      <div class="stat-trend"><span class="trend-neutral"><i class="fas fa-users"></i> 32 total staff</span></div>
+      <div class="stat-sub"><i class="fas fa-dumbbell"></i> Certified professionals</div>
+    </div>
+    <!-- Revenue -->
+    <div class="stat-card">
+      <div class="stat-title">Revenue</div>
+      <div class="stat-number">$84.2K</div>
+      <div class="stat-trend"><span class="trend-up"><i class="fas fa-arrow-up"></i> 18% from last month</span></div>
+      <div class="stat-sub"><i class="fas fa-chart-line"></i> YTD growth +11%</div>
+    </div>
+  </div>
+
+  <!-- Member Growth (bar chart) + Membership Types (pie chart) -->
+  <div class="charts-row">
+    <!-- LEFT: Member Growth (Bar chart) -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Member Growth</h3>
+        <p>Monthly statistics</p>
+      </div>
+      <div class="bar-chart" id="barChartContainer">
+        <!-- dynamic bars injected via JS but we match exactly Jan-Jun values: [120, 180, 240, 310, 280, 340] approx to show growth trend 0-350 -->
+      </div>
+      <div class="small-note">↑ 22% average increase compared to previous semester</div>
+    </div>
+
+    <!-- RIGHT: Membership Types (Pie chart + Legend) Premium 38%, Standard 35%, Basic 27% -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Membership Types</h3>
+        <p>Distribution by plan</p>
+      </div>
+      <div class="pie-container">
+        <div class="pie-svg-wrapper">
+          <svg width="140" height="140" viewBox="0 0 40 40" style="transform: rotate(-90deg);">
+            <!-- Premium 38% = 0.38 * 360 = 136.8deg -->
+            <circle cx="20" cy="20" r="15.915" fill="transparent" stroke="#3b82f6" stroke-width="5" stroke-dasharray="100 100" stroke-dashoffset="0" />
+            <circle cx="20" cy="20" r="15.915" fill="transparent" stroke="#f59e0b" stroke-width="5" stroke-dasharray="38 100" stroke-dashoffset="0" />
+            <circle cx="20" cy="20" r="15.915" fill="transparent" stroke="#10b981" stroke-width="5" stroke-dasharray="35 100" stroke-dashoffset="0" />
+            <circle cx="20" cy="20" r="15.915" fill="transparent" stroke="#8b5cf6" stroke-width="5" stroke-dasharray="27 100" stroke-dashoffset="0" />
+          </svg>
+        </div>
+        <div class="pie-legend">
+          <div class="legend-item"><div class="legend-color" style="background: #3b82f6;"></div><span class="legend-label">Premium</span><span class="legend-percent">38%</span></div>
+          <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div><span class="legend-label">Standard</span><span class="legend-percent">35%</span></div>
+          <div class="legend-item"><div class="legend-color" style="background: #10b981;"></div><span class="legend-label">Basic</span><span class="legend-percent">27%</span></div>
+        </div>
+      </div>
+      <div class="small-note" style="margin-top: 12px;">Premium + Standard = 73% of total members</div>
+    </div>
+  </div>
+
+  <!-- extra insight row (not mandatory but keeps dashboard complete) -->
+  <div class="insight-row">
+    <div class="insight-card">
+      <div class="insight-icon"><i class="fas fa-calendar-week"></i></div>
+      <div class="insight-text"><h4>Attendance Rate</h4><p>87% <span style="font-size: 0.8rem; font-weight: 500;">↑ 5%</span></p></div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon"><i class="fas fa-dollar-sign"></i></div>
+      <div class="insight-text"><h4>Avg. Revenue / Member</h4><p>$45.60</p></div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon"><i class="fas fa-chalkboard"></i></div>
+      <div class="insight-text"><h4>Upcoming Sessions</h4><p>14 classes</p></div>
+    </div>
+  </div>
+  <hr />
+  <div style="font-size: 0.7rem; text-align: center; margin-top: 1.2rem; color: #7c8ba0;">
+    <i class="far fa-chart-bar"></i> Data updated in real time · Last sync: today at 10:24 AM
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Build Bar Chart exactly as described: X-axis Jan, Feb, Mar, Apr, May, Jun
+    // Y-axis 0 to 350 with values that show growth: [120, 180, 240, 310, 280, 340] 
+    // to reflect member growth variation while matching screenshot style
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+    const memberValues = [120, 180, 240, 310, 280, 340];  // peak 340 within 0-350 range
+    
+    const container = document.getElementById('barChartContainer');
+    if (container) {
+      container.innerHTML = '';
+      // find max value for relative bar height (maxY = 350 scale but we use relative to max 340)
+      const maxVal = Math.max(...memberValues, 350);
+      const chartMax = maxVal > 340 ? maxVal : 350;
+      
+      months.forEach((month, idx) => {
+        const value = memberValues[idx];
+        const heightPercent = (value / chartMax) * 180; // max bar height ~180px
+        const barHeight = Math.max(28, heightPercent);
+        
+        const barItem = document.createElement('div');
+        barItem.className = 'bar-item';
+        
+        const barDiv = document.createElement('div');
+        barDiv.className = 'bar';
+        barDiv.style.height = `${barHeight}px`;
+        barDiv.style.width = '100%';
+        barDiv.style.backgroundColor = '#3b82f6';
+        barDiv.style.background = 'linear-gradient(180deg, #3b82f6, #1e40af)';
+        barDiv.style.borderRadius = '10px 10px 6px 6px';
+        barDiv.style.transition = 'height 0.2s';
+        
+        const labelSpan = document.createElement('div');
+        labelSpan.className = 'bar-label';
+        labelSpan.innerText = month;
+        
+        const valueSpan = document.createElement('div');
+        valueSpan.className = 'bar-value';
+        valueSpan.innerText = value;
+        
+        barItem.appendChild(barDiv);
+        barItem.appendChild(labelSpan);
+        barItem.appendChild(valueSpan);
+        container.appendChild(barItem);
+      });
+      
+      // optionally add Y-axis hint (small indicator)
+      const yHint = document.createElement('div');
+      yHint.style.position = 'relative';
+      yHint.style.width = '100%';
+      yHint.style.fontSize = '0.65rem';
+      yHint.style.display = 'flex';
+      yHint.style.justifyContent = 'space-between';
+      yHint.style.marginTop = '8px';
+      yHint.style.color = '#7e8aa2';
+      yHint.style.padding = '0 4px';
+      yHint.innerHTML = '<span>0</span><span>100</span><span>200</span><span>300</span><span>350+</span>';
+      container.parentNode.insertBefore(yHint, container.nextSibling);
+    }
+    
+    // Build proper SVG Pie chart for Premium 38% / Standard 35% / Basic 27%
+    // Using canvas fallback but clean SVG with correct dasharray method (more accurate)
+    const pieSvgWrapper = document.querySelector('.pie-svg-wrapper');
+    if (pieSvgWrapper) {
+      // replace with cleaner precise pie using path or two circles? we do proper SVG paths for exact 38%,35%,27%
+      // but many prefer simple circles with stroke-dasharray (modern). For perfection I'll create path-based arcs.
+      const svgNS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("width", "150");
+      svg.setAttribute("height", "150");
+      svg.setAttribute("viewBox", "0 0 40 40");
+      svg.style.transform = "rotate(-90deg)";
+      
+      const radius = 15.915; // circumference = 100 (2*pi*15.915 ≈ 100)
+      const circumference = 100;
+      
+      // slices: Premium 38%, Standard 35%, Basic 27% in order
+      const slices = [
+        { percent: 38, color: "#3b82f6", name: "Premium" },
+        { percent: 35, color: "#f59e0b", name: "Standard" },
+        { percent: 27, color: "#10b981", name: "Basic" }
+      ];
+      
+      let offset = 0;
+      slices.forEach(slice => {
+        const dashArray = slice.percent;
+        const dashOffset = -offset;
+        const circle = document.createElementNS(svgNS, "circle");
+        circle.setAttribute("cx", "20");
+        circle.setAttribute("cy", "20");
+        circle.setAttribute("r", radius);
+        circle.setAttribute("fill", "transparent");
+        circle.setAttribute("stroke", slice.color);
+        circle.setAttribute("stroke-width", "5");
+        circle.setAttribute("stroke-dasharray", `${dashArray} ${circumference - dashArray}`);
+        circle.setAttribute("stroke-dashoffset", dashOffset);
+        svg.appendChild(circle);
+        offset += dashArray;
+      });
+      
+      // clear previous and append new svg
+      pieSvgWrapper.innerHTML = '';
+      pieSvgWrapper.appendChild(svg);
+    }
+    
+    // ensure legend percentages exactly 38%,35%,27% as required
+    const legendItems = document.querySelectorAll('.legend-percent');
+    if (legendItems.length === 3) {
+      const percents = ['38%', '35%', '27%'];
+      legendItems.forEach((item, idx) => {
+        if (idx < percents.length) item.innerText = percents[idx];
+      });
+    }
+    
+    // tiny enhancement: tooltips or re-check the exact numbers from description
+    // the membership types pie chart representation: Premium 38% Standard 35% Basic 27% -> total 100%
+    // also add optional hover effect on cards
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach(card => {
+      card.addEventListener('click', () => {
+        // just subtle feedback (no requirement but adds interactivity)
+      });
+    });
+    
+    // update active trainers text to exactly match "28 Active Trainers · 32 total staff"
+    const trainerStat = document.querySelector('.stats-grid .stat-card:nth-child(3) .stat-trend');
+    if (trainerStat) {
+      trainerStat.innerHTML = '<span class="trend-neutral"><i class="fas fa-users"></i> 32 total staff</span>';
+    }
+    const classesTrend = document.querySelector('.stats-grid .stat-card:nth-child(2) .stat-trend');
+    if (classesTrend) {
+      classesTrend.innerHTML = '<span class="trend-neutral"><i class="fas fa-chalkboard-user"></i> 8 sessions ongoing</span>';
+    }
+    
+    // ensure revenue trend shows "↑ 18% from last month" exactly
+    const revenueTrend = document.querySelector('.stats-grid .stat-card:nth-child(4) .stat-trend');
+    if (revenueTrend) {
+      revenueTrend.innerHTML = '<span class="trend-up"><i class="fas fa-arrow-up"></i> 18% from last month</span>';
+    }
+    
+    const memberTrend = document.querySelector('.stats-grid .stat-card:nth-child(1) .stat-trend');
+    if (memberTrend) {
+      memberTrend.innerHTML = '<span class="trend-up"><i class="fas fa-arrow-up"></i> 12% from last month</span>';
+    }
+    
+    // Add small visual to ensure classes today number 24 and "8 sessions ongoing" coexist
+    const classSub = document.querySelector('.stats-grid .stat-card:nth-child(2) .stat-sub');
+    if (classSub) classSub.innerHTML = '<i class="far fa-clock"></i> 10:00 AM – 8:00 PM';
+    
+    // Also put the exact wording for Active trainers sub
+    const trainerSub = document.querySelector('.stats-grid .stat-card:nth-child(3) .stat-sub');
+    if (trainerSub) trainerSub.innerHTML = '<i class="fas fa-dumbbell"></i> Certified professionals';
+    
+    // Member growth bar chart X & Y axis description is clearly shown
+    // add graph note under bar chart to match "Member Growth / Monthly statistics"
+    const memberGrowthCard = document.querySelector('.charts-row .chart-card:first-child .small-note');
+    if (memberGrowthCard) {
+      memberGrowthCard.innerHTML = '↑ 22% average increase compared to previous semester';
+    }
+  })();
+</script>
+</body>
+</html>

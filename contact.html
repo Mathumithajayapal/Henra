@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Henra | Contact, Booking & Payment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #000000;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #000000;
+      --text-light: #333333;
+      --bg: #FFFFFF;
+      --bg-light: #F5F0EB;
+      --border: #D4B8A0;
+      --shadow: 0 4px 12px rgba(139,94,60,0.1);
+      --shadow-lg: 0 20px 40px rgba(139,94,60,0.15);
+      --transition: all 0.4s ease;
+      --footer-bg: #FFFFFF;
+      --footer-text: #000000;
+      --card-bg: #ffffff;
+      --input-bg: #ffffff;
+    }
+    .dark-mode {
+      --primary: #C8956A;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #FFFFFF;
+      --text-light: #CCCCCC;
+      --bg: #1A1008;
+      --bg-light: #251608;
+      --border: #5C3D1E;
+      --footer-bg: #1A1008;
+      --footer-text: #FFFFFF;
+      --card-bg: #2A1C0E;
+      --input-bg: #2F2318;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+    h1, h2, h3, h4, .logo-text, .hero h1 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    /* ---- NAVBAR ---- */
+    header { background: var(--bg); box-shadow: 0 2px 10px rgba(139,94,60,0.08); position: sticky; top: 0; z-index: 1000; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; max-width: 1400px; margin: 0 auto; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo i { color: var(--secondary); font-size: 28px; }
+    .logo-text { font-size: 25px; font-weight: 800; background: linear-gradient(45deg, var(--secondary-dark), var(--secondary-light)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; list-style: none; gap: 0.5rem; align-items: center; }
+    .nav-links li { display: flex; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; padding: 8px 16px; border-radius: 30px; transition: var(--transition); font-size: 0.95rem; display: inline-flex; align-items: center; gap: 6px; }
+    .nav-links a:hover, .nav-links a.active { color: var(--secondary); background: rgba(139,94,60,0.08); }
+    .dropdown { position: relative; display: flex; align-items: center; }
+    .dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--bg); list-style: none; padding: 12px 0; min-width: 210px; border-radius: 20px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); display: none; z-index: 1000; }
+    .dropdown-menu a { display: block; padding: 10px 22px; color: var(--text); text-decoration: none; white-space: nowrap; font-weight: 500; }
+    .dropdown-menu a:hover { background: var(--secondary); color: #fff; padding-left: 28px; }
+    .dropdown:hover .dropdown-menu { display: block; }
+    .controls { display: flex; gap: 10px; align-items: center; }
+    .control-btn { background: transparent; border: none; font-size: 18px; padding: 8px 12px; cursor: pointer; color: var(--text); transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; border-radius: 40px; gap: 6px; }
+    .control-btn:hover { color: var(--secondary); transform: scale(1.05); background: rgba(139,94,60,0.08); }
+    .rtl-btn { font-size: 0.85rem; font-weight: 600; padding: 8px 14px; min-width: 70px; }
+    .nav-btn { padding: 8px 22px !important; border-radius: 50px !important; font-weight: 600; }
+    .login-btn { border: 2px solid var(--secondary); color: var(--secondary) !important; background: transparent; }
+    .login-btn:hover { background: var(--secondary);      color: #ec6c10 !important; 
+ }
+    .hamburger { display: none; background: none; border: 2px solid var(--border); border-radius: 8px; font-size: 20px; cursor: pointer; padding: 8px 12px; color: var(--text); }
+    .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 998; display: none; }
+    .mobile-overlay.active { display: block; }
+    .mobile-nav-menu { position: fixed; top: 0; right: -100%; width: 320px; height: 100vh; background: var(--bg-light); z-index: 999; transition: right 0.4s; padding: 90px 1.5rem 2rem; border-left: 3px solid var(--secondary); overflow-y: auto; }
+    .mobile-nav-menu.active { right: 0; }
+    
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    .mobile-nav-links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      list-style: none !important;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 30px 0;
+    }
+    .mobile-nav-links li {
+      width: 100%;
+      list-style: none;
+    }
+    .mobile-nav-links a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 14px 20px !important;
+      border-radius: 16px !important;
+      background: var(--bg) !important;
+      text-decoration: none !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+      text-align: left;
+      border: 2px solid var(--border);
+      transition: all 0.25s ease;
+      gap: 12px;
+      width: 100%;
+    }
+    .mobile-nav-links a i {
+      width: 24px;
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+      background: var(--secondary) !important;
+      color: #ffffff !important;
+      border-color: var(--secondary) !important;
+    }
+    .mobile-nav-links a:hover i,
+    .mobile-nav-links a.active i {
+      color: #ffffff !important;
+    }
+    
+    /* Home sub-items - same consistent styling */
+    .mobile-sub-item {
+      margin-left: 36px !important;
+      padding: 12px 20px !important;
+      background: var(--bg-light) !important;
+      border-style: solid !important;
+      font-size: 0.9rem !important;
+    }
+    .mobile-sub-item i {
+      width: 24px;
+      font-size: 0.9rem;
+    }
+    
+    /* Mobile controls section */
+    .mobile-controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 2px solid var(--border);
+      padding-top: 25px;
+    }
+    .mobile-controls .control-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 20px;
+      background: var(--bg);
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    .mobile-controls .control-btn i {
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      border-color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover i {
+      color: #ffffff;
+    }
+
+    @media (max-width: 1280px) { 
+      .nav-links:not(.mobile-nav-links) { display: none !important; } 
+      .hamburger { display: block !important; } 
+      
+      /* Hide desktop toggle buttons on mobile/tablet */
+      #themeToggle, 
+      #rtlToggle { 
+        display: none !important; 
+      }
+    }
+    @media (min-width: 1281px) { 
+      .nav-links:not(.mobile-nav-links) { display: flex !important; } 
+      .hamburger { display: none !important; } 
+    }
+
+    /* ---- HERO ---- */
+    .page-hero { background: linear-gradient(135deg, var(--secondary-dark), var(--secondary-light)); padding: 3rem 2rem; text-align: center; color: white; }
+    .page-hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+    .page-hero p { font-size: 1.1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+
+    /* ================================================================
+       REDESIGNED 3 SECTIONS — same content, fresh layout
+    ================================================================ */
+    .page-body { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 4rem; display: flex; flex-direction: column; gap: 2.5rem; }
+
+    .eyebrow { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--secondary); display: flex; align-items: center; gap: 8px; margin-bottom: 0.5rem; }
+    .eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--secondary); border-radius: 2px; flex-shrink: 0; }
+
+    /* shared alert */
+    .alert-msg { padding: 10px 16px; border-radius: 12px; margin-top: 0.9rem; font-size: 0.82rem; text-align: center; }
+    .success { background: #2e7d32; color: white; }
+    .error   { background: #c62828; color: white; }
+
+    /* -----------------------------------------------
+       SECTION 1 — CONTACT: side-by-side split card
+    ----------------------------------------------- */
+    .contact-split {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+    }
+    .contact-panel-left {
+      background: var(--secondary-dark);
+      padding: 2.8rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-panel-left::after {
+      content: ''; position: absolute;
+      width: 260px; height: 260px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      bottom: -80px; right: -80px;
+    }
+    .contact-panel-left h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #fff; line-height: 1.25; margin-bottom: 0.5rem; }
+    .contact-panel-left > p { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-bottom: 2.5rem; }
+    .info-stack { display: flex; flex-direction: column; gap: 1.1rem; }
+    .info-row { display: flex; align-items: flex-start; gap: 14px; }
+    .info-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .info-icon i { color: #fff; font-size: 0.85rem; }
+    .info-text strong { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 1px; }
+    .info-text span { font-size: 0.85rem; color: #fff; }
+
+    .contact-panel-right { background: var(--card-bg); padding: 2.8rem 2.2rem; }
+
+    /* form fields */
+    .f-group { margin-bottom: 1rem; }
+    .f-group label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.4rem; }
+    .f-group input, .f-group textarea, .f-group select { width: 100%; padding: 11px 14px; background: var(--input-bg); border: 1.5px solid var(--border); border-radius: 12px; font-family: 'Poppins', sans-serif; color: var(--text); font-size: 0.88rem; transition: 0.2s; }
+    .f-group input:focus, .f-group textarea:focus, .f-group select:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(139,94,60,0.15); }
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-main { width: 100%; padding: 13px; background: var(--secondary); color: #fff; border: none; border-radius: 12px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0.6rem; }
+    .btn-main:hover { background: var(--secondary-dark); transform: translateY(-2px); }
+
+    /* -----------------------------------------------
+       SECTION 2 — BOOKING: header bar + two-col body
+    ----------------------------------------------- */
+    .booking-card {
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .booking-topbar {
+      background: var(--bg-light);
+      border-bottom: 1px solid var(--border);
+      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .booking-topbar h2 { font-family: 'Playfair Display', serif; font-size: 1.65rem; color: var(--text); }
+    .booking-topbar p  { font-size: 0.8rem; color: var(--text-light); margin-top: 1px; }
+    .badge-chip { background: var(--secondary); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; padding: 6px 14px; border-radius: 50px; display: inline-flex; align-items: center; gap: 6px; }
+
+    .booking-body { display: grid; grid-template-columns: 1fr 360px; }
+    .booking-form-col { padding: 2rem; background: var(--card-bg); border-right: 1px solid var(--border); }
+    .booking-side-col { padding: 2rem; background: var(--bg-light); display: flex; flex-direction: column; gap: 1.4rem; }
+
+    /* price box */
+    .price-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.3rem; }
+    .price-box-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 1rem; }
+    .price-row { display: flex; justify-content: space-between; font-size: 0.86rem; color: var(--text-light); padding: 4px 0; }
+    .price-row.total { border-top: 1.5px dashed var(--border); margin-top: 8px; padding-top: 10px; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .price-row.total span:last-child { color: var(--secondary); }
+    .advance-bar { margin-top: 0.8rem; background: var(--secondary); color: #fff; border-radius: 10px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; }
+
+    /* payment methods */
+    .pay-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-light); margin-bottom: 0.6rem; }
+    .pay-methods { display: flex; gap: 0.6rem; }
+    .pay-pill { flex: 1; padding: 9px 8px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--card-bg); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--text); transition: 0.2s; text-align: center; }
+    .pay-pill:hover { border-color: var(--secondary); }
+    .pay-pill.active { background: var(--secondary); color: #fff; border-color: var(--secondary); }
+
+    .pay-fields { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+    .pay-fields .f-group { margin-bottom: 0.7rem; }
+    .pay-fields .f-group:last-child { margin-bottom: 0; }
+
+    /* -----------------------------------------------
+       SECTION 3 — MAP: iframe + info strip below
+    ----------------------------------------------- */
+    .map-card { border-radius: 24px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+    .map-card iframe { width: 100%; height: 380px; display: block; border: none; }
+    .map-infobar {
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .map-infobar-left { display: flex; align-items: center; gap: 14px; }
+    .map-dot { width: 42px; height: 42px; background: var(--secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .map-dot i { color: #fff; font-size: 1rem; }
+    .map-infobar-left strong { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .map-infobar-left span { font-size: 0.8rem; color: var(--text-light); }
+    .map-chips { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .map-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 50px; padding: 5px 14px; font-size: 0.78rem; font-weight: 500; color: var(--text-light); }
+    .map-chip i { color: var(--secondary); font-size: 0.72rem; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--footer-bg); color: var(--footer-text); padding: 70px 0 40px; margin-top: auto; box-shadow: 0 -2px 10px rgba(139,94,60,0.06); }
+    .dark-mode .site-footer { background: #1A1008 !important; }
+    .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px; margin-bottom: 50px; }
+    .footer-column h3 { color: var(--secondary); font-size: 1rem; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; padding-bottom: 12px; border-bottom: 2px solid var(--secondary); }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 12px; }
+    .footer-column a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; transition: var(--transition); }
+    .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
+    .footer-links { display: flex; gap: 35px; }
+    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
+    .footer-links a:hover { color: var(--secondary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--secondary); padding-top: 20px; }
+    .copyright { color: var(--footer-text); font-size: 0.9rem; opacity: 0.8; }
+
+    /* RTL */
+    [dir="rtl"] .mobile-nav-menu { left: -100%; right: auto; border-left: none; border-right: 3px solid var(--secondary); }
+    [dir="rtl"] .mobile-nav-menu.active { left: 0; }
+    [dir="rtl"] .booking-form-col { border-right: none; border-left: 1px solid var(--border); }
+    [dir="rtl"] .eyebrow::before, [dir="rtl"] .eyebrow-white::before { order: 1; }
+    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .contact-split { grid-template-columns: 1fr; }
+      .booking-body  { grid-template-columns: 1fr; }
+      .booking-form-col { border-right: none; border-bottom: 1px solid var(--border); }
+      .footer-top { grid-template-columns: repeat(2, 1fr); }
+      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+    }
+    @media (max-width: 640px) {
+      .page-hero h1 { font-size: 2rem; }
+      .page-body { padding: 2rem 1rem 3rem; gap: 1.8rem; }
+      .contact-panel-left h2 { font-size: 1.7rem; }
+      .f-row { grid-template-columns: 1fr; }
+      .map-card iframe { height: 250px; }
+      .map-infobar { flex-direction: column; align-items: flex-start; }
+      .booking-topbar { flex-direction: column; align-items: flex-start; }
+      .pay-methods { flex-wrap: wrap; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-leaf"></i>
+        <span class="logo-text">Henra</span>
+      </a>
+      <ul class="nav-links">
+        <li class="dropdown">
+          <a href="#">Home <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.html">Home 1</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="artist.html">Artist</a></li>
+        <li><a href="aftercareoil.html" class="active">Aftercare</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+      </ul>
+      <div class="controls">
+        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html"> Home 1</a></li>
+      <li><a href="home2.html"> Home 2</a></li>
+
+      <li><a href="about.html"> About</a></li>
+      <li><a href="service.html"> Service</a></li>
+      <li><a href="artist.html"> Artist</a></li>
+      <li><a href="aftercareoil.html"> Aftercare</a></li>
+      <li><a href="gallery.html"> Gallery</a></li>
+      <li><a href="trends.html"> Trends</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html"> Login</a></li>
+    </ul>
+    <div class="mobile-controls">
+      <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <h1>Connect & Reserve</h1>
+    <p>Reach out, book your experience, and secure your spot with an advance payment</p>
+  </div>
+
+  <!-- ============================================================
+       3 REDESIGNED SECTIONS
+  ============================================================ -->
+  <div class="page-body">
+
+    <!-- ===== 1. GET IN TOUCH — split card ===== -->
+    <div class="contact-split">
+
+      <!-- dark left panel with contact info -->
+      <div class="contact-panel-left">
+        <div>
+          <div class="eyebrow" style="color:rgba(255,255,255,0.55);">
+            <span style="width:24px;height:2px;background:rgba(255,255,255,0.4);border-radius:2px;display:inline-block;flex-shrink:0;"></span>
+            Say Hello
+          </div>
+          <h2>Get in<br>Touch</h2>
+          <p>We'd love to hear from you. Drop us a message and we'll get back within 24 hours.</p>
+        </div>
+        <div class="info-stack">
+          <div class="info-row">
+            <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="info-text">
+              <strong>Studio</strong>
+              <span>123 Elegance Ave, New York, NY 10001</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon"><i class="fas fa-phone"></i></div>
+            <div class="info-text">
+              <strong>Phone</strong>
+              <span>+1 (555) 123-4567</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="info-text">
+              <strong>Email</strong>
+              <span>hello@henra.com</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon"><i class="fas fa-clock"></i></div>
+            <div class="info-text">
+              <strong>Hours</strong>
+              <span>Mon–Fri: 9am–8pm &nbsp;|&nbsp; Sat: 10am–5pm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- form panel -->
+      <div class="contact-panel-right">
+        <div class="eyebrow">Send a Message</div>
+        <form id="contactForm" style="margin-top:0.8rem;">
+          <div class="f-row">
+            <div class="f-group">
+              <label>Full Name</label>
+              <input type="text" id="contactName" placeholder="John Doe" required>
+            </div>
+            <div class="f-group">
+              <label>Email Address</label>
+              <input type="email" id="contactEmail" placeholder="hello@henra.com" required>
+            </div>
+          </div>
+          <div class="f-group">
+            <label>Phone Number</label>
+            <input type="tel" id="contactPhone" placeholder="+1 234 567 890">
+          </div>
+          <div class="f-group">
+            <label>Message</label>
+            <textarea rows="5" id="contactMsg" placeholder="Your questions or feedback..."></textarea>
+          </div>
+          <button type="submit" class="btn-main"><i class="fas fa-paper-plane"></i> Send Message</button>
+          <div id="contactFeedback" class="alert-msg" style="display:none;"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== 2. BOOK A SERVICE ===== -->
+    <div class="booking-card">
+
+      <!-- header bar -->
+      <div class="booking-topbar">
+        <div>
+          <div class="eyebrow">Reserve Your Spot</div>
+          <h2>Book a Service</h2>
+          <p>Pick your service, choose a date, and confirm with a 20% advance payment</p>
+        </div>
+        <div class="badge-chip"><i class="fas fa-shield-alt"></i> 20% Advance Required</div>
+      </div>
+
+      <!-- form + summary side by side -->
+      <div class="booking-body">
+
+        <!-- booking form -->
+        <div class="booking-form-col">
+          <div class="f-group">
+            <label>Service Type</label>
+            <select id="serviceType">
+              <option value="consultation">Premium Consultation — $120</option>
+              <option value="photoshoot">Professional Photoshoot — $250</option>
+              <option value="styling">Exclusive Styling — $180</option>
+              <option value="event">Event Management — $400</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label>Your Name</label>
+            <input type="text" id="bookName" placeholder="Full name" required>
+          </div>
+          <div class="f-row">
+            <div class="f-group">
+              <label>Preferred Date</label>
+              <input type="date" id="bookDate" required>
+            </div>
+            <div class="f-group">
+              <label>Time Slot</label>
+              <select id="bookTime">
+                <option>10:00 AM</option>
+                <option>01:00 PM</option>
+                <option>04:00 PM</option>
+                <option>06:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-group">
+            <label>Guests / Participants</label>
+            <input type="number" id="guests" min="1" max="10" value="1">
+          </div>
+        </div>
+
+        <!-- summary + payment -->
+        <div class="booking-side-col">
+
+          <!-- price summary -->
+          <div class="price-box">
+            <div class="price-box-label">Price Summary</div>
+            <div class="price-row">
+              <span>Base service</span><span id="basePrice">$120</span>
+            </div>
+            <div class="price-row">
+              <span>Extra guests (+$25 each)</span><span id="guestExtra">$0</span>
+            </div>
+            <div class="price-row total">
+              <span>Total</span><span id="totalAmount">$120</span>
+            </div>
+            <div class="advance-bar">
+              <span><i class="fas fa-credit-card" style="margin-right:6px;"></i>Due now (20%)</span>
+              <span id="advanceAmount">$24</span>
+            </div>
+          </div>
+
+          <!-- payment method -->
+          <div>
+            <div class="pay-label">Payment Method</div>
+            <div class="pay-methods" id="paymentMethods">
+              <div class="pay-pill active" data-method="card"><i class="fab fa-cc-visa"></i> Card</div>
+              <div class="pay-pill" data-method="paypal"><i class="fab fa-paypal"></i> PayPal</div>
+              <div class="pay-pill" data-method="bank"><i class="fas fa-university"></i> Bank</div>
+            </div>
+          </div>
+
+          <!-- payment detail fields -->
+          <div class="pay-fields" id="paymentDetailsArea">
+            <div class="f-group">
+              <label>Card Number</label>
+              <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;">
+              <div class="f-group" style="margin:0;">
+                <label>Expiry</label>
+                <input type="text" placeholder="MM/YY">
+              </div>
+              <div class="f-group" style="margin:0;">
+                <label>CVC</label>
+                <input type="text" placeholder="123">
+              </div>
+            </div>
+          </div>
+
+          <button id="payAdvanceBtn" class="btn-main">
+            <i class="fas fa-lock"></i> Pay Advance & Confirm
+          </button>
+          <div id="paymentFeedback" class="alert-msg" style="display:none;"></div>
+          <div id="bookingStatus" style="font-size:0.8rem;text-align:center;margin-top:0.3rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 3. MAP ===== -->
+    <div class="map-card">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-73.98510768458428!3d40.75889697932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1690000000000!5m2!1sen!2sus"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="map-infobar">
+        <div class="map-infobar-left">
+          <div class="map-dot"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <strong>Henra Main Studio</strong>
+            <span>123 Elegance Ave, New York, NY 10001</span>
+          </div>
+        </div>
+        <div class="map-chips">
+          <div class="map-chip"><i class="fas fa-clock"></i> Mon–Fri 9am–8pm</div>
+          <div class="map-chip"><i class="fas fa-phone"></i> +1 (555) 123-4567</div>
+          <div class="map-chip"><i class="fas fa-subway"></i> Near Times Square</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .page-body -->
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-column"><a href="index.html" class="logo"><i class="fas fa-leaf"></i><span class="logo-text">Henra</span></a><p style="margin-top:30px">Your ultimate destination for premium products and services. Join our community today.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="contact.html">Contact</a></li><li><a href="service.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="models.html">Models</a></li></ul></div>
+        <div class="footer-column"><h3>Resources</h3><ul><li><a href="#">Safety Tips</a></li><li><a href="#">Guides</a></li><li><a href="#">Care Tips</a></li></ul></div>
+        <div class="footer-column"><h3>Social Links</h3><ul><li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><div class="copyright">© 2026 Henra. All rights reserved.</div></div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    /* ---- mobile nav ---- */
+    const hamburger = document.getElementById('hamburger'),
+          overlay   = document.getElementById('mobileOverlay'),
+          mobileMenu= document.getElementById('mobileNavMenu');
+    function toggleMobile() {
+      const active = mobileMenu.classList.contains('active');
+      mobileMenu.classList.toggle('active'); overlay.classList.toggle('active');
+      document.body.style.overflow = active ? '' : 'hidden';
+      if (hamburger) hamburger.innerHTML = active ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+    }
+    if (hamburger && overlay && mobileMenu) {
+      hamburger.addEventListener('click', toggleMobile);
+      overlay.addEventListener('click', toggleMobile);
+      document.querySelectorAll('.mobile-nav-links a').forEach(l =>
+        l.addEventListener('click', function() { if (mobileMenu.classList.contains('active')) toggleMobile(); })
+      );
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && mobileMenu.classList.contains('active')) toggleMobile(); });
+      window.addEventListener('resize', () => { if (window.innerWidth > 1280 && mobileMenu.classList.contains('active')) toggleMobile(); });
+    }
+
+    /* ---- theme ---- */
+    function themeToggle() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = isDark ? 'fas fa-sun' : 'fas fa-moon');
+      const sp = document.querySelector('#mobileThemeToggle');
+      if (sp) sp.innerHTML = isDark ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    function rtlToggle() {
+      const doc = document.documentElement, isRtl = doc.getAttribute('dir') === 'rtl';
+      doc.setAttribute('dir', isRtl ? 'ltr' : 'rtl');
+      const s1 = document.getElementById('rtlButtonText'), s2 = document.getElementById('mobileRtlButtonText');
+      if (s1) s1.textContent = isRtl ? 'RTL' : 'LTR';
+      if (s2) s2.textContent = isRtl ? 'RTL Mode' : 'LTR Mode';
+      localStorage.setItem('direction', isRtl ? 'ltr' : 'rtl');
+    }
+    document.getElementById('themeToggle')?.addEventListener('click', themeToggle);
+    document.getElementById('mobileThemeToggle')?.addEventListener('click', themeToggle);
+    document.getElementById('rtlToggle')?.addEventListener('click', rtlToggle);
+    document.getElementById('mobileRtlToggle')?.addEventListener('click', rtlToggle);
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+      const sp = document.querySelector('#mobileThemeToggle');
+      if (sp) sp.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+    }
+    if (localStorage.getItem('direction') === 'rtl') {
+      document.documentElement.setAttribute('dir', 'rtl');
+      const s1 = document.getElementById('rtlButtonText'), s2 = document.getElementById('mobileRtlButtonText');
+      if (s1) s1.textContent = 'LTR'; if (s2) s2.textContent = 'LTR Mode';
+    }
+
+    /* ---- pricing ---- */
+    const serviceSelect   = document.getElementById('serviceType');
+    const guestsInput     = document.getElementById('guests');
+    const prices = { consultation: 120, photoshoot: 250, styling: 180, event: 400 };
+    function updatePricing() {
+      const base    = prices[serviceSelect.value] || 120;
+      const guests  = parseInt(guestsInput.value) || 1;
+      const extra   = guests > 1 ? (guests - 1) * 25 : 0;
+      const total   = base + extra;
+      const advance = Math.round(total * 0.2);
+      document.getElementById('basePrice').textContent   = '$' + base;
+      document.getElementById('guestExtra').textContent  = '$' + extra;
+      document.getElementById('totalAmount').textContent = '$' + total;
+      document.getElementById('advanceAmount').textContent = '$' + advance;
+      return { total, advance };
+    }
+    serviceSelect?.addEventListener('change', updatePricing);
+    guestsInput?.addEventListener('input', updatePricing);
+    updatePricing();
+
+    /* ---- payment pill toggle ---- */
+    const pills = document.querySelectorAll('.pay-pill');
+    let selectedMethod = 'card';
+    pills.forEach(pill => {
+      pill.addEventListener('click', function () {
+        pills.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        selectedMethod = this.dataset.method;
+        const area = document.getElementById('paymentDetailsArea');
+        if (selectedMethod === 'card') {
+          area.innerHTML = `
+            <div class="f-group"><label>Card Number</label><input type="text" id="cardNumber" placeholder="4242 4242 4242 4242"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;">
+              <div class="f-group" style="margin:0;"><label>Expiry</label><input type="text" placeholder="MM/YY"></div>
+              <div class="f-group" style="margin:0;"><label>CVC</label><input type="text" placeholder="123"></div>
+            </div>`;
+        } else if (selectedMethod === 'paypal') {
+          area.innerHTML = `<div class="f-group" style="margin:0;"><label>PayPal Email</label><input type="email" id="paypalEmail" placeholder="your@paypal.com"></div>`;
+        } else {
+          area.innerHTML = `<div class="f-group" style="margin:0;"><label>Bank Account / Reference</label><input type="text" placeholder="Account number or reference"></div>`;
+        }
+      });
+    });
+
+    /* ---- helper ---- */
+    function showMsg(el, text, ok) {
+      el.style.display = 'block'; el.textContent = text;
+      el.className = 'alert-msg ' + (ok ? 'success' : 'error');
+      setTimeout(() => { el.style.display = 'none'; }, 4500);
+    }
+
+    /* ---- pay advance ---- */
+    document.getElementById('payAdvanceBtn')?.addEventListener('click', function (e) {
+      e.preventDefault();
+      const bookName  = document.getElementById('bookName')?.value.trim();
+      const bookDate  = document.getElementById('bookDate')?.value;
+      const bookTime  = document.getElementById('bookTime')?.value;
+      const svcText   = serviceSelect.options[serviceSelect.selectedIndex]?.text;
+      const feedback  = document.getElementById('paymentFeedback');
+      const status    = document.getElementById('bookingStatus');
+      if (!bookName || !bookDate) { showMsg(feedback, '❌ Please fill your name and booking date.', false); return; }
+      const { total, advance } = updatePricing();
+      if (selectedMethod === 'card') {
+        const card = document.getElementById('cardNumber')?.value;
+        if (!card || card.length < 8) { showMsg(feedback, '⚠️ Please enter valid card details.', false); return; }
+      } else if (selectedMethod === 'paypal') {
+        const em = document.getElementById('paypalEmail')?.value;
+        if (!em || !em.includes('@')) { showMsg(feedback, '⚠️ Valid PayPal email required.', false); return; }
+      }
+      let bookings = JSON.parse(localStorage.getItem('henraBookings') || '[]');
+      bookings.push({ name: bookName, date: bookDate, time: bookTime, service: svcText, total, advancePaid: advance, method: selectedMethod, paidAt: new Date().toLocaleString() });
+      localStorage.setItem('henraBookings', JSON.stringify(bookings));
+      showMsg(feedback, `✅ Advance $${advance} paid! Booking confirmed for ${bookName} on ${bookDate}. Remaining $${total - advance} due at service.`, true);
+      status.innerHTML = `<span style="background:var(--secondary);color:#fff;padding:5px 12px;border-radius:50px;font-size:0.75rem;display:inline-block;"><i class="fas fa-check-circle"></i> Booking confirmed!</span>`;
+      document.getElementById('bookName').value = '';
+      document.getElementById('bookDate').value = '';
+      setTimeout(() => { status.innerHTML = ''; }, 4500);
+    });
+
+    /* ---- contact form ---- */
+    document.getElementById('contactForm')?.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName')?.value;
+      const email = document.getElementById('contactEmail')?.value;
+      const fb = document.getElementById('contactFeedback');
+      if (!name || !email) { showMsg(fb, '❌ Name and email required.', false); return; }
+      showMsg(fb, `✨ Thanks ${name}, your message has been sent. We'll reply soon.`, true);
+      this.reset();
+    });
+  })();
+  </script>
+</body>
+</html>

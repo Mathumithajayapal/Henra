@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Henra - Aftercare Oils</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #000000;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #000000;
+      --text-light: #333333;
+      --bg: #FFFFFF;
+      --bg-light: #F5F0EB;
+      --border: #D4B8A0;
+      --shadow: 0 4px 12px rgba(139,94,60,0.1);
+      --shadow-lg: 0 20px 40px rgba(139,94,60,0.15);
+      --transition: all 0.4s ease;
+      --footer-bg: #FFFFFF;
+      --footer-text: #000000;
+    }
+    .dark-mode {
+      --primary: #C8956A;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #FFFFFF;
+      --text-light: #CCCCCC;
+      --bg: #1A1008;
+      --bg-light: #251608;
+      --border: #5C3D1E;
+      --footer-bg: #1A1008;
+      --footer-text: #FFFFFF;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+    h1, h2, h3, h4, h5, h6, .logo-text, .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    .dark-mode h1, .dark-mode h2, .dark-mode h3 { color: #FFFFFF !important; }
+
+    /* ===== HEADER - Clean navbar with proper spacing, only login button ===== */
+    header {
+      background: var(--bg);
+      box-shadow: 0 2px 10px rgba(139,94,60,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo i { color: var(--secondary); font-size: 28px; }
+    .logo-text {
+      font-size: 25px;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--secondary-dark), var(--secondary-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .nav-links li {
+      display: flex;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 30px;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--secondary);
+      background: rgba(139,94,60,0.08);
+    }
+    /* Clean dropdown style */
+    .dropdown { 
+      position: relative; 
+      display: flex;
+      align-items: center;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--bg);
+      list-style: none;
+      padding: 12px 0;
+      min-width: 210px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      display: none;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 22px;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      font-weight: 500;
+      gap: 0;
+    }
+    .dropdown-menu a:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      padding-left: 28px;
+    }
+    .dropdown:hover .dropdown-menu { display: block; }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .control-btn {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+      gap: 6px;
+    }
+    .control-btn:hover {
+      color: var(--secondary);
+      transform: scale(1.05);
+      background: rgba(139,94,60,0.08);
+    }
+    .rtl-btn {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      min-width: 70px;
+    }
+    .rtl-btn i { font-size: 0.9rem; }
+    .nav-btn { 
+      padding: 8px 22px !important; 
+      border-radius: 50px !important; 
+      font-weight: 600; 
+    }
+    .login-btn { 
+      border: 2px solid var(--secondary); 
+      color: var(--secondary) !important; 
+      background: transparent;
+    }
+    .login-btn:hover { 
+      background: var(--secondary); 
+      color: #ec6c10 !important; 
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      display: none;
+      background: none;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px 12px;
+      color: var(--text);
+    }
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 998;
+      display: none;
+    }
+    .mobile-overlay.active { display: block; }
+    .mobile-nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 320px;
+      height: 100vh;
+      background: var(--bg-light);
+      z-index: 999;
+      transition: right 0.4s;
+      padding: 90px 1.5rem 2rem;
+      border-left: 3px solid var(--secondary);
+      overflow-y: auto;
+    }
+    .mobile-nav-menu.active { right: 0; }
+    
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    .mobile-nav-links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      list-style: none !important;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 30px 0;
+    }
+    .mobile-nav-links li {
+      width: 100%;
+      list-style: none;
+    }
+    .mobile-nav-links a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 14px 20px !important;
+      border-radius: 16px !important;
+      background: var(--bg) !important;
+      text-decoration: none !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+      text-align: left;
+      border: 2px solid var(--border);
+      transition: all 0.25s ease;
+      gap: 12px;
+      width: 100%;
+    }
+    .mobile-nav-links a i {
+      width: 24px;
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+      background: var(--secondary) !important;
+      color: #ffffff !important;
+      border-color: var(--secondary) !important;
+    }
+    .mobile-nav-links a:hover i,
+    .mobile-nav-links a.active i {
+      color: #ffffff !important;
+    }
+    
+    /* Home sub-items - same consistent styling */
+    .mobile-sub-item {
+      margin-left: 36px !important;
+      padding: 12px 20px !important;
+      background: var(--bg-light) !important;
+      border-style: solid !important;
+      font-size: 0.9rem !important;
+    }
+    .mobile-sub-item i {
+      width: 24px;
+      font-size: 0.9rem;
+    }
+    
+    /* Mobile controls section */
+    .mobile-controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 2px solid var(--border);
+      padding-top: 25px;
+    }
+    .mobile-controls .control-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 20px;
+      background: var(--bg);
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    .mobile-controls .control-btn i {
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      border-color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover i {
+      color: #ffffff;
+    }
+
+    /* ===== HERO BANNER ===== */
+    .hero {
+      position: relative;
+      height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(60, 30, 10, 0.65);
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 900px;
+      padding: 0 20px;
+    }
+    .hero-content h1 {
+      font-size: 4rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .hero-content h1 span { color: var(--secondary-light); }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #e8d5c4;
+      margin-bottom: 35px;
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    .btn-primary { background: var(--secondary); color: #fff; }
+    .btn-primary:hover { background: var(--secondary-dark); }
+    .btn-secondary { border: 2px solid var(--secondary-light); color: var(--secondary-light); }
+    .btn-secondary:hover { background: var(--secondary); color: #fff; border-color: var(--secondary); }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 70px 0 40px;
+      margin-top: auto;
+      box-shadow: 0 -2px 10px rgba(139,94,60,0.06);
+    }
+    .dark-mode .site-footer { background: #1A1008 !important; }
+    .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    .footer-column h3 {
+      color: var(--secondary);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--secondary);
+    }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 12px; }
+    .footer-column a {
+      color: var(--footer-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
+   
+    .footer-links { display: flex; gap: 35px; }
+    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
+    .footer-links a:hover { color: var(--secondary); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--secondary);
+      padding-top: 20px;
+    }
+    .copyright { color: var(--footer-text); font-size: 0.9rem; opacity: 0.8; }
+
+    /* ===== RTL ===== */
+    [dir="rtl"] .dropdown-menu { left: auto; right: 0; }
+    [dir="rtl"] .footer-column a:hover { transform: translateX(-8px); }
+    [dir="rtl"] .mobile-nav-menu { left: -100%; right: auto; border-left: none; border-right: 3px solid var(--secondary); }
+    [dir="rtl"] .mobile-nav-menu.active { left: 0; }
+    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1280px) {
+      .nav-links:not(.mobile-nav-links) { display: none !important; }
+      .hamburger { display: block !important; }
+      
+      /* Hide desktop toggle buttons on mobile/tablet */
+      #themeToggle, 
+      #rtlToggle { 
+        display: none !important; 
+      }
+    }
+    @media (min-width: 1281px) {
+      .nav-links:not(.mobile-nav-links) { display: flex !important; }
+      .hamburger { display: none !important; }
+    }
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: repeat(2, 1fr); }
+      .footer-middle, .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+      .hero h1 { font-size: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.5rem; }
+      .hero-content p { font-size: 1rem; }
+      .hero { height: 60vh; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+      .btn { padding: 12px 24px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .navbar { padding: 1rem; }
+      .logo-text { font-size: 20px; }
+    }
+
+    /* ===== AFTERCARE OILS PAGE STYLES ===== */
+    .intro-strip { background: var(--bg-light); padding: 60px 2rem; text-align: center; position: relative; overflow: hidden; }
+    .intro-strip .eyebrow { display: inline-block; letter-spacing: 4px; text-transform: uppercase; font-size: 0.75rem; font-weight: 700; color: var(--secondary); background: rgba(139,94,60,0.1); padding: 6px 18px; border-radius: 50px; margin-bottom: 18px; }
+    .intro-strip h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: var(--text); max-width: 700px; margin: 0 auto 18px; line-height: 1.25; }
+    .intro-strip h2 em { color: var(--secondary); font-style: italic; }
+    .intro-strip p { max-width: 620px; margin: 0 auto; color: var(--text-light); font-size: 1rem; line-height: 1.8; }
+    .why-section { padding: 90px 2rem; max-width: 1300px; margin: 0 auto; }
+    .section-label { display: inline-block; letter-spacing: 4px; text-transform: uppercase; font-size: 0.75rem; font-weight: 700; color: var(--secondary); margin-bottom: 14px; }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+    .why-text h2 { font-size: 2.4rem; line-height: 1.25; margin-bottom: 22px; color: var(--text); }
+    .why-text p { color: var(--text-light); font-size: 0.98rem; line-height: 1.85; margin-bottom: 30px; }
+    .why-checklist { list-style: none; margin-bottom: 36px; }
+    .why-checklist li { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; font-size: 0.95rem; color: var(--text-light); }
+    .why-checklist li .check-icon { width: 22px; height: 22px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.65rem; flex-shrink: 0; margin-top: 2px; }
+    .why-image-wrap { position: relative; }
+    .why-image-wrap img { width: 100%; border-radius: 24px; object-fit: cover; height: 520px; display: block; }
+    .why-image-badge { position: absolute; bottom: 30px; left: -28px; background: var(--secondary); color: #fff; border-radius: 16px; padding: 18px 22px; box-shadow: var(--shadow-lg); text-align: center; min-width: 130px; }
+    .why-image-badge .badge-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 800; line-height: 1; }
+    .why-image-badge .badge-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; margin-top: 4px; opacity: 0.9; }
+    .products-section { background: var(--bg-light); padding: 90px 2rem; }
+    .products-header { max-width: 1300px; margin: 0 auto 55px; display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
+    .products-header h2 { font-size: 2.4rem; line-height: 1.2; color: var(--text); max-width: 420px; }
+    .products-header p { max-width: 380px; color: var(--text-light); font-size: 0.95rem; line-height: 1.75; }
+    .products-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .product-card { background: var(--bg); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); border: 1px solid var(--border); }
+    .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .product-img { position: relative; height: 240px; overflow: hidden; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .product-card:hover .product-img img { transform: scale(1.06); }
+    .product-tag { position: absolute; top: 14px; left: 14px; background: var(--secondary); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 12px; border-radius: 50px; }
+    .product-body { padding: 24px 24px 28px; }
+    .product-body h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin-bottom: 10px; color: var(--text); }
+    .product-body p { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; margin-bottom: 18px; }
+    .product-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .product-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--secondary); }
+    .product-rating { display: flex; align-items: center; gap: 5px; font-size: 0.82rem; color: var(--text-light); }
+    .product-rating i { color: #F5A623; font-size: 0.75rem; }
+    .product-btn { display: block; width: 100%; text-align: center; padding: 11px 20px; background: transparent; border: 2px solid var(--secondary); border-radius: 50px; color: var(--secondary); font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: 0.3s; cursor: pointer; }
+    .product-btn:hover { background: var(--secondary); color: #fff; }
+    .ingredients-section { padding: 90px 2rem; max-width: 1300px; margin: 0 auto; }
+    .ingredients-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+    .ingredients-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .ingredient-tile { background: var(--bg-light); border-radius: 18px; padding: 28px 20px; text-align: center; border: 1px solid var(--border); transition: var(--transition); }
+    .ingredient-tile:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .ingredient-tile:first-child { grid-column: span 2; background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)); color: #fff; border: none; }
+    .ingredient-tile:first-child .tile-icon { color: rgba(255,255,255,0.8); }
+    .ingredient-tile:first-child .tile-name { color: #fff; }
+    .ingredient-tile:first-child .tile-desc { color: rgba(255,255,255,0.75); }
+    .tile-icon { font-size: 2rem; color: var(--secondary); margin-bottom: 10px; display: block; }
+    .tile-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .tile-desc { font-size: 0.78rem; color: var(--text-light); line-height: 1.5; }
+    .ingredients-text h2 { font-size: 2.4rem; line-height: 1.25; margin-bottom: 18px; color: var(--text); }
+    .ingredients-text p { color: var(--text-light); font-size: 0.98rem; line-height: 1.85; margin-bottom: 26px; }
+    .ingredients-stats { display: flex; gap: 40px; margin-top: 10px; }
+    .ingredients-stats .stat-item .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 800; color: var(--secondary); line-height: 1; }
+    .ingredients-stats .stat-item .stat-label { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; font-weight: 500; }
+    .howto-section { background: var(--bg-light); padding: 90px 2rem; }
+    .howto-inner { max-width: 1300px; margin: 0 auto; }
+    .howto-header { text-align: center; margin-bottom: 60px; }
+    .howto-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 14px; }
+    .howto-header p { max-width: 560px; margin: 0 auto; color: var(--text-light); font-size: 0.95rem; }
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .step-card { background: var(--bg); border-radius: 20px; padding: 34px 26px 30px; text-align: center; border: 1px solid var(--border); position: relative; transition: var(--transition); }
+    .step-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--secondary); }
+    .step-number { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); width: 36px; height: 36px; background: var(--secondary); border-radius: 50%; color: #fff; font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(139,94,60,0.35); }
+    .step-icon { font-size: 2.2rem; color: var(--secondary); margin-bottom: 16px; display: block; }
+    .step-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 10px; }
+    .step-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.65; }
+    .testimonials-section { padding: 90px 2rem; max-width: 1300px; margin: 0 auto; }
+    .testimonials-header { text-align: center; margin-bottom: 55px; }
+    .testimonials-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 12px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .testimonial-card { background: var(--bg-light); border-radius: 20px; padding: 32px 28px; border: 1px solid var(--border); position: relative; transition: var(--transition); }
+    .testimonial-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .testimonial-card::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 5rem; line-height: 1; color: var(--secondary); opacity: 0.15; position: absolute; top: 10px; left: 22px; }
+    .testimonial-stars { display: flex; gap: 3px; margin-bottom: 14px; }
+    .testimonial-stars i { color: #F5A623; font-size: 0.85rem; }
+    .testimonial-card p { font-size: 0.92rem; color: var(--text-light); line-height: 1.8; margin-bottom: 22px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; }
+    .author-name { font-weight: 600; font-size: 0.92rem; color: var(--text); }
+    .author-title { font-size: 0.78rem; color: var(--secondary); }
+    .cta-section { background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 60%, var(--secondary-light) 100%); padding: 80px 2rem; text-align: center; position: relative; overflow: hidden; }
+    .cta-section h2 { font-size: 2.6rem; color: #fff; margin-bottom: 16px; position: relative; }
+    .cta-section p { color: rgba(255,255,255,0.85); font-size: 1.05rem; max-width: 560px; margin: 0 auto 36px; position: relative; }
+    .cta-buttons { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; position: relative; }
+    .btn-white { background: #fff; color: var(--secondary-dark); padding: 14px 34px; border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+    .btn-white:hover { background: var(--bg-light); transform: translateY(-2px); }
+    .btn-outline-white { border: 2px solid rgba(255,255,255,0.7); color: #fff; padding: 14px 34px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: 0.3s; }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.12); }
+    .faq-section { padding: 90px 2rem; background: var(--bg-light); }
+    .faq-inner { max-width: 860px; margin: 0 auto; }
+    .faq-header { text-align: center; margin-bottom: 50px; }
+    .faq-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 12px; }
+    .faq-item { background: var(--bg); border-radius: 14px; border: 1px solid var(--border); margin-bottom: 14px; overflow: hidden; transition: var(--transition); }
+    .faq-item.open { border-color: var(--secondary); box-shadow: var(--shadow); }
+    .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: var(--text); gap: 16px; }
+    .faq-question .faq-icon { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--secondary); transition: 0.3s; font-size: 0.75rem; }
+    .faq-item.open .faq-icon { background: var(--secondary); color: #fff; border-color: var(--secondary); transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 24px; font-size: 0.9rem; color: var(--text-light); line-height: 1.8; }
+    .faq-item.open .faq-answer { max-height: 200px; padding: 0 24px 20px; }
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+    @media (max-width: 1024px) {
+      .why-grid, .ingredients-inner { grid-template-columns: 1fr; gap: 44px; }
+      .why-image-badge { left: 20px; bottom: 20px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .products-grid, .steps-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .intro-strip h2 { font-size: 2rem; }
+      .why-text h2, .ingredients-text h2, .howto-header h2, .testimonials-header h2, .cta-section h2, .faq-header h2 { font-size: 1.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- ===== HEADER - Only Login button, SignUp removed ===== -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-leaf"></i>
+        <span class="logo-text">Henra</span>
+      </a>
+      <ul class="nav-links">
+        <li class="dropdown">
+          <a href="#">Home <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.html">Home 1</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="artist.html">Artist</a></li>
+        <li><a href="aftercareoil.html" class="active">Aftercare</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+      </ul>
+      <div class="controls">
+        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html"> Home 1</a></li>
+      <li><a href="home2.html"> Home 2</a></li>
+
+      <li><a href="about.html"> About</a></li>
+      <li><a href="service.html"> Service</a></li>
+      <li><a href="artist.html"> Artist</a></li>
+      <li><a href="aftercareoil.html"> Aftercare</a></li>
+      <li><a href="gallery.html"> Gallery</a></li>
+      <li><a href="trends.html"> Trends</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html"> Login</a></li>
+    </ul>
+    <div class="mobile-controls">
+      <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+    </div>
+  </div>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero">
+    <img src="images/img (16).jpg" alt="Aftercare Oils Hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Aftercare <span>Oils</span></h1>
+      <p>Pure, nourishing botanical oils crafted to soothe, restore, and protect your skin after every treatment.</p>
+      <div class="hero-buttons">
+        <a href="#products" class="btn btn-primary">Shop Oils</a>
+        <a href="#how-to-use" class="btn btn-secondary">How To Use</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO STRIP ===== -->
+  <section class="intro-strip">
+    <span class="eyebrow">Premium Botanical Care</span>
+    <h2>Your Skin Deserves <em>the Best</em> After Every Treatment</h2>
+    <p>Aftercare is not an afterthought. Our oils are formulated with cold-pressed botanicals and skin-loving actives to lock in results, calm inflammation, and leave your skin glowing.</p>
+  </section>
+
+  <!-- ===== WHY AFTERCARE ===== -->
+  <section class="why-section">
+    <div class="why-grid fade-in">
+      <div class="why-text">
+        <span class="section-label">Why It Matters</span>
+        <h2>The Science Behind Aftercare Oils</h2>
+        <p>After professional treatments, your skin barrier is temporarily compromised. The right oil delivers essential fatty acids, antioxidants, and anti-inflammatory botanicals exactly when your skin is most receptive.</p>
+        <ul class="why-checklist">
+          <li><span class="check-icon"><i class="fas fa-check"></i></span> Restores the skin's natural lipid barrier instantly</li>
+          <li><span class="check-icon"><i class="fas fa-check"></i></span> Reduces post-treatment redness and sensitivity</li>
+          <li><span class="check-icon"><i class="fas fa-check"></i></span> Locks in moisture to prevent trans-epidermal water loss</li>
+          <li><span class="check-icon"><i class="fas fa-check"></i></span> Accelerates natural cell regeneration overnight</li>
+          <li><span class="check-icon"><i class="fas fa-check"></i></span> 100% natural, non-comedogenic & dermatologist approved</li>
+        </ul>
+        <a href="#products" class="btn btn-primary">Explore the Range</a>
+      </div>
+      <div class="why-image-wrap">
+        <img src="images/img (17).jpg" alt="Aftercare Oil bottles">
+        <div class="why-image-badge">
+          <div class="badge-num">100%</div>
+          <div class="badge-label">Natural<br>Ingredients</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTS GRID ===== -->
+  <section class="products-section" id="products">
+    <div class="products-header fade-in">
+      <div><span class="section-label">Our Collection</span><h2>Aftercare Oil<br>Products</h2></div>
+      <p>Each oil is specially blended for a different skin need — whether you're recovering from a facial, waxing, tattooing, or laser treatment.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card fade-in"><div class="product-img"><img src="images/img (18).jpg" alt="Rosehip Recovery Oil"><span class="product-tag">Bestseller</span></div><div class="product-body"><h3>Rosehip Recovery Oil</h3><p>Cold-pressed rosehip seed oil rich in Vitamin A and essential fatty acids.</p><div class="product-meta"><span class="product-price">$38</span><span class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 4.9</span></div><a href="#" class="product-btn">Add to Cart</a></div></div>
+      <div class="product-card featured fade-in"><div class="product-img"><img src="images/img (19).jpg" alt="Jojoba Soothe Oil"><span class="product-tag">Editor's Pick</span></div><div class="product-body"><h3>Jojoba Soothe Oil</h3><p>Perfectly mimics the skin's natural sebum. Non-greasy, antibacterial.</p><div class="product-meta"><span class="product-price">$42</span><span class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 5.0</span></div><a href="#" class="product-btn">Add to Cart</a></div></div>
+      <div class="product-card fade-in"><div class="product-img"><img src="images/img (20).jpg" alt="Argan Renewal Oil"><span class="product-tag">New</span></div><div class="product-body"><h3>Argan Renewal Oil</h3><p>Liquid gold from Morocco. High in Vitamin E and polyphenols.</p><div class="product-meta"><span class="product-price">$55</span><span class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.7</span></div><a href="#" class="product-btn">Add to Cart</a></div></div>
+    </div>
+  </section>
+
+  <!-- ===== INGREDIENTS ===== -->
+  <section class="ingredients-section">
+    <div class="ingredients-inner">
+      <div class="ingredients-visual fade-in">
+        <div class="ingredient-tile"><span class="tile-icon"><i class="fas fa-seedling"></i></span><div class="tile-name">Cold-Pressed Only</div><div class="tile-desc">We never use heat extraction, preserving every nutrient.</div></div>
+        <div class="ingredient-tile"><span class="tile-icon"><i class="fas fa-leaf"></i></span><div class="tile-name">Rosehip</div><div class="tile-desc">Vitamin A & C, essential fatty acids.</div></div>
+        <div class="ingredient-tile"><span class="tile-icon"><i class="fas fa-sun"></i></span><div class="tile-name">Argan</div><div class="tile-desc">Vitamin E, polyphenols, anti-aging.</div></div>
+        <div class="ingredient-tile"><span class="tile-icon"><i class="fas fa-spa"></i></span><div class="tile-name">Jojoba</div><div class="tile-desc">Mimics sebum, antibacterial.</div></div>
+      </div>
+      <div class="ingredients-text fade-in"><span class="section-label">Pure Ingredients</span><h2>Only the Best Botanicals Make the Cut</h2><p>Every oil in the Henra aftercare range is ethically sourced, cold-pressed, and third-party tested for purity. We exclude all synthetic fragrances, mineral oils, and parabens — always.</p><div class="ingredients-stats"><div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">Botanical Ingredients</div></div><div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Synthetic Additives</div></div><div class="stat-item"><div class="stat-num">3rd</div><div class="stat-label">Party Tested</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== HOW TO USE ===== -->
+  <section class="howto-section" id="how-to-use">
+    <div class="howto-inner">
+      <div class="howto-header fade-in"><span class="section-label">Application Guide</span><h2>How To Use Aftercare Oils</h2><p>Follow these four simple steps for the best post-treatment results.</p></div>
+      <div class="steps-grid">
+        <div class="step-card fade-in"><span class="step-number">1</span><i class="fas fa-tint step-icon"></i><h3>Cleanse Gently</h3><p>Use a mild, fragrance-free cleanser. Pat dry — never rub.</p></div>
+        <div class="step-card fade-in"><span class="step-number">2</span><i class="fas fa-hand-sparkles step-icon"></i><h3>Warm the Oil</h3><p>Dispense 3–5 drops and gently warm between fingers.</p></div>
+        <div class="step-card fade-in"><span class="step-number">3</span><i class="fas fa-hands step-icon"></i><h3>Press & Massage</h3><p>Press onto skin using upward motions. Do not drag.</p></div>
+        <div class="step-card fade-in"><span class="step-number">4</span><i class="fas fa-moon step-icon"></i><h3>Let It Absorb</h3><p>Allow 5–10 minutes. For best results, apply before bed.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials-section">
+    <div class="testimonials-header fade-in"><span class="section-label">Real Results</span><h2>What Our Clients Say</h2><p>Thousands of customers trust Henra aftercare oils as part of their post-treatment ritual.</p></div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in"><div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>The Rosehip Recovery Oil completely changed my post-facial routine. My skin heals so much faster and the redness is gone by morning.</p><div class="testimonial-author"><div class="author-avatar">S</div><div><div class="author-name">Sofia M.</div><div class="author-title">Esthetician, Dubai</div></div></div></div>
+      <div class="testimonial-card fade-in"><div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p>I use the Jojoba Soothe Oil after every waxing session on my clients. The results are incredible — no bumps, no redness the next day.</p><div class="testimonial-author"><div class="author-avatar">R</div><div><div class="author-name">Rania K.</div><div class="author-title">Beauty Therapist, Riyadh</div></div></div></div>
+      <div class="testimonial-card fade-in"><div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><p>The Tattoo Aftercare Oil saved my last sleeve! Colors stayed vibrant and the healing was twice as fast as previous tattoos.</p><div class="testimonial-author"><div class="author-avatar">J</div><div><div class="author-name">James T.</div><div class="author-title">Tattoo Artist, London</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section">
+    <h2>Ready to Transform Your Aftercare?</h2>
+    <p>Join over 15,000 happy customers who trust Henra oils as their daily post-treatment ritual.</p>
+    <div class="cta-buttons"><a href="#products" class="btn-white">Shop the Collection</a><a href="contact.html" class="btn-outline-white">Talk to an Expert</a></div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-header fade-in"><span class="section-label">Questions & Answers</span><h2>Aftercare Oil FAQs</h2><p>Everything you need to know before adding our oils to your routine.</p></div>
+      <div class="faq-item fade-in"><div class="faq-question">When should I apply the oil after a treatment?<span class="faq-icon"><i class="fas fa-plus"></i></span></div><div class="faq-answer">Apply the oil within 30 minutes of completing your treatment while the skin is still slightly warm and pores are open. This ensures maximum absorption of the active botanical compounds.</div></div>
+      <div class="faq-item fade-in"><div class="faq-question">Can I use these oils on sensitive skin?<span class="faq-icon"><i class="fas fa-plus"></i></span></div><div class="faq-answer">Yes. All Henra aftercare oils are dermatologist-tested, free from synthetic fragrances and parabens, and formulated specifically for post-treatment sensitive skin.</div></div>
+      <div class="faq-item fade-in"><div class="faq-question">Are Henra oils non-comedogenic?<span class="faq-icon"><i class="fas fa-plus"></i></span></div><div class="faq-answer">Absolutely. Every oil in our range has a comedogenic rating of 2 or below, making them safe for all skin types including acne-prone and oily skin.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-column"><a href="index.html" class="logo"><i class="fas fa-leaf"></i><span class="logo-text">Henra</span></a><p style="margin-top:30px">Your ultimate destination for premium products and services. Join our community today.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="contact.html">Contact</a></li><li><a href="service.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="models.html">Models</a></li></ul></div>
+        <div class="footer-column"><h3>Resources</h3><ul><li><a href="#">Safety Tips</a></li><li><a href="#">Guides</a></li><li><a href="#">Care Tips</a></li></ul></div>
+        <div class="footer-column"><h3>Social Links</h3><ul><li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><div class="copyright">© 2026 Henra. All rights reserved.</div></div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const h = document.getElementById('hamburger'), o = document.getElementById('mobileOverlay'), m = document.getElementById('mobileNavMenu');
+      if (h && o && m) {
+        function toggle() { 
+          const a = m.classList.contains('active'); 
+          m.classList.toggle('active'); 
+          o.classList.toggle('active'); 
+          document.body.style.overflow = a ? '' : 'hidden'; 
+          h.innerHTML = a ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>'; 
+        }
+        h.addEventListener('click', toggle); 
+        o.addEventListener('click', toggle);
+        document.querySelectorAll('.mobile-nav-links a').forEach(l => l.addEventListener('click', function() { if (m.classList.contains('active')) toggle(); }));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('active')) toggle(); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 1280 && m.classList.contains('active')) toggle(); });
+      }
+
+      function theme() {
+        document.body.classList.toggle('dark-mode');
+        const d = document.body.classList.contains('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+        localStorage.setItem('theme', d ? 'dark' : 'light');
+      }
+      function rtl() {
+        const doc = document.documentElement, r = doc.getAttribute('dir') === 'rtl';
+        doc.setAttribute('dir', r ? 'ltr' : 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = r ? 'RTL' : 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = r ? 'RTL Mode' : 'LTR Mode';
+        localStorage.setItem('direction', r ? 'ltr' : 'rtl');
+      }
+      document.getElementById('themeToggle')?.addEventListener('click', theme);
+      document.getElementById('mobileThemeToggle')?.addEventListener('click', theme);
+      document.getElementById('rtlToggle')?.addEventListener('click', rtl);
+      document.getElementById('mobileRtlToggle')?.addEventListener('click', rtl);
+
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+      }
+      const savedDir = localStorage.getItem('direction');
+      if (savedDir === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = 'LTR Mode';
+      }
+
+      const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.12 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+          if (!isOpen) item.classList.add('open');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

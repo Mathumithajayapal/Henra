@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Health & Beauty | Appointment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Overall page background – clean, light spa-like ambiance */
+        body {
+            background: #eef2f0;   /* subtle sage undertone */
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', Helvetica, 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        /* Main card container – exactly replicating the visual hierarchy from the image description */
+        .appointment-card {
+            max-width: 860px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* Inner padding system for a clean, spacious layout */
+        .card-inner {
+            padding: 2.5rem 2.8rem 3rem 2.8rem;
+        }
+
+        /* --- TOP BANNER / REGISTRATION CALLOUT --- 
+           Exactly recreates "REGISTRATION NOW TO GET MORE DEALS" 
+           with high emphasis, modern typography */
+        .reg-banner {
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: -0.01em;
+        }
+
+        .reg-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: #1f2a2e;
+            color: #f9eed7;
+            display: inline-block;
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            letter-spacing: 0.08em;
+            word-spacing: 0.1em;
+            backdrop-filter: blur(0px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            font-family: inherit;
+        }
+
+        /* Alternative: if needed for responsive, keep consistent */
+        @media (max-width: 550px) {
+            .reg-text {
+                font-size: 0.85rem;
+                padding: 0.5rem 1.2rem;
+                letter-spacing: 0.06em;
+            }
+            .card-inner {
+                padding: 1.8rem 1.5rem 2.2rem 1.5rem;
+            }
+        }
+
+        /* --- MAIN TAGLINE: WHERE HEALTH, BEAUTY AND FITNESS MEET. --- 
+           Elegant, serif-inspired but modern, balanced weight */
+        .hero-tagline {
+            text-align: center;
+            margin: 1.2rem 0 1.8rem 0;
+        }
+
+        .hero-tagline h1 {
+            font-size: 2.5rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #1b2b2e;
+            line-height: 1.2;
+            text-transform: none;
+            font-family: 'Times New Roman', Georgia, 'Playfair Display', serif;
+        }
+
+        /* For a slightly more refined look, but keeping clean */
+        @media (max-width: 650px) {
+            .hero-tagline h1 {
+                font-size: 1.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-tagline h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* subtle divider for elegance (optional to match visual rhythm) */
+        .divider-light {
+            width: 70px;
+            height: 2px;
+            background: #d4dfcd;
+            margin: 1rem auto 1.8rem auto;
+            border-radius: 2px;
+        }
+
+        /* --- APPOINTMENT HEADLINE (main CTA) --- 
+           "APPOINTMENT" as primary action heading, bold & modern */
+        .appointment-headline {
+            text-align: center;
+            margin: 0.5rem 0 2rem 0;
+        }
+
+        .appointment-headline h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #2c4b3e;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #2c5f4a 0%, #1f3f34 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+            border-bottom: 3px solid #c7d8c5;
+            padding-bottom: 0.2rem;
+        }
+
+        /* For smaller devices, adjust size */
+        @media (max-width: 550px) {
+            .appointment-headline h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* --- FORM STYLES: modern appointment booking simulation --- 
+           Clean, minimal, high readability, matching health/beauty theme */
+        .appointment-form {
+            margin-top: 1.8rem;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.6rem;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #5f6c66;
+            margin-bottom: 0.5rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #e0e6e2;
+            border-radius: 1.2rem;
+            background: #fefefc;
+            transition: 0.2s;
+            font-family: inherit;
+            color: #1e2a26;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #9bc0aa;
+            box-shadow: 0 0 0 3px rgba(110, 150, 120, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            border-radius: 1.2rem;
+        }
+
+        /* checkbox group for preferences */
+        .pref-group {
+            margin: 1rem 0 1.6rem 0;
+        }
+
+        .pref-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #2c4b3e;
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.02em;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: #2c5f4a;
+            margin: 0;
+        }
+
+        .checkbox-item span {
+            font-size: 0.95rem;
+            color: #2d3e38;
+        }
+
+        /* Button styling — elegant and inviting */
+        .btn-submit {
+            background: #2c5f4a;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 1rem 1.8rem;
+            border-radius: 3rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.8rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            font-family: inherit;
+        }
+
+        .btn-submit:hover {
+            background: #1f4838;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -8px rgba(44, 95, 74, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        /* footnote / extra deals note */
+        .deals-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #8f9e97;
+            border-top: 1px solid #eef2ef;
+            padding-top: 1.5rem;
+            letter-spacing: 0.3px;
+        }
+
+        .deals-note a {
+            color: #2c5f4a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .deals-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* small decorative elements to match health/beauty/fitness vibe */
+        .icon-mood {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .icon-mood span {
+            font-size: 1.3rem;
+            opacity: 0.7;
+        }
+
+        /* responsiveness for tight screens */
+        @media (max-width: 640px) {
+            .form-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .checkbox-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+        }
+
+        /* ensure exact wording from image: 
+           "REGISTRATIONNOWTOGETMOREDEALS" appears without spaces? 
+           Based on description: it shows "REGISTRATIONNOWTOGETMOREDEALS" combined? 
+           but from typical designs, it's likely a banner reading "REGISTRATION NOW TO GET MORE DEALS"
+           However the given text block: "REGISTRATIONNOWTOGETMOREDEALS" may be concatenated. 
+           For exactness: we respect the original text snippet: the content says: 
+           "REGISTRATIONNOWTOGETMOREDEALS" (one word style) but usually it's separated by spaces. 
+           To match exactly as described I'll keep both possibilities? The image text shows: 
+           "REGISTRATIONNOWTOGETMOREDEALS" maybe due to tight kerning? But given requirement "exact recreation html and css" 
+           I will preserve the exact string "REGISTRATIONNOWTOGETMOREDEALS" inside the badge? However original also shows 
+           second line: WHEREHEALTH,BEAUTYANDFITNESSMEET. but given the file content: 
+           lines: 
+           REGISTRATIONNOWTOGETMOREDEALS
+           WHEREHEALTH,BEAUTYANDFITNESSMEET.
+           APPOINTMENT
+           
+           So to be 100% faithful to the exact wording, I'll recreate exactly these three phrases as prominent design layers.
+           I'll display "REGISTRATIONNOWTOGETMOREDEALS" as a continuous bold capsule text (maybe without spaces) but it's visually close.
+           Also WHEREHEALTH,BEAUTYANDFITNESSMEET. must appear exactly with commas and period. 
+           And final APPOINTMENT as the main headline. 
+        */
+        
+        /* Exact match for the given textual content */
+        .exact-reg-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: #1f2a2e;
+            color: #f9efdf;
+            display: inline-block;
+            padding: 0.75rem 1.8rem;
+            border-radius: 60px;
+            letter-spacing: 0.02em;
+            word-break: keep-all;
+            font-family: 'Montserrat', system-ui, sans-serif;
+        }
+
+        /* ensure it's responsive: if too wide for small screen, reduce font */
+        @media (max-width: 550px) {
+            .exact-reg-text {
+                font-size: 0.85rem;
+                padding: 0.5rem 1.2rem;
+                letter-spacing: 0;
+            }
+        }
+
+        .exact-tagline {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #1f332c;
+            text-align: center;
+            line-height: 1.25;
+            font-family: 'Times New Roman', Georgia, serif;
+        }
+
+        .exact-tagline br {
+            display: none;
+        }
+
+        /* for mobile adjustment to avoid overflow */
+        @media (max-width: 550px) {
+            .exact-tagline {
+                font-size: 1.5rem;
+            }
+        }
+
+        .appoint-exact {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(125deg, #2f6b53, #194433);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 550px) {
+            .appoint-exact {
+                font-size: 2.3rem;
+            }
+        }
+
+        /* keep everything aligned */
+        .exact-wrapper {
+            text-align: center;
+        }
+
+        .comma-fix {
+            white-space: normal;
+        }
+    </style>
+</head>
+<body>
+
+<div class="appointment-card">
+    <div class="card-inner">
+        
+        <!-- Exact first line: REGISTRATIONNOWTOGETMOREDEALS (preserving spacing exactly as given) -->
+        <div class="reg-banner">
+            <div class="exact-reg-text">REGISTRATIONNOWTOGETMOREDEALS</div>
+        </div>
+        
+        <!-- Second exact line: WHEREHEALTH,BEAUTYANDFITNESSMEET. (with commas and period) -->
+        <div class="hero-tagline exact-wrapper">
+            <div class="exact-tagline">
+                WHEREHEALTH,<span style="font-weight: 500;">BEAUTYANDFITNESSMEET.</span>
+            </div>
+        </div>
+        
+        <!-- subtle divider for design rhythm (optional but aesthetic) -->
+        <div class="divider-light"></div>
+        
+        <!-- Third main element: APPOINTMENT (exact as given) -->
+        <div class="appointment-headline">
+            <div class="appoint-exact">APPOINTMENT</div>
+        </div>
+        
+        <!-- interactive appointment form: fully functional booking simulation matching health, beauty, fitness theme -->
+        <div class="appointment-form">
+            <form id="appointmentForm" action="#" method="post">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="hello@example.com" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 234 567 890">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Type</label>
+                        <select id="service" name="service">
+                            <option value="wellness-consult">Wellness Consultation</option>
+                            <option value="beauty-therapy">Beauty & Skincare</option>
+                            <option value="fitness-training">Personal Fitness Training</option>
+                            <option value="holistic-health">Holistic Health Session</option>
+                            <option value="spa-massage">Spa & Massage Therapy</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Preferred Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Preferred Time</label>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+                </div>
+                
+                <!-- Preferences aligned with health/beauty/fitness -->
+                <div class="pref-group">
+                    <div class="pref-title">I'm interested in (optional)</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="interest" value="wellness"> 
+                            <span>Wellness tips</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="interest" value="beauty"> 
+                            <span>Beauty offers</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="interest" value="fitness"> 
+                            <span>Fitness programs</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="interest" value="deals"> 
+                            <span>Exclusive deals</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Additional Notes / Requests</label>
+                    <textarea id="notes" name="notes" rows="2" placeholder="Tell us about your health, beauty or fitness goals..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">Book Appointment →</button>
+                <div class="deals-note">
+                    ⚡ By registering you get <strong>more deals</strong> & wellness updates. <a href="#">Privacy policy</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- small icons to reinforce the theme: health, beauty, fitness -->
+        <div class="icon-mood">
+            <span>🌿</span>
+            <span>✨</span>
+            <span>💪</span>
+            <span>🌸</span>
+        </div>
+    </div>
+</div>
+
+<!-- simple JS to enhance UX: show confirmation on submit matching deals/registration concept -->
+<script>
+    (function() {
+        const form = document.getElementById('appointmentForm');
+        if(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Gather basic details to simulate booking success with deals reminder
+                const nameInput = document.getElementById('fullname');
+                const name = nameInput ? nameInput.value.trim() : 'Guest';
+                const serviceSelect = document.getElementById('service');
+                const service = serviceSelect ? serviceSelect.options[serviceSelect.selectedIndex]?.text : 'selected service';
+                const dateInput = document.getElementById('date');
+                const date = dateInput ? dateInput.value : 'soon';
+                const timeInput = document.getElementById('time');
+                const time = timeInput ? timeInput.value : 'preferred time';
+                
+                if(!name || !date || !time) {
+                    alert("✨ Please fill in your name, date and time to secure your appointment & get more deals!");
+                    return;
+                }
+                
+                // Show confirmation message with exact spirit: "REGISTRATIONNOWTOGETMOREDEALS" + appointment booked
+                alert(`🎉 ${name}, your ${service} appointment is confirmed for ${date} at ${time}!\n\n✅ REGISTRATIONNOWTOGETMOREDEALS — you unlocked extra wellness offers. We'll reach out shortly.`);
+                // Optionally reset a few fields? keep data but not necessary, but we could reset checkboxes if desired:
+                // For better experience we leave as is but mark success.
+                // Also we could mimic that form submission leads to "more deals" message as per design.
+                // And clear?
+                // But we don't auto reset to preserve data, however we can add subtle effect.
+                const btn = document.querySelector('.btn-submit');
+                const originalText = btn.innerText;
+                btn.innerText = '✓ Appointment Saved!';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                }, 2000);
+                // Additional: optional to reset only if user wants? Not mandatory, but shows interactive
+                // According to exact recreation: we maintain layout and copy.
+            });
+        }
+        
+        // Set default min date to today for better usability
+        const datePicker = document.getElementById('date');
+        if(datePicker) {
+            const today = new Date().toISOString().split('T')[0];
+            datePicker.setAttribute('min', today);
+        }
+    })();
+</script>
+</body>
+</html>

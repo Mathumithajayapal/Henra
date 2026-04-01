@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Henra - Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #000000;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #000000;
+      --text-light: #333333;
+      --bg: #FFFFFF;
+      --bg-light: #F5F0EB;
+      --border: #D4B8A0;
+      --shadow: 0 4px 12px rgba(139,94,60,0.1);
+      --shadow-lg: 0 20px 40px rgba(139,94,60,0.15);
+      --transition: all 0.4s ease;
+      --footer-bg: #FFFFFF;
+      --footer-text: #000000;
+    }
+    .dark-mode {
+      --primary: #C8956A;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #FFFFFF;
+      --text-light: #CCCCCC;
+      --bg: #1A1008;
+      --bg-light: #251608;
+      --border: #5C3D1E;
+      --footer-bg: #1A1008;
+      --footer-text: #FFFFFF;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+    h1,h2,h3,h4,h5,h6,.logo-text,.hero h1 { font-family: 'Playfair Display', serif; font-weight: 700; }
+    .dark-mode h1,.dark-mode h2,.dark-mode h3 { color: #FFFFFF !important; }
+
+    /* ===== HEADER - Clean navbar with proper spacing, only login button ===== */
+    header { background: var(--bg); box-shadow: 0 2px 10px rgba(139,94,60,0.08); position: sticky; top: 0; z-index: 1000; }
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; max-width: 1400px; margin: 0 auto; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo i { color: var(--secondary); font-size: 28px; }
+    .logo-text { font-size: 25px; font-weight: 800; background: linear-gradient(45deg, var(--secondary-dark), var(--secondary-light)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; list-style: none; gap: 0.5rem; align-items: center; }
+    .nav-links li { display: flex; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; padding: 8px 16px; border-radius: 30px; transition: var(--transition); font-size: 0.95rem; display: inline-flex; align-items: center; gap: 6px; }
+    .nav-links a:hover,.nav-links a.active { color: var(--secondary); background: rgba(139,94,60,0.08); }
+    .dropdown { position: relative; display: flex; align-items: center; }
+    .dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--bg); list-style: none; padding: 12px 0; min-width: 210px; border-radius: 20px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); display: none; z-index: 1000; backdrop-filter: blur(4px); }
+    .dropdown-menu a { display: block; padding: 10px 22px; color: var(--text); text-decoration: none; white-space: nowrap; font-weight: 500; gap: 0; }
+    .dropdown-menu a:hover { background: var(--secondary); color: #ffffff; padding-left: 28px; }
+    .dropdown:hover .dropdown-menu { display: block; }
+    .controls { display: flex; gap: 10px; align-items: center; }
+    .control-btn { background: transparent; border: none; font-size: 18px; padding: 8px 12px; cursor: pointer; color: var(--text); transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; border-radius: 40px; gap: 6px; }
+    .control-btn:hover { color: var(--secondary); transform: scale(1.05); background: rgba(139,94,60,0.08); }
+    .rtl-btn { font-size: 0.85rem; font-weight: 600; padding: 8px 14px; min-width: 70px; }
+    .rtl-btn i { font-size: 0.9rem; }
+    .nav-btn { padding: 8px 22px !important; border-radius: 50px !important; font-weight: 600; }
+    .login-btn { border: 2px solid var(--secondary); color: var(--secondary) !important; background: transparent; }
+    .login-btn:hover { background: var(--secondary);       color: #ec6c10 !important; 
+}
+    .hamburger { display: none; background: none; border: 2px solid var(--border); border-radius: 8px; font-size: 20px; cursor: pointer; padding: 8px 12px; color: var(--text); }
+    .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 998; display: none; }
+    .mobile-overlay.active { display: block; }
+    .mobile-nav-menu { position: fixed; top: 0; right: -100%; width: 320px; height: 100vh; background: var(--bg-light); z-index: 999; transition: right 0.4s; padding: 90px 1.5rem 2rem; border-left: 3px solid var(--secondary); overflow-y: auto; }
+    .mobile-nav-menu.active { right: 0; }
+    
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    .mobile-nav-links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      list-style: none !important;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 30px 0;
+    }
+    .mobile-nav-links li {
+      width: 100%;
+      list-style: none;
+    }
+    .mobile-nav-links a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 14px 20px !important;
+      border-radius: 16px !important;
+      background: var(--bg) !important;
+      text-decoration: none !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+      text-align: left;
+      border: 2px solid var(--border);
+      transition: all 0.25s ease;
+      gap: 12px;
+      width: 100%;
+    }
+    .mobile-nav-links a i {
+      width: 24px;
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+      background: var(--secondary) !important;
+      color: #ffffff !important;
+      border-color: var(--secondary) !important;
+    }
+    .mobile-nav-links a:hover i,
+    .mobile-nav-links a.active i {
+      color: #ffffff !important;
+    }
+    
+    /* Home sub-items - same consistent styling */
+    .mobile-sub-item {
+      margin-left: 36px !important;
+      padding: 12px 20px !important;
+      background: var(--bg-light) !important;
+      border-style: solid !important;
+      font-size: 0.9rem !important;
+    }
+    .mobile-sub-item i {
+      width: 24px;
+      font-size: 0.9rem;
+    }
+    
+    /* Mobile controls section */
+    .mobile-controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 2px solid var(--border);
+      padding-top: 25px;
+    }
+    .mobile-controls .control-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 20px;
+      background: var(--bg);
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    .mobile-controls .control-btn i {
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      border-color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover i {
+      color: #ffffff;
+    }
+
+    /* ===== HERO ===== */
+    .hero { position: relative; height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+    .hero img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(60,30,10,0.68); z-index: 2; }
+    .hero-content { position: relative; z-index: 3; max-width: 900px; padding: 0 20px; }
+    .hero-content .hero-tag { display: inline-block; background: rgba(169,124,88,0.25); border: 1px solid var(--secondary-light); color: var(--secondary-light); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 20px; border-radius: 50px; margin-bottom: 18px; }
+    .hero-content h1 { font-size: 4rem; color: #ffffff; margin-bottom: 20px; line-height: 1.15; }
+    .hero-content h1 span { color: var(--secondary-light); }
+    .hero-content p { font-size: 1.15rem; color: #e8d5c4; margin-bottom: 35px; }
+    .hero-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .btn { padding: 14px 32px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: 0.3s ease; display: inline-block; cursor: pointer; border: none; font-family: 'Poppins', sans-serif; font-size: 1rem; }
+    .btn-primary { background: var(--secondary); color: #fff; }
+    .btn-primary:hover { background: var(--secondary-dark); }
+    .btn-secondary { border: 2px solid var(--secondary-light); color: var(--secondary-light); background: transparent; }
+    .btn-secondary:hover { background: var(--secondary); color: #fff; border-color: var(--secondary); }
+
+    /* ===== GENERAL ===== */
+    .section { padding: 90px 2rem; }
+    .section-bg { background: var(--bg-light); }
+    .container { max-width: 1300px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header .tag { display: inline-block; background: rgba(139,94,60,0.12); color: var(--secondary); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 18px; border-radius: 50px; margin-bottom: 14px; }
+    .section-header h2 { font-size: 2.6rem; color: var(--text); margin-bottom: 16px; line-height: 1.2; }
+    .section-header h2 span { color: var(--secondary); }
+    .section-header p { font-size: 1rem; color: var(--text-light); max-width: 580px; margin: 0 auto; }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .ornament-divider { text-align: center; padding: 10px 0; color: var(--secondary); font-size: 1.4rem; letter-spacing: 10px; opacity: 0.5; }
+
+    /* ===== SERVICE TABS + GRID ===== */
+    .service-tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 60px; }
+    .tab-btn { padding: 11px 26px; border-radius: 50px; border: 2px solid var(--border); background: transparent; color: var(--text); font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: var(--transition); }
+    .tab-btn:hover, .tab-btn.active { background: var(--secondary); border-color: var(--secondary); color: #fff; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    .svc-card { background: var(--bg); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; transition: var(--transition); position: relative; }
+    .svc-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .svc-card-top { height: 220px; position: relative; overflow: hidden; }
+    .svc-card-top img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .svc-card:hover .svc-card-top img { transform: scale(1.05); }
+    .svc-badge { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; z-index: 2; }
+    .svc-popular { position: absolute; top: 12px; right: 12px; background: #F5A623; color: #fff; font-size: 0.68rem; font-weight: 700; padding: 3px 10px; border-radius: 50px; z-index: 2; }
+    .svc-body { padding: 26px 24px 28px; }
+    .svc-body h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text); }
+    .svc-body p { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; margin-bottom: 18px; }
+    .svc-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--border); }
+    .svc-price { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 800; color: var(--secondary); }
+    .svc-duration { font-size: 0.78rem; color: var(--text-light); display: flex; align-items: center; gap: 4px; }
+    .svc-book { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; background: var(--secondary); color: #fff; padding: 9px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; text-decoration: none; transition: background 0.3s; width: fit-content; }
+    .svc-book:hover { background: var(--secondary-dark); }
+
+    /* ===== FEATURED SERVICE ===== */
+    .featured-service { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1300px; margin: 0 auto 80px; }
+    .featured-service.reverse { direction: rtl; }
+    .featured-service.reverse > * { direction: ltr; }
+    .featured-img-wrap { position: relative; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-lg); }
+    .featured-img-wrap img { width: 100%; height: 480px; object-fit: cover; display: block; border-radius: 24px; transition: transform 0.5s ease; }
+    .featured-img-wrap:hover img { transform: scale(1.03); }
+    .featured-label { position: absolute; top: 20px; left: 20px; background: var(--secondary); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; z-index: 2; }
+    .featured-badge { position: absolute; bottom: -16px; right: 24px; background: var(--bg); border: 2px solid var(--border); border-radius: 16px; padding: 16px 20px; text-align: center; box-shadow: var(--shadow-lg); z-index: 2; }
+    .featured-badge .b-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; color: var(--secondary); line-height: 1; }
+    .featured-badge .b-lbl { font-size: 0.72rem; color: var(--text-light); }
+    .featured-text .tag { display: inline-block; background: rgba(139,94,60,0.12); color: var(--secondary); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 18px; border-radius: 50px; margin-bottom: 16px; }
+    .featured-text h2 { font-size: 2.2rem; margin-bottom: 16px; line-height: 1.25; }
+    .featured-text h2 span { color: var(--secondary); }
+    .featured-text p { color: var(--text-light); font-size: 0.97rem; line-height: 1.8; margin-bottom: 14px; }
+    .feature-list { list-style: none; margin: 22px 0 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .feature-list li { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-light); }
+    .feature-list li i { color: var(--secondary); font-size: 0.85rem; flex-shrink: 0; }
+    .price-tag { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; color: var(--secondary); line-height: 1; }
+    .price-label { font-size: 0.8rem; color: var(--text-light); }
+
+    /* ===== CELEBRITY SECTION ===== */
+    .celebrity-section { padding: 90px 2rem; }
+    .celeb-inner { max-width: 1300px; margin: 0 auto; }
+    .celeb-showcase { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 50px; }
+    .celeb-card { border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 3/4; cursor: pointer; box-shadow: var(--shadow); }
+    .celeb-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .celeb-card:hover img { transform: scale(1.05); }
+    .celeb-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(60,30,10,0.92) 0%, transparent 100%); padding: 24px 18px 18px; }
+    .celeb-info .occasion { font-size: 0.72rem; color: var(--secondary-light); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .celeb-info h4 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1rem; }
+    .celeb-recreate-banner { background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 50%, var(--secondary-light) 100%); border-radius: 24px; padding: 50px 50px; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+    .celeb-recreate-banner h3 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
+    .celeb-recreate-banner p { color: rgba(255,255,255,0.85); font-size: 0.95rem; max-width: 500px; }
+    .celeb-recreate-banner .btn-white { background: #fff; color: var(--secondary-dark); font-weight: 700; padding: 14px 32px; border-radius: 50px; text-decoration: none; transition: 0.3s; display: inline-block; }
+    .celeb-recreate-banner .btn-white:hover { background: var(--bg-light); transform: translateY(-2px); }
+
+    /* ===== PROCESS STEPS ===== */
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; position: relative; }
+    .process-steps::before { content: ''; position: absolute; top: 36px; left: 12%; right: 12%; height: 2px; background: linear-gradient(90deg, var(--secondary-dark), var(--secondary-light)); z-index: 0; }
+    .step-item { text-align: center; position: relative; z-index: 1; }
+    .step-num { width: 72px; height: 72px; border-radius: 50%; background: var(--secondary); color: #fff; font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 0 0 8px var(--bg), 0 0 0 10px var(--secondary); }
+    .step-item h4 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text); }
+    .step-item p { font-size: 0.85rem; color: var(--text-light); }
+
+    /* ===== CTA BAND ===== */
+    .cta-band { background: var(--secondary); padding: 70px 2rem; text-align: center; }
+    .cta-band h2 { font-size: 2.4rem; color: #fff; margin-bottom: 14px; }
+    .cta-band p { color: rgba(255,255,255,0.85); font-size: 1rem; margin-bottom: 32px; max-width: 550px; margin-left: auto; margin-right: auto; }
+    .cta-band .btn-white { background: #fff; color: var(--secondary-dark); font-weight: 700; padding: 14px 32px; border-radius: 50px; text-decoration: none; transition: 0.3s; margin: 0 8px; display: inline-block; }
+    .cta-band .btn-white:hover { background: var(--bg-light); transform: translateY(-2px); }
+    .cta-band .btn-outline-white { border: 2px solid #fff; color: #fff; background: transparent; padding: 14px 32px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: 0.3s; margin: 0 8px; display: inline-block; }
+    .cta-band .btn-outline-white:hover { background: #fff; color: var(--secondary-dark); }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--footer-bg); color: var(--footer-text); padding: 70px 0 40px; margin-top: auto; box-shadow: 0 -2px 10px rgba(139,94,60,0.06); }
+    .dark-mode .site-footer { background: #1A1008 !important; }
+    .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px; margin-bottom: 50px; }
+    .footer-column h3 { color: var(--secondary); font-size: 1rem; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; padding-bottom: 12px; border-bottom: 2px solid var(--secondary); }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 12px; }
+    .footer-column a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; transition: var(--transition); }
+    .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
+    .footer-links { display: flex; gap: 35px; }
+    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
+    .footer-links a:hover { color: var(--secondary); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--secondary); padding-top: 20px; }
+    .copyright { color: var(--footer-text); font-size: 0.9rem; opacity: 0.8; }
+
+    /* ===== RTL ===== */
+    [dir="rtl"] .dropdown-menu { left: auto; right: 0; }
+    [dir="rtl"] .footer-column a:hover { transform: translateX(-8px); }
+    [dir="rtl"] .mobile-nav-menu { left: -100%; right: auto; border-left: none; border-right: 3px solid var(--secondary); }
+    [dir="rtl"] .mobile-nav-menu.active { left: 0; }
+    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
+    [dir="rtl"] .featured-service.reverse { direction: ltr; }
+    [dir="rtl"] .featured-service.reverse > * { direction: rtl; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1280px) {
+      .nav-links:not(.mobile-nav-links) { display: none !important; }
+      .hamburger { display: block !important; }
+      .celeb-showcase { grid-template-columns: repeat(2, 1fr); }
+      .process-steps::before { display: none; }
+      
+      /* Hide desktop toggle buttons on mobile/tablet */
+      #themeToggle, 
+      #rtlToggle { 
+        display: none !important; 
+      }
+    }
+    @media (min-width: 1281px) {
+      .nav-links:not(.mobile-nav-links) { display: flex !important; }
+      .hamburger { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .featured-service { grid-template-columns: 1fr; gap: 40px; }
+      .featured-service.reverse { direction: ltr; }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.5rem; }
+      .hero { height: 60vh; }
+      .services-grid { grid-template-columns: 1fr; }
+      .celeb-showcase { grid-template-columns: 1fr 1fr; }
+      .celeb-recreate-banner { text-align: center; flex-direction: column; padding: 36px 24px; }
+      .footer-top { grid-template-columns: repeat(2, 1fr); }
+      .footer-middle,.footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+      .feature-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero-content h1 { font-size: 2rem; }
+      .btn { padding: 12px 24px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .navbar { padding: 1rem; }
+      .logo-text { font-size: 20px; }
+      .section-header h2 { font-size: 2rem; }
+      .celeb-showcase { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- ===== HEADER - Only Login button, SignUp removed ===== -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-leaf"></i>
+        <span class="logo-text">Henra</span>
+      </a>
+      <ul class="nav-links">
+        <li class="dropdown">
+          <a href="#">Home <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.html">Home 1</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html" class="active">Services</a></li>
+        <li><a href="artist.html">Artist</a></li>
+        <li><a href="aftercareoil.html" >Aftercare</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+      </ul>
+      <div class="controls">
+        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html"> Home 1</a></li>
+      <li><a href="home2.html"> Home 2</a></li>
+
+      <li><a href="about.html"> About</a></li>
+      <li><a href="service.html"> Service</a></li>
+      <li><a href="artist.html"> Artist</a></li>
+      <li><a href="aftercareoil.html"> Aftercare</a></li>
+      <li><a href="gallery.html"> Gallery</a></li>
+      <li><a href="trends.html"> Trends</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html"> Login</a></li>
+    </ul>
+    <div class="mobile-controls">
+      <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <img src="images/img (10).jpg" alt="Henra Henna Services">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-tag">✦ The Art of Henna ✦</span>
+      <h1>Crafted with <span>Passion</span>,<br>Worn with <span>Pride</span></h1>
+      <p>From intimate bridal ceremonies to celebrity-inspired recreations — every stroke is a masterpiece crafted just for you.</p>
+      <div class="hero-buttons">
+        <a href="#services" class="btn btn-primary">Explore Services</a>
+        <a href="contact.html" class="btn btn-secondary">Book Appointment</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ORNAMENT ===== -->
+  <div class="ornament-divider">❧ ✦ ❧ ✦ ❧ ✦ ❧</div>
+
+  <!-- ===== SERVICE TABS + GRID ===== -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="tag">All Services</span>
+        <h2>Our Henna <span>Artistry</span></h2>
+        <p>Every design is handcrafted using premium natural henna, tailored to your style, occasion, and soul.</p>
+      </div>
+
+      <div class="service-tabs fade-up">
+        <button class="tab-btn active" data-filter="all">All</button>
+        <button class="tab-btn" data-filter="bridal">Bridal</button>
+        <button class="tab-btn" data-filter="custom">Custom</button>
+        <button class="tab-btn" data-filter="party">Party</button>
+        <button class="tab-btn" data-filter="special">Specialty</button>
+      </div>
+
+      <div class="services-grid" id="servicesGrid">
+        <div class="svc-card fade-up" data-cat="bridal"><div class="svc-card-top"><img src="images/img (7).jpg" alt="Bridal Henna"><span class="svc-badge">Bridal</span><span class="svc-popular">★ Top Pick</span></div><div class="svc-body"><h3>Bridal Full Henna</h3><p>Elaborate bridal designs covering both hands and feet — intricate patterns that tell the story of your love and heritage on your wedding day.</p><div class="svc-meta"><span class="svc-price">From ₹3,500</span><span class="svc-duration"><i class="fas fa-clock"></i> 4–6 hrs</span></div><a href="contact.html" class="svc-book">Book Now <i class="fas fa-arrow-right"></i></a></div></div>
+        <div class="svc-card fade-up" data-cat="custom"><div class="svc-card-top"><img src="images/img (8).jpg" alt="Arabic Henna"><span class="svc-badge">Arabic</span></div><div class="svc-body"><h3>Arabic Floral Henna</h3><p>Bold, flowing floral patterns inspired by Arabic henna traditions — featuring large blooms, vines, and elegant spacing.</p><div class="svc-meta"><span class="svc-price">From ₹600</span><span class="svc-duration"><i class="fas fa-clock"></i> 45–90 min</span></div><a href="contact.html" class="svc-book">Book Now <i class="fas fa-arrow-right"></i></a></div></div>
+        <div class="svc-card fade-up" data-cat="party"><div class="svc-card-top"><img src="images/img (9).jpg" alt="Party Henna"><span class="svc-badge">Party</span></div><div class="svc-body"><h3>Party & Event Henna</h3><p>Quick, beautiful designs perfect for parties, festivals, mehndi nights, and group events. Fast application with stunning results.</p><div class="svc-meta"><span class="svc-price">From ₹300/person</span><span class="svc-duration"><i class="fas fa-clock"></i> 15–30 min</span></div><a href="contact.html" class="svc-book">Book Now <i class="fas fa-arrow-right"></i></a></div></div>
+        <div class="svc-card fade-up" data-cat="party"><div class="svc-card-top"><img src="images/img (11).jpg" alt="Kids Henna"><span class="svc-badge">Kids</span></div><div class="svc-body"><h3>Kids & Teen Henna</h3><p>Fun, playful designs specially crafted for children and teens — butterflies, flowers, hearts, and cartoon-inspired patterns.</p><div class="svc-meta"><span class="svc-price">From ₹200</span><span class="svc-duration"><i class="fas fa-clock"></i> 10–20 min</span></div><a href="contact.html" class="svc-book">Book Now <i class="fas fa-arrow-right"></i></a></div></div>
+        <div class="svc-card fade-up" data-cat="special"><div class="svc-card-top"><img src="images/img (12).jpg" alt="Glitter Henna"><span class="svc-badge">Specialty</span><span class="svc-popular">✨ New</span></div><div class="svc-body"><h3>Glitter & Jagua Henna</h3><p>Elevate your look with gold/silver glitter overlay on henna designs, or opt for Jagua — natural plant-based ink for stunning blue-black tattoos.</p><div class="svc-meta"><span class="svc-price">From ₹700</span><span class="svc-duration"><i class="fas fa-clock"></i> 1–2 hrs</span></div><a href="contact.html" class="svc-book">Book Now <i class="fas fa-arrow-right"></i></a></div></div>
+        <div class="svc-card fade-up" data-cat="special"><div class="svc-card-top"><img src="images/img (13).jpg" alt="Full Arm Henna"><span class="svc-badge">Full Arm</span></div><div class="svc-body"><h3>Full Arm Henna Sleeve</h3><p>A dramatic full arm sleeve covering wrist to shoulder — a bold statement piece blending traditional motifs with modern geometric elements.</p><div class="svc-meta"><span class="svc-price">From ₹2,500</span><span class="svc-duration"><i class="fas fa-clock"></i> 3–5 hrs</span></div><a href="contact.html" class="svc-book">Book Now <i class="fas fa-arrow-right"></i></a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURED — BRIDAL ===== -->
+  <section class="section section-bg">
+    <div class="container">
+      <div class="featured-service fade-up">
+        <div class="featured-img-wrap"><img src="images/img (14).jpg" alt="Bridal Henna Ceremony"><span class="featured-label">✦ Signature Service</span><div class="featured-badge"><div class="b-num">500+</div><div class="b-lbl">Brides<br>Adorned</div></div></div>
+        <div class="featured-text"><span class="tag">Our Specialty</span><h2>Bridal <span>Henna</span> — The Heart of Our Art</h2><p>Your bridal mehendi is more than decoration — it is a ritual, a blessing, a memory etched in time. Our master artists bring decades of expertise to your most special day.</p><ul class="feature-list"><li><i class="fas fa-check-circle"></i> Pre-wedding design consultation</li><li><i class="fas fa-check-circle"></i> Free trial session included</li><li><i class="fas fa-check-circle"></i> Both hands & feet covered</li><li><i class="fas fa-check-circle"></i> 100% natural henna paste</li><li><i class="fas fa-check-circle"></i> Groom's hand motif hidden</li><li><i class="fas fa-check-circle"></i> Same-day home service</li></ul><div><div class="price-tag">From ₹3,500</div><div class="price-label">Full bridal package</div></div><a href="contact.html" class="btn btn-primary">Book Bridal Session</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURED — CELEBRITY RECREATION ===== -->
+  <section class="celebrity-section">
+    <div class="celeb-inner">
+      <div class="section-header fade-up"><span class="tag">Celebrity Inspired</span><h2>Celebrity Marriage <span>Henna Recreation</span></h2><p>Obsessed with the mehendi from a star-studded wedding? We study, recreate, and personalize iconic celebrity henna looks.</p></div>
+      <div class="celeb-showcase fade-up"><div class="celeb-card"><img src="images/img (15).jpg" alt="Rajasthani Royal Style"><div class="celeb-info"><div class="occasion">Bollywood Wedding</div><h4>Rajasthani Royal Style</h4></div></div><div class="celeb-card"><img src="images/img (16).jpg" alt="Kerala Temple Motifs"><div class="celeb-info"><div class="occasion">South Indian Wedding</div><h4>Kerala Temple Motifs</h4></div></div><div class="celeb-card"><img src="images/img (17).jpg" alt="Mughal Inspired"><div class="celeb-info"><div class="occasion">Mughal Inspired</div><h4>Intricate Lattice Work</h4></div></div><div class="celeb-card"><img src="images/img (18).jpg" alt="Modern Floral Fusion"><div class="celeb-info"><div class="occasion">Arabic Style</div><h4>Modern Floral Fusion</h4></div></div></div>
+      <div class="celeb-recreate-banner fade-up"><div><h3>Seen a Design You Love?</h3><p>Share a photo of any celebrity wedding henna — from Bollywood to Hollywood — and our artists will recreate it faithfully for you.</p></div><a href="contact.html" class="btn-white">Request a Recreation →</a></div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURED — CUSTOM HENNA ===== -->
+  <section class="section section-bg">
+    <div class="container">
+      <div class="featured-service reverse fade-up">
+        <div class="featured-text"><span class="tag">Bespoke Service</span><h2>Fully <span>Customized</span> Henna Designs</h2><p>No template. No repeat. Every custom design session begins with a conversation — we listen to your story, your aesthetic, your occasion — and translate it into art on your skin.</p><ul class="feature-list"><li><i class="fas fa-check-circle"></i> Personal design consultation</li><li><i class="fas fa-check-circle"></i> Mood board creation</li><li><i class="fas fa-check-circle"></i> Name & initials integration</li><li><i class="fas fa-check-circle"></i> Cultural motif blending</li><li><i class="fas fa-check-circle"></i> Geometric & modern styles</li><li><i class="fas fa-check-circle"></i> Revision until perfect</li></ul><div><div class="price-tag">From ₹800</div><div class="price-label">Custom design session</div></div><a href="contact.html" class="btn btn-primary">Start Your Design</a></div>
+        <div class="featured-img-wrap"><img src="images/img (19).jpg" alt="Custom Henna Design"><span class="featured-label">✦ Bespoke Art</span><div class="featured-badge"><div class="b-num">∞</div><div class="b-lbl">Unique<br>Designs</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-up"><span class="tag">Our Process</span><h2>How It <span>Works</span></h2><p>Getting your perfect henna design is simple, seamless, and enjoyable from start to finish.</p></div>
+      <div class="process-steps fade-up"><div class="step-item"><div class="step-num">1</div><h4>Book & Consult</h4><p>Choose your service, pick a date, and share your inspiration.</p></div><div class="step-item"><div class="step-num">2</div><h4>Design Planning</h4><p>Our artist crafts a personalized design plan based on your style.</p></div><div class="step-item"><div class="step-num">3</div><h4>Application Day</h4><p>Relax while our artist works their magic with premium natural henna.</p></div><div class="step-item"><div class="step-num">4</div><h4>Aftercare & Stain</h4><p>Follow our aftercare guide for the deepest, richest color.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BAND ===== -->
+  <section class="cta-band fade-up">
+    <h2>Ready to Wear Art on Your Skin?</h2>
+    <p>Book your session today and let our master henna artists craft something truly unforgettable just for you.</p>
+    <div><a href="contact.html" class="btn-white">Book an Appointment</a><a href="#services" class="btn-outline-white">View All Services</a></div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-column"><a href="index.html" class="logo"><i class="fas fa-leaf"></i><span class="logo-text">Henra</span></a><p style="margin-top:30px">Your ultimate destination for premium henna artistry. Every design tells a story.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="contact.html">Contact</a></li><li><a href="service.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="models.html">Models</a></li></ul></div>
+        <div class="footer-column"><h3>Resources</h3><ul><li><a href="#">Safety Tips</a></li><li><a href="#">Guides</a></li><li><a href="#">Care Tips</a></li></ul></div>
+        <div class="footer-column"><h3>Social Links</h3><ul><li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><div class="copyright">© 2026 Henra. All rights reserved.</div></div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const h = document.getElementById('hamburger'), o = document.getElementById('mobileOverlay'), m = document.getElementById('mobileNavMenu');
+      if (h && o && m) {
+        function toggle() { 
+          const a = m.classList.contains('active'); 
+          m.classList.toggle('active'); 
+          o.classList.toggle('active'); 
+          document.body.style.overflow = a ? '' : 'hidden'; 
+          h.innerHTML = a ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>'; 
+        }
+        h.addEventListener('click', toggle); 
+        o.addEventListener('click', toggle);
+        document.querySelectorAll('.mobile-nav-links a').forEach(l => l.addEventListener('click', function() { if (m.classList.contains('active')) toggle(); }));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('active')) toggle(); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 1280 && m.classList.contains('active')) toggle(); });
+      }
+
+      function theme() {
+        document.body.classList.toggle('dark-mode');
+        const d = document.body.classList.contains('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+        localStorage.setItem('theme', d ? 'dark' : 'light');
+      }
+      function rtl() {
+        const doc = document.documentElement, r = doc.getAttribute('dir') === 'rtl';
+        doc.setAttribute('dir', r ? 'ltr' : 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = r ? 'RTL' : 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = r ? 'RTL Mode' : 'LTR Mode';
+        localStorage.setItem('direction', r ? 'ltr' : 'rtl');
+      }
+      document.getElementById('themeToggle')?.addEventListener('click', theme);
+      document.getElementById('mobileThemeToggle')?.addEventListener('click', theme);
+      document.getElementById('rtlToggle')?.addEventListener('click', rtl);
+      document.getElementById('mobileRtlToggle')?.addEventListener('click', rtl);
+
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+      }
+      const savedDir = localStorage.getItem('direction');
+      if (savedDir === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = 'LTR Mode';
+      }
+    })();
+
+    /* ===== SERVICE FILTER TABS ===== */
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const f = this.dataset.filter;
+        document.querySelectorAll('#servicesGrid .svc-card').forEach(card => {
+          if (f === 'all' || card.dataset.cat === f) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    /* ===== FADE ON SCROLL ===== */
+    const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

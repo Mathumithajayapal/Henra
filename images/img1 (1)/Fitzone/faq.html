@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Groww FitZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Dark Mode */
+        body.dark {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        body.dark ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff6b35;
+            border-radius: 5px;
+        }
+
+        /* ========== FIXED HEADER ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+        body.dark .navbar {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .logo i {
+            font-size: 1.8rem;
+            color: #ff6b35;
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-text small {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #6b7280;
+        }
+        body.dark .logo-text small {
+            color: #9ca3af;
+        }
+        .logo-text strong {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+
+        /* Desktop Navigation */
+        .nav-links {
+            display: none;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        @media (min-width: 1024px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        body.dark .nav-links a {
+            color: #ffffff;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ff6b35;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        body.dark .dropdown-menu {
+            background: #1f2937;
+        }
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #4b5563;
+            transition: all 0.2s;
+        }
+        body.dark .dropdown-menu a {
+            color: #d1d5db;
+        }
+        .dropdown-menu a:hover {
+            background: #f3f4f6;
+            color: #ff6b35;
+            padding-left: 1.5rem;
+        }
+        body.dark .dropdown-menu a:hover {
+            background: #374151;
+        }
+
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .theme-btn, .rtl-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s;
+            color: #1f2937;
+        }
+        body.dark .theme-btn,
+        body.dark .rtl-btn {
+            color: white;
+        }
+        .theme-btn:hover, .rtl-btn:hover {
+            background: #e5e7eb;
+        }
+        body.dark .theme-btn:hover,
+        body.dark .rtl-btn:hover {
+            background: #374151;
+        }
+        .login-btn {
+            display: none;
+            background: #ff6b35;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .login-btn:hover {
+            background: #e55a2a;
+            transform: translateY(-2px);
+        }
+        @media (min-width: 1024px) {
+            .login-btn {
+                display: block;
+            }
+        }
+        .mobile-toggle {
+            display: block;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #1f2937;
+        }
+        body.dark .mobile-toggle {
+            color: white;
+        }
+        @media (min-width: 1024px) {
+            .mobile-toggle {
+                display: none;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            background: white;
+            padding: 1rem 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        body.dark .mobile-menu {
+            background: #000000;
+            border-top-color: #374151;
+        }
+        .mobile-menu.show {
+            display: block;
+        }
+        .mobile-menu a {
+            display: block;
+            padding: 0.75rem 0;
+            text-decoration: none;
+            color: #1f2937;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        body.dark .mobile-menu a {
+            color: white;
+            border-bottom-color: #2d2d2d;
+        }
+        .mobile-menu a.active {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&auto=format');
+            background-size: cover;
+            background-position: center;
+            margin-top: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+        .outline-text {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1.5px white;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 768px) {
+            .outline-text { font-size: 2rem; }
+        }
+        @media (min-width: 1024px) {
+            .outline-text { font-size: 3rem; -webkit-text-stroke: 2px white; }
+        }
+        .solid-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .solid-text { font-size: 3.5rem; }
+        }
+        @media (min-width: 1024px) {
+            .solid-text { font-size: 5rem; }
+        }
+        .hero-subtitle {
+            color: white;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .hero-subtitle { font-size: 1rem; }
+        }
+        .hero-button {
+            display: inline-block;
+            border: 3px solid white;
+            padding: 0.75rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .hero-button { padding: 1rem 2.5rem; }
+        }
+        .hero-button:hover {
+            background: white;
+            color: #ff6b35;
+        }
+
+        /* ========== FAQ SECTION ========== */
+        .faq-section {
+            padding: 4rem 1.5rem;
+            background: #f9fafb;
+        }
+        body.dark .faq-section {
+            background: #000000;
+        }
+        @media (min-width: 768px) {
+            .faq-section { padding: 5rem 2rem; }
+        }
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2rem 0 1.5rem;
+            color: #1f2937;
+        }
+        body.dark .category-title {
+            color: white;
+        }
+        @media (min-width: 768px) {
+            .category-title {
+                font-size: 1.8rem;
+                margin: 2.5rem 0 2rem;
+            }
+        }
+        .category-title i {
+            color: #ff6b35;
+            margin-right: 0.5rem;
+        }
+        .faq-item {
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        body.dark .faq-item {
+            background: #111827;
+            border-color: #1f2937;
+        }
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 1rem 1.2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+            color: #1f2937;
+        }
+        body.dark .faq-question {
+            color: white;
+        }
+        @media (min-width: 768px) {
+            .faq-question {
+                padding: 1.2rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+        .faq-question:hover {
+            background: #f3f4f6;
+        }
+        body.dark .faq-question:hover {
+            background: #1f2937;
+        }
+        .faq-question i {
+            transition: transform 0.3s;
+            font-size: 0.9rem;
+            color: #ff6b35;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.2rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        body.dark .faq-answer {
+            color: #9ca3af;
+        }
+        @media (min-width: 768px) {
+            .faq-answer {
+                padding: 0 1.5rem;
+                font-size: 1rem;
+            }
+        }
+        .faq-answer.active {
+            max-height: 300px;
+            padding: 0 1.2rem 1rem 1.2rem;
+        }
+        @media (min-width: 768px) {
+            .faq-answer.active {
+                padding: 0 1.5rem 1.2rem 1.5rem;
+            }
+        }
+
+        /* ========== COMMON QUESTIONS SECTION ========== */
+        .common-section {
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&auto=format');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+            padding: 4rem 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .common-section {
+                background-attachment: fixed;
+                padding: 6rem 2rem;
+            }
+        }
+        .common-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+        }
+        .common-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .common-badge {
+            color: #ff6b35;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 768px) {
+            .common-badge { font-size: 0.8rem; }
+        }
+        .common-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+        @media (min-width: 768px) {
+            .common-title { font-size: 2.5rem; }
+        }
+        @media (min-width: 1024px) {
+            .common-title { font-size: 3.5rem; }
+        }
+        .help-box {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            border: 1px solid #374151;
+        }
+        .help-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .help-box h3 { font-size: 2rem; }
+        }
+        .contact-link {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+        .contact-link:hover {
+            background: #e55a2a;
+            transform: translateY(-2px);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #0f1c2e;
+            color: #cbd5e1;
+            padding-top: 60px;
+        }
+        body.dark .footer {
+            background: #000000;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            padding: 0 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .footer-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2.5rem;
+            }
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .footer-logo i {
+            font-size: 1.8rem;
+            color: #ff6b35;
+        }
+        .footer-logo span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+        }
+        .footer-logo span span {
+            color: #ff6b35;
+        }
+        .footer-text {
+            color: #9ca3af;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+        }
+        .footer-contact i {
+            color: #ff6b35;
+            width: 1.2rem;
+        }
+        .footer-col h4 {
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-col ul li a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .footer-col ul li a:hover {
+            color: #ff6b35;
+            padding-left: 0.25rem;
+        }
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid #1f2937;
+        }
+        .hours-item span:last-child {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            width: 2.2rem;
+            height: 2.2rem;
+            background: #1f2937;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .social-links a:hover {
+            background: #ff6b35;
+            transform: scale(1.05);
+        }
+        .footer-bottom {
+            border-top: 1px solid #1f2937;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #9ca3af;
+        }
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+        .footer-links-bottom {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .footer-links-bottom a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+        .footer-links-bottom a:hover {
+            color: #ff6b35;
+        }
+        .heart {
+            color: #ff6b35;
+            display: inline-block;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIXED HEADER -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-dumbbell"></i>
+                <div class="logo-text">
+                    <small>Groww</small>
+                    <strong>FitZone</strong>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#">Home <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#">Home Page 1</a>
+                        <a href="#">Home Page 2</a>
+                    </div>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Classes</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#" class="active">FAQ</a></li>
+                <li><a href="#">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#">Dashboard <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#">Admin Dashboard</a>
+                        <a href="#">User Dashboard</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="header-actions">
+                <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <button class="rtl-btn" id="rtlToggle">🌐 LTR</button>
+                <a href="#" class="login-btn">Login</a>
+                <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#">Home Page 1</a>
+            <a href="#">Home Page 2</a>
+            <a href="#">About Us</a>
+            <a href="#">Pricing</a>
+            <a href="#">Classes</a>
+            <a href="#">Blog</a>
+            <a href="#" class="active">FAQ</a>
+            <a href="#">Contact</a>
+            <a href="#">Admin Dashboard</a>
+            <a href="#">User Dashboard</a>
+            <a href="#">Login</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="outline-text">REAL FITNESS</div>
+            <h1 class="solid-text">DEPENDS ON<br>EXERCISE</h1>
+            <p class="hero-subtitle">SHAPE YOUR BODY WELL</p>
+            <a href="#faq-section" class="hero-button">GET STARTED</a>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq-section" class="faq-section">
+        <div class="faq-container">
+            <!-- Membership Category -->
+            <h2 class="category-title"><i class="fas fa-id-card"></i> Membership</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">How do I sign up for a membership? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">You can sign up online through our website by clicking "Join Now" or visit our gym in person. Our staff will guide you through the registration process and help you choose the best plan for your needs.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Can I cancel my membership anytime? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Yes, you can cancel your membership with 30 days' notice. Monthly memberships offer more flexibility, while annual memberships may have specific terms.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Do you offer free trial sessions? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Yes! We offer a complimentary 3-day trial pass for new members. This allows you to experience our facilities and classes before committing to a membership.</div>
+            </div>
+
+            <!-- Classes Category -->
+            <h2 class="category-title"><i class="fas fa-running"></i> Classes</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">How do I book a class? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">You can book classes through our mobile app, website, or at the front desk. Premium and VIP members get priority booking access.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What should I bring to my first class? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Bring comfortable workout clothes, athletic shoes, a water bottle, and a towel. We provide mats and equipment for all classes.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Are classes suitable for beginners? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Absolutely! We offer beginner-friendly classes and our trainers provide modifications for all fitness levels. Don't hesitate to inform the instructor if it's your first time.</div>
+            </div>
+
+            <!-- Facilities Category -->
+            <h2 class="category-title"><i class="fas fa-building"></i> Facilities</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">What are your operating hours? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">We're open Monday-Friday: 5AM-11PM, and Saturday-Sunday: 6AM-10PM. Premium and VIP members enjoy 24/7 access with keycard entry.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Do you have parking facilities? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Yes, we offer free parking for all members. There are 100+ parking spots available on a first-come, first-served basis.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Are lockers and showers available? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Yes, we provide complimentary lockers and modern shower facilities with toiletries. Bring your own lock or rent one from us.</div>
+            </div>
+
+            <!-- Payment Category -->
+            <h2 class="category-title"><i class="fas fa-credit-card"></i> Payment</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">What payment methods do you accept? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">We accept cash, credit/debit cards, UPI, net banking, and digital wallets. Membership fees can also be set up for auto-payment.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is there a joining fee? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Yes, there's a one-time joining fee of ₹500. However, we often run promotions where this fee is waived. Check our website for current offers!</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Do you offer student discounts? <i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer">Yes! Students with valid ID receive 15% off all membership plans. We also offer corporate discounts for company groups.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMON QUESTIONS SECTION -->
+    <section class="common-section">
+        <div class="common-overlay"></div>
+        <div class="common-content">
+            <div class="common-badge">COMMON QUESTIONS</div>
+            <h2 class="common-title">EVERYTHING YOU<br>NEED TO KNOW</h2>
+            <div class="help-box">
+                <h3>NEED HELP?</h3>
+                <a href="#" class="contact-link">CONTACT</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Groww <span>FitZone</span></span>
+                </div>
+                <p class="footer-text">Transform your body and mind with our expert guidance. Join our fitness community today!</p>
+                <div class="footer-contact">
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope"></i> info@growwfitzone.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Fitness Street, India</p>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Classes</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>SUPPORT</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Register</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Login</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>OPENING HOURS</h4>
+                <div class="hours-item"><span>Monday - Friday:</span><span>6AM - 10PM</span></div>
+                <div class="hours-item"><span>Saturday:</span><span>7AM - 9PM</span></div>
+                <div class="hours-item"><span>Sunday:</span><span>8AM - 6PM</span></div>
+                <h4 style="margin-top: 1.5rem;">FOLLOW US</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Groww FitZone. All Rights Reserved. Made with <i class="fas fa-heart heart"></i> in India</p>
+            <div class="footer-links-bottom">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        if (localStorage.theme === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.theme = isDark ? 'dark' : 'light';
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // RTL Toggle
+        const rtlToggle = document.getElementById('rtlToggle');
+        const savedDir = localStorage.getItem('direction');
+        if (savedDir === 'rtl') {
+            document.documentElement.setAttribute('dir', 'rtl');
+            rtlToggle.innerHTML = '🌐 RTL';
+        }
+        
+        rtlToggle.addEventListener('click', () => {
+            const dir = document.documentElement.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl';
+            document.documentElement.setAttribute('dir', dir);
+            localStorage.setItem('direction', dir);
+            rtlToggle.innerHTML = dir === 'rtl' ? '🌐 RTL' : '🌐 LTR';
+        });
+
+        // Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('show');
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                answer.classList.toggle('active');
+                icon.style.transform = answer.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>

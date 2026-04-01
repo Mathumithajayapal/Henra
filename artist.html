@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Henra - Henna Artists</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #000000;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #000000;
+      --text-light: #333333;
+      --bg: #FFFFFF;
+      --bg-light: #F5F0EB;
+      --border: #D4B8A0;
+      --shadow: 0 4px 12px rgba(139,94,60,0.1);
+      --shadow-lg: 0 20px 40px rgba(139,94,60,0.15);
+      --transition: all 0.4s ease;
+      --footer-bg: #FFFFFF;
+      --footer-text: #000000;
+    }
+    .dark-mode {
+      --primary: #C8956A;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #FFFFFF;
+      --text-light: #CCCCCC;
+      --bg: #1A1008;
+      --bg-light: #251608;
+      --border: #5C3D1E;
+      --footer-bg: #1A1008;
+      --footer-text: #FFFFFF;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+    h1, h2, h3, h4, h5, h6, .logo-text, .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    .dark-mode h1, .dark-mode h2, .dark-mode h3 { color: #FFFFFF !important; }
+
+    /* ===== HEADER - Clean navbar with proper spacing, only login button ===== */
+    header {
+      background: var(--bg);
+      box-shadow: 0 2px 10px rgba(139,94,60,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo i { color: var(--secondary); font-size: 28px; }
+    .logo-text {
+      font-size: 25px;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--secondary-dark), var(--secondary-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .nav-links li {
+      display: flex;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 30px;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--secondary);
+      background: rgba(139,94,60,0.08);
+    }
+    .dropdown { 
+      position: relative; 
+      display: flex;
+      align-items: center;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--bg);
+      list-style: none;
+      padding: 12px 0;
+      min-width: 210px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      display: none;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 22px;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      font-weight: 500;
+      gap: 0;
+    }
+    .dropdown-menu a:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      padding-left: 28px;
+    }
+    .dropdown:hover .dropdown-menu { display: block; }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .control-btn {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+      gap: 6px;
+    }
+    .control-btn:hover {
+      color: var(--secondary);
+      transform: scale(1.05);
+      background: rgba(139,94,60,0.08);
+    }
+    .rtl-btn {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      min-width: 70px;
+    }
+    .rtl-btn i { font-size: 0.9rem; }
+    .nav-btn { 
+      padding: 8px 22px !important; 
+      border-radius: 50px !important; 
+      font-weight: 600; 
+    }
+    .login-btn { 
+      border: 2px solid var(--secondary); 
+      color: var(--secondary) !important; 
+      background: transparent;
+    }
+    .login-btn:hover { 
+      background: var(--secondary); 
+      color: #ec6c10 !important; 
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      display: none;
+      background: none;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px 12px;
+      color: var(--text);
+    }
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 998;
+      display: none;
+    }
+    .mobile-overlay.active { display: block; }
+    .mobile-nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 320px;
+      height: 100vh;
+      background: var(--bg-light);
+      z-index: 999;
+      transition: right 0.4s;
+      padding: 90px 1.5rem 2rem;
+      border-left: 3px solid var(--secondary);
+      overflow-y: auto;
+    }
+    .mobile-nav-menu.active { right: 0; }
+    
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    .mobile-nav-links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      list-style: none !important;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 30px 0;
+    }
+    .mobile-nav-links li {
+      width: 100%;
+      list-style: none;
+    }
+    .mobile-nav-links a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 14px 20px !important;
+      border-radius: 16px !important;
+      background: var(--bg) !important;
+      text-decoration: none !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+      text-align: left;
+      border: 2px solid var(--border);
+      transition: all 0.25s ease;
+      gap: 12px;
+      width: 100%;
+    }
+    .mobile-nav-links a i {
+      width: 24px;
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+      background: var(--secondary) !important;
+      color: #ffffff !important;
+      border-color: var(--secondary) !important;
+    }
+    .mobile-nav-links a:hover i,
+    .mobile-nav-links a.active i {
+      color: #ffffff !important;
+    }
+    
+    /* Home sub-items - same consistent styling */
+    .mobile-sub-item {
+      margin-left: 36px !important;
+      padding: 12px 20px !important;
+      background: var(--bg-light) !important;
+      border-style: solid !important;
+      font-size: 0.9rem !important;
+    }
+    .mobile-sub-item i {
+      width: 24px;
+      font-size: 0.9rem;
+    }
+    
+    /* Mobile controls section */
+    .mobile-controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 2px solid var(--border);
+      padding-top: 25px;
+    }
+    .mobile-controls .control-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 20px;
+      background: var(--bg);
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    .mobile-controls .control-btn i {
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      border-color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover i {
+      color: #ffffff;
+    }
+
+    /* ===== HERO BANNER ===== */
+    .hero {
+      position: relative;
+      height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(60, 30, 10, 0.65);
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 900px;
+      padding: 0 20px;
+    }
+    .hero-content h1 {
+      font-size: 4rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .hero-content h1 span { color: var(--secondary-light); }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #e8d5c4;
+      margin-bottom: 35px;
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    .btn-primary { background: var(--secondary); color: #fff; }
+    .btn-primary:hover { background: var(--secondary-dark); }
+    .btn-secondary { border: 2px solid var(--secondary-light); color: var(--secondary-light); }
+    .btn-secondary:hover { background: var(--secondary); color: #fff; border-color: var(--secondary); }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 70px 0 40px;
+      margin-top: auto;
+      box-shadow: 0 -2px 10px rgba(139,94,60,0.06);
+    }
+    .dark-mode .site-footer { background: #1A1008 !important; }
+    .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px; margin-bottom: 50px; }
+    .footer-column h3 {
+      color: var(--secondary); font-size: 1rem; font-weight: 700;
+      margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;
+      padding-bottom: 12px; border-bottom: 2px solid var(--secondary);
+    }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 12px; }
+    .footer-column a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; transition: var(--transition); }
+    .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
+   
+    .footer-links { display: flex; gap: 35px; }
+    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
+    .footer-links a:hover { color: var(--secondary); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--secondary); padding-top: 20px;
+    }
+    .copyright { color: var(--footer-text); font-size: 0.9rem; opacity: 0.8; }
+
+    /* ===== RTL ===== */
+    [dir="rtl"] .dropdown-menu { left: auto; right: 0; }
+    [dir="rtl"] .footer-column a:hover { transform: translateX(-8px); }
+    [dir="rtl"] .mobile-nav-menu { left: -100%; right: auto; border-left: none; border-right: 3px solid var(--secondary); }
+    [dir="rtl"] .mobile-nav-menu.active { left: 0; }
+    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
+
+    /* ===== RESPONSIVE BASE ===== */
+    @media (max-width: 1280px) {
+      .nav-links:not(.mobile-nav-links) { display: none !important; }
+      .hamburger { display: block !important; }
+      
+      /* Hide desktop toggle buttons on mobile/tablet */
+      #themeToggle, 
+      #rtlToggle { 
+        display: none !important; 
+      }
+    }
+    @media (min-width: 1281px) {
+      .nav-links:not(.mobile-nav-links) { display: flex !important; }
+      .hamburger { display: none !important; }
+    }
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: repeat(2, 1fr); }
+      .footer-middle, .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+      .hero h1 { font-size: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.5rem; }
+      .hero-content p { font-size: 1rem; }
+      .hero { height: 60vh; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+      .btn { padding: 12px 24px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .navbar { padding: 1rem; }
+      .logo-text { font-size: 20px; }
+    }
+
+    /* ============================================================
+       HENNA ARTISTS PAGE — CONTENT STYLES (unchanged content)
+    ============================================================ */
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      background: rgba(139,94,60,0.09);
+      padding: 5px 16px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    .intro-banner {
+      background: var(--bg-light);
+      padding: 64px 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .intro-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.7rem;
+      color: var(--text);
+      max-width: 720px;
+      margin: 0 auto 18px;
+      line-height: 1.22;
+    }
+    .intro-banner h2 em { color: var(--secondary); font-style: italic; }
+    .intro-banner p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--text-light);
+      font-size: 1rem;
+      line-height: 1.82;
+    }
+    .about-section {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 90px 2rem;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .about-image-col { position: relative; }
+    .about-image-col img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 24px;
+      display: block;
+    }
+    .about-image-col .stat-bubble {
+      position: absolute;
+      bottom: 28px; left: -28px;
+      background: var(--secondary);
+      color: #fff;
+      border-radius: 18px;
+      padding: 18px 24px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      min-width: 130px;
+    }
+    .stat-bubble .bubble-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .stat-bubble .bubble-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-top: 4px;
+      opacity: 0.88;
+    }
+    .about-text h2 {
+      font-size: 2.4rem;
+      line-height: 1.25;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+    .about-text p {
+      font-size: 0.97rem;
+      color: var(--text-light);
+      line-height: 1.85;
+      margin-bottom: 26px;
+    }
+    .about-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+    .pill {
+      padding: 7px 18px;
+      border-radius: 50px;
+      border: 1.5px solid var(--secondary);
+      color: var(--secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .artists-section {
+      background: var(--bg-light);
+      padding: 90px 2rem;
+    }
+    .artists-header {
+      max-width: 1300px;
+      margin: 0 auto 55px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .artists-header h2 { font-size: 2.4rem; color: var(--text); max-width: 400px; line-height: 1.2; }
+    .artists-header p { max-width: 380px; color: var(--text-light); font-size: 0.95rem; line-height: 1.75; }
+    .artists-grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .artist-card {
+      background: var(--bg);
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    .artist-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .artist-photo {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+    }
+    .artist-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .artist-card:hover .artist-photo img { transform: scale(1.07); }
+    .artist-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: var(--secondary);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 50px;
+    }
+    .artist-socials {
+      position: absolute;
+      bottom: 14px; left: 14px;
+      display: flex;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: 0.35s ease;
+    }
+    .artist-card:hover .artist-socials { opacity: 1; transform: none; }
+    .artist-socials a {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--secondary);
+      font-size: 0.78rem;
+      text-decoration: none;
+    }
+    .artist-socials a:hover { background: var(--secondary); color: #fff; }
+    .artist-body { padding: 22px 22px 26px; }
+    .artist-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .artist-specialty {
+      font-size: 0.8rem;
+      color: var(--secondary);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .artist-bio {
+      font-size: 0.86rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+    .artist-meta {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 18px;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      flex-wrap: wrap;
+    }
+    .artist-meta span { display: flex; align-items: center; gap: 5px; }
+    .artist-meta i { color: var(--secondary); }
+    .artist-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 18px;
+      font-size: 0.82rem;
+      color: var(--text-light);
+    }
+    .artist-rating i { color: #F5A623; font-size: 0.75rem; }
+    .book-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 11px;
+      border-radius: 50px;
+      border: 2px solid var(--secondary);
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.87rem;
+      text-decoration: none;
+      transition: 0.3s;
+      background: transparent;
+    }
+    .book-btn:hover { background: var(--secondary); color: #fff; }
+    .styles-section {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 90px 2rem;
+    }
+    .styles-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .styles-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 12px; }
+    .styles-header p { max-width: 540px; margin: 0 auto; color: var(--text-light); font-size: 0.95rem; }
+    .styles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .style-tile {
+      background: var(--bg-light);
+      border-radius: 20px;
+      padding: 34px 22px 28px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .style-tile:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--secondary); }
+    .style-icon {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+    .style-tile h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .style-tile p { font-size: 0.83rem; color: var(--text-light); line-height: 1.65; }
+    .process-section {
+      background: var(--bg-light);
+      padding: 90px 2rem;
+    }
+    .process-inner { max-width: 1300px; margin: 0 auto; }
+    .process-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .process-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 12px; }
+    .process-header p { max-width: 540px; margin: 0 auto; color: var(--text-light); font-size: 0.95rem; }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 10%; right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--secondary), var(--secondary-light), var(--secondary));
+      z-index: 0;
+    }
+    .process-step {
+      text-align: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--secondary);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 1.3rem;
+      color: var(--secondary);
+      position: relative;
+      transition: 0.3s;
+      box-shadow: var(--shadow);
+    }
+    .process-step:hover .step-circle {
+      background: var(--secondary);
+      color: #fff;
+    }
+    .step-num {
+      position: absolute;
+      top: -6px; right: -6px;
+      width: 22px; height: 22px;
+      background: var(--secondary-dark);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .process-step h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .process-step p { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; }
+    .gallery-section {
+      padding: 90px 2rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .gallery-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 12px; }
+    .gallery-header p { max-width: 520px; margin: 0 auto; color: var(--text-light); font-size: 0.95rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%; height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item.tall img { height: 416px; }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(107, 66, 38, 0.55);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: 0.35s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay i { color: #fff; font-size: 1.6rem; }
+    .testimonials-section {
+      background: var(--bg-light);
+      padding: 90px 2rem;
+    }
+    .testimonials-inner { max-width: 1300px; margin: 0 auto; }
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+    .testimonials-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 12px; }
+    .testimonials-header p { max-width: 520px; margin: 0 auto; color: var(--text-light); font-size: 0.95rem; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .testimonial-card {
+      background: var(--bg);
+      border-radius: 20px;
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: var(--transition);
+    }
+    .testimonial-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+    .testimonial-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5.5rem;
+      line-height: 1;
+      color: var(--secondary);
+      opacity: 0.12;
+      position: absolute;
+      top: 8px; left: 20px;
+    }
+    .t-stars { display: flex; gap: 3px; margin-bottom: 14px; }
+    .t-stars i { color: #F5A623; font-size: 0.82rem; }
+    .testimonial-card blockquote {
+      font-size: 0.91rem;
+      color: var(--text-light);
+      line-height: 1.82;
+      margin-bottom: 22px;
+      font-style: italic;
+    }
+    .t-author { display: flex; align-items: center; gap: 12px; }
+    .t-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .t-name { font-weight: 600; font-size: 0.92rem; color: var(--text); }
+    .t-location { font-size: 0.77rem; color: var(--secondary); }
+    .cta-section {
+      background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 55%, var(--secondary-light) 100%);
+      padding: 84px 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section h2 { font-size: 2.6rem; color: #fff; margin-bottom: 16px; position: relative; }
+    .cta-section p { color: rgba(255,255,255,0.86); font-size: 1.05rem; max-width: 560px; margin: 0 auto 36px; position: relative; }
+    .cta-btns { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; position: relative; }
+    .btn-white { background: #fff; color: var(--secondary-dark); padding: 14px 34px; border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.3s; display: inline-block; }
+    .btn-white:hover { background: var(--bg-light); transform: translateY(-2px); }
+    .btn-ghost { border: 2px solid rgba(255,255,255,0.7); color: #fff; padding: 14px 34px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: 0.3s; display: inline-block; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.12); }
+    .faq-section { background: var(--bg-light); padding: 90px 2rem; }
+    .faq-inner { max-width: 860px; margin: 0 auto; }
+    .faq-header { text-align: center; margin-bottom: 50px; }
+    .faq-header h2 { font-size: 2.4rem; color: var(--text); margin-bottom: 12px; }
+    .faq-header p { color: var(--text-light); font-size: 0.95rem; }
+    .faq-item {
+      background: var(--bg);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .faq-item.open { border-color: var(--secondary); box-shadow: var(--shadow); }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 24px; cursor: pointer;
+      font-weight: 600; font-size: 0.95rem; color: var(--text); gap: 16px;
+    }
+    .faq-icon {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--secondary);
+      transition: 0.3s; font-size: 0.75rem;
+    }
+    .faq-item.open .faq-icon { background: var(--secondary); color: #fff; border-color: var(--secondary); transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      padding: 0 24px;
+      font-size: 0.9rem; color: var(--text-light); line-height: 1.8;
+    }
+    .faq-item.open .faq-answer { max-height: 200px; padding: 0 24px 20px; }
+
+    @media (max-width: 1100px) {
+      .styles-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .process-steps::before { display: none; }
+      .artists-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item.tall { grid-row: span 1; }
+      .gallery-item.tall img, .gallery-item img { height: 200px; }
+    }
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 44px; }
+      .about-image-col .stat-bubble { left: 20px; bottom: 20px; }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .artists-grid, .testimonials-grid, .styles-grid, .process-steps { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .artists-header { flex-direction: column; align-items: flex-start; }
+      .intro-banner h2 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- ===== HEADER - Only Login button ===== -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-leaf"></i>
+        <span class="logo-text">Henra</span>
+      </a>
+      <ul class="nav-links">
+        <li class="dropdown">
+          <a href="#">Home <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.html">Home 1</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="artist.html" class="active">Artist</a></li>
+        <li><a href="aftercareoil.html">Aftercare</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+      </ul>
+      <div class="controls">
+        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html"> Home 1</a></li>
+      <li><a href="home2.html"> Home 2</a></li>
+
+      <li><a href="about.html"> About</a></li>
+      <li><a href="service.html"> Service</a></li>
+      <li><a href="artist.html"> Artist</a></li>
+      <li><a href="aftercareoil.html"> Aftercare</a></li>
+      <li><a href="gallery.html"> Gallery</a></li>
+      <li><a href="trends.html"> Trends</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html"> Login</a></li>
+    </ul>
+    <div class="mobile-controls">
+      <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+    </div>
+  </div>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero">
+    <img src="images/img (10).jpg" alt="Henna Artists Hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Henna <span>Artists</span></h1>
+      <p>Meet our talented, certified henna artists bringing tradition, artistry, and elegance to every design they create.</p>
+      <div class="hero-buttons">
+        <a href="#artists" class="btn btn-primary">Meet the Artists</a>
+        <a href="#booking" class="btn btn-secondary">Book a Session</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTRO BANNER ===== -->
+  <section class="intro-banner">
+    <div class="fade-up">
+      <span class="section-eyebrow">The Art of Henna</span>
+      <h2>Where Ancient Tradition Meets <em>Modern Elegance</em></h2>
+      <p>Our henna artists are passionate craftspeople trained in classical and contemporary mehndi styles. Every design is hand-drawn with precision, love, and years of expertise — made uniquely for you.</p>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT HENNA ARTISTS ===== -->
+  <section class="about-section">
+    <div class="about-grid">
+      <div class="about-image-col fade-up">
+        <img src="images/img (11).jpg" alt="Henna artist at work">
+        <div class="stat-bubble">
+          <div class="bubble-num">500+</div>
+          <div class="bubble-label">Happy Clients<br>Per Month</div>
+        </div>
+      </div>
+      <div class="about-text fade-up">
+        <span class="section-eyebrow">Who We Are</span>
+        <h2>Artists Who Live & Breathe Mehndi</h2>
+        <p>Henra's henna artists are carefully selected through a rigorous training program rooted in both cultural heritage and modern design innovation. Each artist brings their own signature flair while mastering the timeless language of henna.</p>
+        <p>From intimate bridal ceremonies to large celebrations, corporate events, and photo shoots, our artists are experienced in every setting — bringing calm, creativity, and flawless execution to every appointment.</p>
+        <div class="about-pills">
+          <span class="pill">Bridal Mehndi</span>
+          <span class="pill">Arabic Style</span>
+          <span class="pill">Indo-Western</span>
+          <span class="pill">Minimalist</span>
+          <span class="pill">Tattoo Style</span>
+          <span class="pill">Glitter Henna</span>
+        </div>
+        <a href="#artists" class="btn btn-primary">View All Artists</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ARTIST CARDS ===== -->
+  <section class="artists-section" id="artists">
+    <div class="artists-header fade-up">
+      <div><span class="section-eyebrow">Our Team</span><h2>Meet Our Featured Henna Artists</h2></div>
+      <p>Each of our artists has been trained, certified, and mentored in both traditional and contemporary mehndi techniques.</p>
+    </div>
+    <div class="artists-grid">
+      <div class="artist-card featured fade-up"><div class="artist-photo"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80" alt="Layla Hassan"><span class="artist-badge">Head Artist</span><div class="artist-socials"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-pinterest"></i></a></div></div><div class="artist-body"><div class="artist-name">Layla Hassan</div><div class="artist-specialty">Bridal & Indo-Western</div><p class="artist-bio">With 12 years of experience, Layla is our lead bridal specialist. Her intricate patterns and flawless execution have made her one of the most sought-after artists.</p><div class="artist-meta"><span><i class="fas fa-map-marker-alt"></i> Dubai, UAE</span><span><i class="fas fa-calendar-check"></i> 1,200+ bookings</span></div><div class="artist-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>5.0 (348 reviews)</span></div><a href="#booking" class="book-btn">Book Layla</a></div></div>
+      <div class="artist-card fade-up"><div class="artist-photo"><img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&q=80" alt="Amira Patel"><span class="artist-badge">Specialist</span><div class="artist-socials"><a href="#"><i class="fab fa-instagram"></i></a></div></div><div class="artist-body"><div class="artist-name">Amira Patel</div><div class="artist-specialty">Arabic & Minimalist</div><p class="artist-bio">Amira's clean, flowing Arabic style designs are unmistakable. She specialises in modern minimalist patterns.</p><div class="artist-meta"><span><i class="fas fa-map-marker-alt"></i> Riyadh, KSA</span><span><i class="fas fa-calendar-check"></i> 870+ bookings</span></div><div class="artist-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> <span>4.9 (211 reviews)</span></div><a href="#booking" class="book-btn">Book Amira</a></div></div>
+      <div class="artist-card fade-up"><div class="artist-photo"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80" alt="Zara Malik"><div class="artist-socials"><a href="#"><i class="fab fa-instagram"></i></a></div></div><div class="artist-body"><div class="artist-name">Zara Malik</div><div class="artist-specialty">Tattoo Style & Glitter</div><p class="artist-bio">Zara pushes the creative boundaries of henna with bold tattoo-inspired designs and dazzling glitter overlays.</p><div class="artist-meta"><span><i class="fas fa-map-marker-alt"></i> London, UK</span><span><i class="fas fa-calendar-check"></i> 620+ bookings</span></div><div class="artist-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> <span>4.8 (179 reviews)</span></div><a href="#booking" class="book-btn">Book Zara</a></div></div>
+    </div>
+  </section>
+
+  <!-- ===== STYLES / SPECIALTIES ===== -->
+  <section class="styles-section">
+    <div class="styles-header fade-up"><span class="section-eyebrow">Design Specialties</span><h2>Henna Styles We Master</h2><p>Our artists are trained across a wide spectrum of mehndi traditions so we can match any aesthetic you envision.</p></div>
+    <div class="styles-grid">
+      <div class="style-tile fade-up"><div class="style-icon"><i class="fas fa-ring"></i></div><h3>Bridal Mehndi</h3><p>Full-hand and full-leg bridal designs with fine-line detailing and hidden names.</p></div>
+      <div class="style-tile fade-up"><div class="style-icon"><i class="fas fa-fan"></i></div><h3>Arabic Style</h3><p>Bold floral motifs, flowing vines, and geometric borders — elegant and dramatic.</p></div>
+      <div class="style-tile fade-up"><div class="style-icon"><i class="fas fa-feather-alt"></i></div><h3>Minimalist Henna</h3><p>Clean lines, single-element motifs, and negative space techniques.</p></div>
+      <div class="style-tile fade-up"><div class="style-icon"><i class="fas fa-star-and-crescent"></i></div><h3>Khaleeji / Gulf</h3><p>Large, bold florals with open spacing rooted in Gulf tradition.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section class="process-section" id="booking">
+    <div class="process-inner">
+      <div class="process-header fade-up"><span class="section-eyebrow">How It Works</span><h2>Booking Your Henna Session</h2><p>From discovery to that final, stunning reveal — here's exactly what to expect.</p></div>
+      <div class="process-steps">
+        <div class="process-step fade-up"><div class="step-circle"><i class="fas fa-search"></i><span class="step-num">1</span></div><h3>Browse Artists</h3><p>Explore profiles, specialties, portfolios, and reviews.</p></div>
+        <div class="process-step fade-up"><div class="step-circle"><i class="fas fa-calendar-alt"></i><span class="step-num">2</span></div><h3>Choose Date & Style</h3><p>Pick your preferred date, session length, and share inspiration.</p></div>
+        <div class="process-step fade-up"><div class="step-circle"><i class="fas fa-comments"></i><span class="step-num">3</span></div><h3>Consultation</h3><p>Discuss design concept, skin tone, and placement to finalize your look.</p></div>
+        <div class="process-step fade-up"><div class="step-circle"><i class="fas fa-hand-sparkles"></i><span class="step-num">4</span></div><h3>Application Day</h3><p>Sit back and enjoy the artistry. Your artist creates a unique masterpiece.</p></div>
+        <div class="process-step fade-up"><div class="step-circle"><i class="fas fa-camera"></i><span class="step-num">5</span></div><h3>Reveal & Aftercare</h3><p>Receive aftercare kit and tips to ensure your henna lasts.</p></div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta-section">
+    <h2>Ready to Book Your Henna Artist?</h2>
+    <p>Over 4,000 bookings made monthly. Find your perfect artist and reserve your spot today — slots fill fast.</p>
+    <div class="cta-btns"><a href="#artists" class="btn-white">Browse All Artists</a><a href="contact.html" class="btn-ghost">Get in Touch</a></div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-header fade-up"><span class="section-eyebrow">Common Questions</span><h2>Henna Artist FAQs</h2><p>Everything you need to know before booking your session.</p></div>
+      <div class="faq-item fade-up"><div class="faq-question">How long does a henna session take?<span class="faq-icon"><i class="fas fa-plus"></i></span></div><div class="faq-answer">Session length varies by design complexity. A simple hand design takes 20–30 minutes. Bridal full-hand designs typically take 2–4 hours.</div></div>
+      <div class="faq-item fade-up"><div class="faq-question">Is henna safe for all skin types?<span class="faq-icon"><i class="fas fa-plus"></i></span></div><div class="faq-answer">Henra exclusively uses natural, organic henna paste free from black henna chemicals. We recommend a patch test 24 hours before your session.</div></div>
+      <div class="faq-item fade-up"><div class="faq-question">How long does henna last?<span class="faq-icon"><i class="fas fa-plus"></i></span></div><div class="faq-answer">Natural henna typically lasts 1–3 weeks depending on skin type, placement, and aftercare. Hands and feet tend to stain darkest and longest.</div></div>
+      <div class="faq-item fade-up"><div class="faq-question">Do artists travel to my location?<span class="faq-icon"><i class="fas fa-plus"></i></span></div><div class="faq-answer">Yes! All Henra artists offer both studio appointments and home/venue visits. A travel fee may apply depending on your location.</div></div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-column"><a href="index.html" class="logo"><i class="fas fa-leaf"></i><span class="logo-text">Henra</span></a><p style="margin-top:30px">Your ultimate destination for premium products and services. Join our community today.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="contact.html">Contact</a></li><li><a href="service.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="models.html">Models</a></li></ul></div>
+        <div class="footer-column"><h3>Resources</h3><ul><li><a href="#">Safety Tips</a></li><li><a href="#">Guides</a></li><li><a href="#">Care Tips</a></li></ul></div>
+        <div class="footer-column"><h3>Social Links</h3><ul><li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><div class="copyright">© 2026 Henra. All rights reserved.</div></div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const h = document.getElementById('hamburger'), o = document.getElementById('mobileOverlay'), m = document.getElementById('mobileNavMenu');
+      if (h && o && m) {
+        function toggle() { 
+          const a = m.classList.contains('active'); 
+          m.classList.toggle('active'); 
+          o.classList.toggle('active'); 
+          document.body.style.overflow = a ? '' : 'hidden'; 
+          h.innerHTML = a ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>'; 
+        }
+        h.addEventListener('click', toggle); 
+        o.addEventListener('click', toggle);
+        document.querySelectorAll('.mobile-nav-links a').forEach(l => l.addEventListener('click', function() { if (m.classList.contains('active')) toggle(); }));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('active')) toggle(); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 1280 && m.classList.contains('active')) toggle(); });
+      }
+
+      function theme() {
+        document.body.classList.toggle('dark-mode');
+        const d = document.body.classList.contains('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+        localStorage.setItem('theme', d ? 'dark' : 'light');
+      }
+      function rtl() {
+        const doc = document.documentElement, r = doc.getAttribute('dir') === 'rtl';
+        doc.setAttribute('dir', r ? 'ltr' : 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = r ? 'RTL' : 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = r ? 'RTL Mode' : 'LTR Mode';
+        localStorage.setItem('direction', r ? 'ltr' : 'rtl');
+      }
+      document.getElementById('themeToggle')?.addEventListener('click', theme);
+      document.getElementById('mobileThemeToggle')?.addEventListener('click', theme);
+      document.getElementById('rtlToggle')?.addEventListener('click', rtl);
+      document.getElementById('mobileRtlToggle')?.addEventListener('click', rtl);
+
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+      }
+      const savedDir = localStorage.getItem('direction');
+      if (savedDir === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = 'LTR Mode';
+      }
+
+      const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.10 });
+      document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+          const open = item.classList.contains('open');
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+          if (!open) item.classList.add('open');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

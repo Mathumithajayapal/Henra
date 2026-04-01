@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Henra - Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #000000;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #000000;
+      --text-light: #333333;
+      --bg: #FFFFFF;
+      --bg-light: #F5F0EB;
+      --border: #D4B8A0;
+      --shadow: 0 4px 12px rgba(139,94,60,0.1);
+      --shadow-lg: 0 20px 40px rgba(139,94,60,0.15);
+      --transition: all 0.4s ease;
+      --footer-bg: #FFFFFF;
+      --footer-text: #000000;
+    }
+    .dark-mode {
+      --primary: #C8956A;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #FFFFFF;
+      --text-light: #CCCCCC;
+      --bg: #1A1008;
+      --bg-light: #251608;
+      --border: #5C3D1E;
+      --footer-bg: #1A1008;
+      --footer-text: #FFFFFF;
+    }
+    body { font-family:'Poppins',sans-serif; color:var(--text); background:var(--bg); line-height:1.6; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
+    h1,h2,h3,h4,h5,h6,.logo-text,.hero h1 { font-family:'Playfair Display',serif; font-weight:700; }
+    .dark-mode h1,.dark-mode h2,.dark-mode h3 { color:#FFFFFF !important; }
+
+    /* HEADER - Clean navbar */
+    header { background:var(--bg); box-shadow:0 2px 10px rgba(139,94,60,0.08); position:sticky; top:0; z-index:1000; }
+    .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; max-width:1400px; margin:0 auto; }
+    .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo i { color:var(--secondary); font-size:28px; }
+    .logo-text { font-size:25px; font-weight:800; background:linear-gradient(45deg,var(--secondary-dark),var(--secondary-light)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .nav-links { display:flex; list-style:none; gap:0.5rem; align-items:center; }
+    .nav-links li { display:flex; align-items:center; }
+    .nav-links a { text-decoration:none; color:var(--text); font-weight:600; padding:8px 16px; border-radius:30px; transition:var(--transition); font-size:0.95rem; display:inline-flex; align-items:center; gap:6px; }
+    .nav-links a:hover,.nav-links a.active { color:var(--secondary); background:rgba(139,94,60,0.08); }
+    .dropdown { position:relative; display:flex; align-items:center; }
+    .dropdown-menu { position:absolute; top:100%; left:0; background:var(--bg); list-style:none; padding:12px 0; min-width:210px; border-radius:20px; box-shadow:var(--shadow-lg); border:1px solid var(--border); display:none; z-index:1000; backdrop-filter:blur(4px); }
+    .dropdown-menu a { display:block; padding:10px 22px; color:var(--text); text-decoration:none; white-space:nowrap; font-weight:500; gap:0; }
+    .dropdown-menu a:hover { background:var(--secondary); color:#ffffff; padding-left:28px; }
+    .dropdown:hover .dropdown-menu { display:block; }
+    .controls { display:flex; gap:10px; align-items:center; }
+    .control-btn { background:transparent; border:none; font-size:18px; padding:8px 12px; cursor:pointer; color:var(--text); transition:0.3s; display:inline-flex; align-items:center; justify-content:center; border-radius:40px; gap:6px; }
+    .control-btn:hover { color:var(--secondary); transform:scale(1.05); background:rgba(139,94,60,0.08); }
+    .rtl-btn { font-size:0.85rem; font-weight:600; padding:8px 14px; min-width:70px; }
+    .rtl-btn i { font-size:0.9rem; }
+    .nav-btn { padding:8px 22px !important; border-radius:50px !important; font-weight:600; }
+    .login-btn { border:2px solid var(--secondary); color:var(--secondary) !important; background:transparent; }
+    .login-btn:hover { background:var(--secondary);      color: #ec6c10 !important; 
+ }
+
+    /* HAMBURGER */
+    .hamburger { display:none; background:none; border:2px solid var(--border); border-radius:8px; font-size:20px; cursor:pointer; padding:8px 12px; color:var(--text); }
+    .mobile-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:998; display:none; }
+    .mobile-overlay.active { display:block; }
+    .mobile-nav-menu { position:fixed; top:0; right:-100%; width:320px; height:100vh; background:var(--bg-light); z-index:999; transition:right 0.4s; padding:90px 1.5rem 2rem; border-left:3px solid var(--secondary); overflow-y:auto; }
+    .mobile-nav-menu.active { right:0; }
+    
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    .mobile-nav-links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      list-style: none !important;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 30px 0;
+    }
+    .mobile-nav-links li {
+      width: 100%;
+      list-style: none;
+    }
+    .mobile-nav-links a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 14px 20px !important;
+      border-radius: 16px !important;
+      background: var(--bg) !important;
+      text-decoration: none !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+      text-align: left;
+      border: 2px solid var(--border);
+      transition: all 0.25s ease;
+      gap: 12px;
+      width: 100%;
+    }
+    .mobile-nav-links a i {
+      width: 24px;
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+      background: var(--secondary) !important;
+      color: #ffffff !important;
+      border-color: var(--secondary) !important;
+    }
+    .mobile-nav-links a:hover i,
+    .mobile-nav-links a.active i {
+      color: #ffffff !important;
+    }
+    
+    /* Home sub-items - same consistent styling */
+    .mobile-sub-item {
+      margin-left: 36px !important;
+      padding: 12px 20px !important;
+      background: var(--bg-light) !important;
+      border-style: solid !important;
+      font-size: 0.9rem !important;
+    }
+    .mobile-sub-item i {
+      width: 24px;
+      font-size: 0.9rem;
+    }
+    
+    /* Mobile controls section */
+    .mobile-controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 2px solid var(--border);
+      padding-top: 25px;
+    }
+    .mobile-controls .control-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 20px;
+      background: var(--bg);
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    .mobile-controls .control-btn i {
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      border-color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover i {
+      color: #ffffff;
+    }
+
+    /* HERO */
+    .hero { position:relative; height:95vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+    .hero img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+    .hero-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(60,30,10,0.65); z-index:2; }
+    .hero-content { position:relative; z-index:3; max-width:900px; padding:0 20px; }
+    .hero-content h1 { font-size:4rem; color:#ffffff; margin-bottom:20px; }
+    .hero-content h1 span { color:var(--secondary-light); }
+    .hero-content p { font-size:1.2rem; color:#e8d5c4; margin-bottom:35px; }
+    .hero-buttons { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .btn { padding:14px 32px; border-radius:50px; font-weight:600; text-decoration:none; transition:0.3s ease; }
+    .btn-primary { background:var(--secondary); color:#fff; }
+    .btn-primary:hover { background:var(--secondary-dark); }
+    .btn-secondary { border:2px solid var(--secondary-light); color:var(--secondary-light); }
+    .btn-secondary:hover { background:var(--secondary); color:#fff; border-color:var(--secondary); }
+
+    /* ==================== GALLERY ==================== */
+    .gallery-section { padding:80px 2rem 60px; max-width:1400px; margin:0 auto; width:100%; }
+
+    .section-header { text-align:center; margin-bottom:50px; }
+    .section-header .tag { display:inline-block; font-size:0.78rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--secondary); background:rgba(139,94,60,0.1); padding:6px 18px; border-radius:50px; margin-bottom:14px; border:1px solid rgba(139,94,60,0.25); }
+    .section-header h2 { font-size:2.8rem; color:var(--text); line-height:1.2; }
+    .section-header h2 em { font-style:italic; color:var(--secondary); }
+    .accent-line { width:56px; height:3px; background:linear-gradient(90deg,var(--secondary-dark),var(--secondary-light)); border-radius:2px; margin:14px auto 0; }
+    .section-header p { margin-top:14px; color:var(--text-light); font-size:1rem; max-width:520px; margin-left:auto; margin-right:auto; opacity:0.8; }
+
+    /* Filter */
+    .filter-bar { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:50px; }
+    .filter-btn { padding:8px 22px; border-radius:50px; border:2px solid var(--border); background:transparent; color:var(--text); font-family:'Poppins',sans-serif; font-weight:600; font-size:0.85rem; cursor:pointer; transition:var(--transition); letter-spacing:0.5px; }
+    .filter-btn:hover,.filter-btn.active { background:var(--secondary); border-color:var(--secondary); color:#ffffff; box-shadow:0 4px 16px rgba(139,94,60,0.3); }
+
+    /* grid blocks */
+    .grid-block { margin-bottom:16px; }
+    .grid-hero { display:grid; grid-template-columns:2fr 1fr; grid-template-rows:520px; gap:16px; }
+    .gi-right-stack { display:flex; flex-direction:column; gap:16px; }
+    .gi-right-stack .gi { flex:1; }
+    .grid-trio { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:300px; gap:16px; }
+    .grid-quad { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:260px; gap:16px; }
+    .grid-wide-port { display:grid; grid-template-columns:3fr 1fr; grid-template-rows:400px; gap:16px; }
+
+    /* Gallery Item */
+    .gi { position:relative; border-radius:14px; overflow:hidden; cursor:pointer; background:var(--bg-light); }
+    .gi img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .gi:hover img { transform:scale(1.07); }
+    .gi.hidden { display:none !important; }
+    .gi-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:22px 20px 18px; background:linear-gradient(to top,rgba(40,18,5,0.88) 0%,rgba(40,18,5,0.2) 45%,transparent 100%); opacity:0; transition:opacity 0.4s ease; }
+    .gi:hover .gi-overlay { opacity:1; }
+    .gi-overlay-top { position:absolute; top:14px; right:14px; display:flex; gap:8px; align-items:center; }
+    .gi-badge { background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.25); color:#fff; font-size:0.68rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:20px; }
+    .gi-zoom { width:34px; height:34px; background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.25); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; transition:background 0.3s; cursor:pointer; }
+    .gi-zoom:hover { background:var(--secondary); border-color:var(--secondary); }
+    .gi-title { font-family:'Playfair Display',serif; color:#fff; font-size:1rem; font-weight:700; margin-bottom:3px; text-shadow:0 1px 6px rgba(0,0,0,0.5); }
+    .gi-cat { font-size:0.7rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--secondary-light); }
+    .gi-feature .gi-title { font-size:1.5rem; }
+    .gi-num { position:absolute; bottom:10px; left:16px; font-family:'Playfair Display',serif; font-size:3rem; font-weight:800; color:rgba(255,255,255,0.06); line-height:1; pointer-events:none; }
+
+    /* Stats */
+    .stats-strip { background:var(--bg-light); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:44px 2rem; margin-top:70px; }
+    .stats-inner { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center; }
+    .stat-item h3 { font-size:2.4rem; color:var(--secondary); margin-bottom:4px; }
+    .stat-item p { font-size:0.88rem; color:var(--text-light); font-weight:500; letter-spacing:0.5px; opacity:0.8; }
+
+    /* Lightbox */
+    .lightbox { position:fixed; inset:0; background:rgba(10,5,2,0.97); z-index:9999; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.35s ease; }
+    .lightbox.active { opacity:1; pointer-events:all; }
+    .lightbox-inner { position:relative; max-width:90vw; max-height:90vh; display:flex; flex-direction:column; align-items:center; }
+    .lightbox-inner img { max-width:88vw; max-height:76vh; object-fit:contain; border-radius:10px; box-shadow:0 30px 80px rgba(0,0,0,0.8); transform:scale(0.92); transition:transform 0.35s ease; }
+    .lightbox.active .lightbox-inner img { transform:scale(1); }
+    .lightbox-caption { margin-top:18px; text-align:center; }
+    .lightbox-caption h4 { font-family:'Playfair Display',serif; font-size:1.3rem; color:#ffffff; margin-bottom:4px; }
+    .lightbox-caption span { font-size:0.78rem; color:var(--secondary-light); letter-spacing:2px; text-transform:uppercase; font-weight:700; }
+    .lightbox-close { position:fixed; top:22px; right:28px; width:44px; height:44px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18); border-radius:50%; color:#fff; font-size:17px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.3s; z-index:10001; }
+    .lightbox-close:hover { background:var(--secondary); border-color:var(--secondary); }
+    .lightbox-nav { position:fixed; top:50%; transform:translateY(-50%); width:48px; height:48px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18); border-radius:50%; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.3s; z-index:10001; }
+    .lightbox-nav:hover { background:var(--secondary); border-color:var(--secondary); }
+    .lightbox-prev { left:22px; }
+    .lightbox-next { right:22px; }
+    .lightbox-counter { position:fixed; top:28px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.45); font-size:0.8rem; letter-spacing:2px; font-weight:600; z-index:10001; }
+
+    /* FOOTER */
+    .site-footer { background:var(--footer-bg); color:var(--footer-text); padding:70px 0 40px; margin-top:auto; box-shadow:0 -2px 10px rgba(139,94,60,0.06); }
+    .dark-mode .site-footer { background:#1A1008 !important; }
+    .footer-content { max-width:1300px; margin:0 auto; padding:0 2rem; }
+    .footer-top { display:grid; grid-template-columns:repeat(4,1fr); gap:50px; margin-bottom:50px; }
+    .footer-column h3 { color:var(--secondary); font-size:1rem; font-weight:700; margin-bottom:25px; text-transform:uppercase; letter-spacing:2px; padding-bottom:12px; border-bottom:2px solid var(--secondary); }
+    .footer-column ul { list-style:none; }
+    .footer-column li { margin-bottom:12px; }
+    .footer-column a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; transition:var(--transition); }
+    .footer-column a:hover { color:var(--secondary); transform:translateX(8px); }
+    .footer-links { display:flex; gap:35px; }
+    .footer-links a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; }
+    .footer-links a:hover { color:var(--secondary); }
+    .footer-bottom { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--secondary); padding-top:20px; }
+    .copyright { color:var(--footer-text); font-size:0.9rem; opacity:0.8; }
+
+    /* RTL */
+    [dir="rtl"] .dropdown-menu { left:auto; right:0; }
+    [dir="rtl"] .footer-column a:hover { transform:translateX(-8px); }
+    [dir="rtl"] .mobile-nav-menu { left:-100%; right:auto; border-left:none; border-right:3px solid var(--secondary); }
+    [dir="rtl"] .mobile-nav-menu.active { left:0; }
+    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
+    [dir="rtl"] .lightbox-prev { left:auto; right:22px; }
+    [dir="rtl"] .lightbox-next { right:auto; left:22px; }
+
+    /* RESPONSIVE */
+    @media (max-width:1280px) {
+      .nav-links:not(.mobile-nav-links) { display:none !important; }
+      .hamburger { display:block !important; }
+      
+      /* Hide desktop toggle buttons on mobile/tablet */
+      #themeToggle, 
+      #rtlToggle { 
+        display: none !important; 
+      }
+    }
+    @media (min-width:1281px) {
+      .nav-links:not(.mobile-nav-links) { display:flex !important; }
+      .hamburger { display:none !important; }
+    }
+    @media (max-width:1024px) {
+      .grid-hero { grid-template-columns:1fr; grid-template-rows:380px 190px; }
+      .gi-right-stack { flex-direction:row; }
+      .grid-quad { grid-template-columns:repeat(2,1fr); grid-template-rows:220px 220px; }
+      .grid-wide-port { grid-template-columns:1fr; grid-template-rows:320px; }
+      .grid-wide-port .gi:last-child { display:none; }
+    }
+    @media (max-width:900px) {
+      .footer-top { grid-template-columns:repeat(2,1fr); }
+      .footer-middle,.footer-bottom { flex-direction:column; gap:20px; text-align:center; }
+      .hero h1 { font-size:3rem; }
+      .grid-trio { grid-template-columns:1fr 1fr; grid-template-rows:240px; }
+      .grid-trio .gi:last-child { display:none; }
+      .stats-inner { grid-template-columns:repeat(2,1fr); }
+      .section-header h2 { font-size:2rem; }
+    }
+    @media (max-width:768px) {
+      .hero-content h1 { font-size:2.5rem; }
+      .hero-content p { font-size:1rem; }
+      .hero { height:60vh; }
+      .grid-hero { grid-template-rows:300px 160px; }
+    }
+    @media (max-width:600px) {
+      .hero h1 { font-size:2.2rem; }
+      .btn { padding:12px 24px; }
+      .footer-top { grid-template-columns:1fr; }
+      .navbar { padding:1rem; }
+      .logo-text { font-size:20px; }
+      .grid-trio,.grid-quad { grid-template-columns:1fr; }
+      .lightbox-nav { display:none; }
+      .stats-inner { grid-template-columns:1fr 1fr; }
+    }
+    .gi { animation:riseIn 0.55s cubic-bezier(0.22,1,0.36,1) both; }
+    @keyframes riseIn { from { opacity:0; transform:translateY(22px) scale(0.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- HEADER - Only Login button, SignUp removed -->
+    <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-leaf"></i>
+        <span class="logo-text">Henra</span>
+      </a>
+      <ul class="nav-links">
+        <li class="dropdown">
+          <a href="#">Home <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.html">Home 1</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="artist.html">Artist</a></li>
+        <li><a href="aftercareoil.html">Aftercare</a></li>
+        <li><a href="gallery.html"  class="active">Gallery</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+      </ul>
+      <div class="controls">
+        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html"> Home 1</a></li>
+      <li><a href="home2.html"> Home 2</a></li>
+
+      <li><a href="about.html"> About</a></li>
+      <li><a href="service.html"> Service</a></li>
+      <li><a href="artist.html"> Artist</a></li>
+      <li><a href="aftercareoil.html"> Aftercare</a></li>
+      <li><a href="gallery.html"> Gallery</a></li>
+      <li><a href="trends.html"> Trends</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html"> Login</a></li>
+    </ul>
+    <div class="mobile-controls">
+      <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+    </div>
+  </div>
+  <!-- HERO -->
+  <section class="hero">
+    <img src="images/img (10).jpg" alt="Gallery Hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Our <span>Gallery</span></h1>
+      <p>A curated collection of our finest moments, craftsmanship, and the beauty we celebrate every day.</p>
+      <div class="hero-buttons">
+        <a href="#gallery" class="btn btn-primary">View Gallery</a>
+        <a href="contact.html" class="btn btn-secondary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY SECTION -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-header">
+      <div class="tag">Our Collection</div>
+      <h2>Moments of <em>Beauty</em></h2>
+      <div class="accent-line"></div>
+      <p>Explore our handpicked gallery — nature, lifestyle, and the premium Henra experience.</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="nature">Nature</button>
+      <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
+      <button class="filter-btn" data-filter="products">Products</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+    </div>
+
+    <!-- BLOCK 1: Hero Feature -->
+    <div class="grid-block">
+      <div class="grid-hero">
+        <div class="gi gi-feature" data-category="nature" data-title="Forest Serenity" data-src="images/img (7).jpg">
+          <img src="images/img (7).jpg" alt="Forest Serenity">
+          <div class="gi-overlay">
+            <div class="gi-overlay-top"><span class="gi-badge">Nature</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div>
+            <div class="gi-title">Forest Serenity</div>
+            <div class="gi-cat">Nature · Featured</div>
+          </div>
+          <div class="gi-num">01</div>
+        </div>
+        <div class="gi-right-stack">
+          <div class="gi" data-category="lifestyle" data-title="Morning Ritual" data-src="images/img (8).jpg">
+            <img src="images/img (8).jpg" alt="Morning Ritual">
+            <div class="gi-overlay">
+              <div class="gi-overlay-top"><span class="gi-badge">Lifestyle</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div>
+              <div class="gi-title">Morning Ritual</div><div class="gi-cat">Lifestyle</div>
+            </div>
+            <div class="gi-num">02</div>
+          </div>
+          <div class="gi" data-category="products" data-title="Premium Blend" data-src="images/img (9).jpg">
+            <img src="images/img (9).jpg" alt="Premium Blend">
+            <div class="gi-overlay">
+              <div class="gi-overlay-top"><span class="gi-badge">Products</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div>
+              <div class="gi-title">Premium Blend</div><div class="gi-cat">Products</div>
+            </div>
+            <div class="gi-num">03</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 2: Trio -->
+    <div class="grid-block">
+      <div class="grid-trio">
+        <div class="gi" data-category="nature" data-title="Golden Meadow" data-src="images/img (11).jpg">
+          <img src="images/img (11).jpg" alt="Golden Meadow">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Nature</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Golden Meadow</div><div class="gi-cat">Nature</div></div><div class="gi-num">04</div>
+        </div>
+        <div class="gi" data-category="events" data-title="Gathering Warmth" data-src="images/img (12).jpg">
+          <img src="images/img (12).jpg" alt="Gathering Warmth">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Events</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Gathering Warmth</div><div class="gi-cat">Events</div></div><div class="gi-num">05</div>
+        </div>
+        <div class="gi" data-category="lifestyle" data-title="Quiet Afternoon" data-src="images/img (13).jpg">
+          <img src="images/img (13).jpg" alt="Quiet Afternoon">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Lifestyle</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Quiet Afternoon</div><div class="gi-cat">Lifestyle</div></div><div class="gi-num">06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 3: Quad -->
+    <div class="grid-block">
+      <div class="grid-quad">
+        <div class="gi" data-category="nature" data-title="Sunrise Peak" data-src="images/img (22).jpg">
+          <img src="images/img (22).jpg" alt="Sunrise Peak">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Nature</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Sunrise Peak</div><div class="gi-cat">Nature</div></div><div class="gi-num">15</div>
+        </div>
+        <div class="gi" data-category="products" data-title="Wellness Range" data-src="images/img (23).jpg">
+          <img src="images/img (23).jpg" alt="Wellness Range">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Products</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Wellness Range</div><div class="gi-cat">Products</div></div><div class="gi-num">16</div>
+        </div>
+        <div class="gi" data-category="events" data-title="Evening Glow" data-src="images/img (12).jpg">
+          <img src="images/img (12).jpg" alt="Evening Glow">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Events</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Evening Glow</div><div class="gi-cat">Events</div></div><div class="gi-num">17</div>
+        </div>
+        <div class="gi" data-category="lifestyle" data-title="Pure Moments" data-src="images/img (13).jpg">
+          <img src="images/img (13).jpg" alt="Pure Moments">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Lifestyle</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Pure Moments</div><div class="gi-cat">Lifestyle</div></div><div class="gi-num">18</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK 4: Wide + Portrait -->
+    <div class="grid-block">
+      <div class="grid-wide-port">
+        <div class="gi" data-category="nature" data-title="Open Horizons" data-src="images/img (18).jpg">
+          <img src="images/img (18).jpg" alt="Open Horizons">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Nature</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Open Horizons</div><div class="gi-cat">Nature · Panoramic</div></div><div class="gi-num">19</div>
+        </div>
+        <div class="gi" data-category="products" data-title="Earth Tones" data-src="images/img (9).jpg">
+          <img src="images/img (9).jpg" alt="Earth Tones">
+          <div class="gi-overlay"><div class="gi-overlay-top"><span class="gi-badge">Products</span><div class="gi-zoom"><i class="fas fa-expand-alt"></i></div></div><div class="gi-title">Earth Tones</div><div class="gi-cat">Products</div></div><div class="gi-num">20</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="load-more-wrap" style="text-align:center; margin-top:40px;">
+      <button class="load-more-btn" id="loadMoreBtn" style="padding:13px 40px; border-radius:50px; border:2px solid var(--secondary); background:transparent; color:var(--secondary); font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; cursor:pointer; transition:var(--transition);">
+        <i class="fas fa-plus" style="margin-right:8px"></i>Load More
+      </button>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item"><h3>500+</h3><p>Photos Curated</p></div>
+      <div class="stat-item"><h3>48</h3><p>Collections</p></div>
+      <div class="stat-item"><h3>12K+</h3><p>Happy Visitors</p></div>
+      <div class="stat-item"><h3>5★</h3><p>Average Rating</p></div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-counter" id="lightboxCounter">1 / 20</div>
+    <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+    <div class="lightbox-inner">
+      <img src="" alt="" id="lightboxImg">
+      <div class="lightbox-caption">
+        <h4 id="lightboxTitle"></h4>
+        <span id="lightboxCategory"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-column"><a href="index.html" class="logo"><i class="fas fa-leaf"></i><span class="logo-text">Henra</span></a><p style="margin-top:30px">Your ultimate destination for premium products and services. Join our community today.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="contact.html">Contact</a></li><li><a href="service.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="models.html">Models</a></li></ul></div>
+        <div class="footer-column"><h3>Resources</h3><ul><li><a href="#">Safety Tips</a></li><li><a href="#">Guides</a></li><li><a href="#">Care Tips</a></li></ul></div>
+        <div class="footer-column"><h3>Social Links</h3><ul><li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><div class="copyright">© 2026 Henra. All rights reserved.</div></div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    /* Hamburger */
+    const h = document.getElementById('hamburger'), o = document.getElementById('mobileOverlay'), m = document.getElementById('mobileNavMenu');
+    if (h && o && m) {
+      function toggleMenu() {
+        const a = m.classList.contains('active');
+        m.classList.toggle('active'); o.classList.toggle('active');
+        document.body.style.overflow = a ? '' : 'hidden';
+        h.innerHTML = a ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+      }
+      h.addEventListener('click', toggleMenu); o.addEventListener('click', toggleMenu);
+      document.querySelectorAll('.mobile-nav-links a').forEach(l => l.addEventListener('click', function() { if (m.classList.contains('active')) toggleMenu(); }));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('active')) toggleMenu(); });
+      window.addEventListener('resize', () => { if (window.innerWidth > 1280 && m.classList.contains('active')) toggleMenu(); });
+    }
+
+    /* Theme / RTL */
+    function theme() {
+      document.body.classList.toggle('dark-mode');
+      const d = document.body.classList.contains('dark-mode');
+      document.querySelectorAll('#themeToggle i,#mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+      const s = document.querySelector('#mobileThemeToggle');
+      if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+      localStorage.setItem('theme', d ? 'dark' : 'light');
+    }
+    function rtl() {
+      const doc = document.documentElement, r = doc.getAttribute('dir') === 'rtl';
+      doc.setAttribute('dir', r ? 'ltr' : 'rtl');
+      const rtlSpan = document.getElementById('rtlButtonText');
+      const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+      if (rtlSpan) rtlSpan.textContent = r ? 'RTL' : 'LTR';
+      if (mobileRtlSpan) mobileRtlSpan.textContent = r ? 'RTL Mode' : 'LTR Mode';
+      localStorage.setItem('direction', r ? 'ltr' : 'rtl');
+    }
+    document.getElementById('themeToggle')?.addEventListener('click', theme);
+    document.getElementById('mobileThemeToggle')?.addEventListener('click', theme);
+    document.getElementById('rtlToggle')?.addEventListener('click', rtl);
+    document.getElementById('mobileRtlToggle')?.addEventListener('click', rtl);
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.querySelectorAll('#themeToggle i,#mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+      const s = document.querySelector('#mobileThemeToggle');
+      if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+    }
+    const savedDir = localStorage.getItem('direction');
+    if (savedDir === 'rtl') {
+      document.documentElement.setAttribute('dir', 'rtl');
+      const rtlSpan = document.getElementById('rtlButtonText');
+      const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+      if (rtlSpan) rtlSpan.textContent = 'LTR';
+      if (mobileRtlSpan) mobileRtlSpan.textContent = 'LTR Mode';
+    }
+
+    /* Filter */
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const allItems = document.querySelectorAll('.gi[data-category]');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        allItems.forEach(item => item.classList.toggle('hidden', filter !== 'all' && item.dataset.category !== filter));
+      });
+    });
+
+    /* Lightbox */
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg'), lbTitle = document.getElementById('lightboxTitle');
+    const lbCat = document.getElementById('lightboxCategory'), lbCounter = document.getElementById('lightboxCounter');
+    let currentIndex = 0;
+
+    function getVisible() { return Array.from(allItems).filter(i => !i.classList.contains('hidden')); }
+
+    function setSlide(vis, idx) {
+      currentIndex = idx;
+      const item = vis[idx];
+      lbImg.src = item.dataset.src; lbImg.alt = item.dataset.title;
+      lbTitle.textContent = item.dataset.title;
+      lbCat.textContent = item.dataset.category.charAt(0).toUpperCase() + item.dataset.category.slice(1);
+      lbCounter.textContent = (idx + 1) + ' / ' + vis.length;
+    }
+
+    function openLightbox(idx) { setSlide(getVisible(), idx); lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+    function navigate(dir) { const vis = getVisible(); setSlide(vis, (currentIndex + dir + vis.length) % vis.length); }
+
+    allItems.forEach(item => {
+      item.addEventListener('click', (e) => { if (!e.target.closest('.gi-zoom')) { const vis = getVisible(); const idx = vis.indexOf(item); if (idx !== -1) openLightbox(idx); } });
+      const zoomBtn = item.querySelector('.gi-zoom');
+      if (zoomBtn) zoomBtn.addEventListener('click', (e) => { e.stopPropagation(); const vis = getVisible(); const idx = vis.indexOf(item); if (idx !== -1) openLightbox(idx); });
+    });
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxPrev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lightboxNext').addEventListener('click', () => navigate(1));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+
+    /* Load More */
+    document.getElementById('loadMoreBtn')?.addEventListener('click', function() {
+      this.innerHTML = '<i class="fas fa-check" style="margin-right:8px"></i>All Photos Loaded';
+      this.disabled = true; this.style.opacity = '0.55'; this.style.cursor = 'default';
+    });
+  })();
+  </script>
+</body>
+</html>

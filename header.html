@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SparkRide - Layout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #000000;
+      --secondary: #1fdb1f;
+      --text: #000000;
+      --text-light: #333333;
+      --bg: #FFFFFF;
+      --bg-light: #F0F0F0;
+      --border: #CCCCCC;
+      --shadow: 0 4px 12px rgba(31,219,31,0.1);
+      --shadow-lg: 0 20px 40px rgba(31,219,31,0.15);
+      --transition: all 0.4s ease;
+      --footer-bg: #FFFFFF;
+      --footer-text: #000000;
+    }
+    .dark-mode {
+      --primary: #1fdb1f;
+      --secondary: #1fdb1f;
+      --text: #FFFFFF;
+      --text-light: #CCCCCC;
+      --bg: #000000;
+      --bg-light: #111111;
+      --border: #333333;
+      --footer-bg: #000000;
+      --footer-text: #FFFFFF;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+    h1, h2, h3, h4, h5, h6, .logo-text, .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    .dark-mode h1, .dark-mode h2, .dark-mode h3 { color: #FFFFFF !important; }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--bg);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo i { color: var(--secondary); font-size: 28px; }
+    .logo-text {
+      font-size: 25px;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--secondary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.75rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--secondary);
+      background: rgba(31,219,31,0.08);
+    }
+    .dropdown { position: relative; }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--bg);
+      list-style: none;
+      padding: 15px 0;
+      min-width: 200px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      display: none;
+      z-index: 1000;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 12px 20px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .dropdown-menu a:hover {
+      background: var(--secondary);
+      color: #000000;
+      padding-left: 30px;
+    }
+    .dropdown:hover .dropdown-menu { display: block; }
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .control-btn {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      padding: 8px;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.3s;
+    }
+    .control-btn:hover {
+      color: var(--secondary);
+      transform: scale(1.1);
+    }
+    .nav-btn { padding: 8px 18px !important; border-radius: 50px !important; font-weight: 600; }
+    .login-btn { border: 2px solid var(--secondary); color: var(--secondary) !important; }
+    .login-btn:hover { background: var(--secondary);       color: #ec6c10 !important; 
+ }
+    .signup-btn { background: var(--secondary); color: #000000 !important; }
+    .signup-btn:hover { background: #1ac61a; }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      display: none;
+      background: none;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px 12px;
+      color: var(--text);
+    }
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 998;
+      display: none;
+    }
+    .mobile-overlay.active { display: block; }
+    .mobile-nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 320px;
+      height: 100vh;
+      background: var(--bg-light);
+      z-index: 999;
+      transition: right 0.4s;
+      padding: 90px 2rem 2rem;
+      border-left: 3px solid var(--secondary);
+      overflow-y: auto;
+    }
+    .mobile-nav-menu.active { right: 0; }
+    .mobile-nav-menu .nav-links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.5rem !important;
+      padding-bottom: 30px !important;
+      list-style: none !important;
+    }
+    .mobile-nav-menu .nav-links a {
+      display: block !important;
+      padding: 15px 20px !important;
+      border: 2px solid var(--border) !important;
+      border-radius: 8px !important;
+      background: var(--bg) !important;
+      text-decoration: none !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+      width: 100% !important;
+    }
+    .mobile-nav-menu .nav-links a:hover {
+      background: var(--secondary) !important;
+      color: #000000 !important;
+      border-color: var(--secondary) !important;
+    }
+    .mobile-nav-menu .nav-links .home-sub-item {
+      padding-left: 40px !important;
+      margin-top: -5px !important;
+      margin-bottom: 5px !important;
+      border-color: var(--border) !important;
+      background: var(--bg-light) !important;
+      font-size: 0.9rem !important;
+    }
+    .mobile-controls {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mobile-controls .control-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--bg);
+    }
+    .mobile-nav-menu .nav-links a.active,
+    .mobile-nav-menu .nav-links a.active:hover {
+      background: var(--secondary) !important;
+      color: #000000 !important;
+      border-color: var(--secondary) !important;
+    }
+
+    /* ===== HERO BANNER ===== */
+    .hero {
+      position: relative;
+      height: 95vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 900px;
+      padding: 0 20px;
+    }
+    .hero-content h1 {
+      font-size: 4rem;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .hero-content h1 span { color: var(--secondary); }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #dddddd;
+      margin-bottom: 35px;
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+    .btn-primary { background: var(--secondary); color: #000; }
+    .btn-primary:hover { background: #1ac61a; }
+    .btn-secondary { border: 2px solid var(--secondary); color: var(--secondary); }
+    .btn-secondary:hover { background: var(--secondary); color: #000; }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 70px 0 40px;
+      margin-top: auto;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+    }
+    .dark-mode .site-footer { background: #000000 !important; }
+    .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    .footer-column h3 {
+      color: var(--secondary);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--secondary);
+    }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 12px; }
+    .footer-column a {
+      color: var(--footer-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
+    .footer-middle {
+      padding: 25px 0;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--secondary);
+    }
+    .footer-links { display: flex; gap: 35px; }
+    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
+    .footer-links a:hover { color: var(--secondary); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--secondary);
+      padding-top: 20px;
+    }
+    .copyright { color: var(--footer-text); font-size: 0.9rem; opacity: 0.8; }
+
+    /* ===== RTL ===== */
+    [dir="rtl"] .dropdown-menu { left: auto; right: 0; }
+    [dir="rtl"] .footer-column a:hover { transform: translateX(-8px); }
+    [dir="rtl"] .mobile-nav-menu {
+      left: -100%;
+      right: auto;
+      border-left: none;
+      border-right: 3px solid var(--secondary);
+    }
+    [dir="rtl"] .mobile-nav-menu.active { left: 0; }
+    [dir="rtl"] .home-sub-item { padding-left: 20px !important; padding-right: 40px !important; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1280px) {
+      .nav-links:not(.mobile-nav-menu .nav-links) { display: none !important; }
+      .hamburger { display: block !important; }
+      .navbar .controls #themeToggle,
+      .navbar .controls #rtlToggle { display: none !important; }
+    }
+    @media (min-width: 1281px) {
+      .nav-links:not(.mobile-nav-menu .nav-links) { display: flex !important; }
+      .hamburger { display: none !important; }
+    }
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: repeat(2, 1fr); }
+      .footer-middle, .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+      .hero h1 { font-size: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.5rem; }
+      .hero-content p { font-size: 1rem; }
+      .hero { height: 60vh; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+      .btn { padding: 12px 24px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .navbar { padding: 1rem; }
+      .logo-text { font-size: 20px; }
+    }
+    .dark-mode .login-btn:hover { background: var(--secondary); color: #ffffff !important; }
+    .dark-mode .signup-btn:hover { background: #1ac61a; color: #ffffff !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-bolt"></i>
+        <span class="logo-text">SparkRide</span>
+      </a>
+      <ul class="nav-links">
+        <li class="dropdown">
+          <a href="#">Home <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.html">Home 1</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html" class="active">Services</a></li>
+        <li><a href="Blog.html">Blog</a></li>
+        <li><a href="models.html">Models</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li class="dropdown">
+          <a href="#">Dashboard <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="user.html">User</a></li>
+            <li><a href="admin.html">Admin</a></li>
+          </ul>
+        </li>
+        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+        <li><a href="signIn.html" class="nav-btn signup-btn">Sign Up</a></li>
+      </ul>
+      <div class="controls">
+        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="control-btn" id="rtlToggle"><i class="fas fa-exchange-alt"></i></button>
+        <!-- Hamburger -->
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MOBILE NAV (Hamburger Menu) ===== -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <ul class="nav-links">
+      <li><a href="#"><i class="fas fa-caret-down"></i> Home</a></li>
+      <li><a href="index.html" class="home-sub-item">Home 1</a></li>
+      <li><a href="home2.html" class="home-sub-item">Home 2</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="service.html" class="active">Service</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="models.html">Models</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#"><i class="fas fa-caret-down"></i> Dashboard</a></li>
+      <li><a href="user.html" class="home-sub-item">User</a></li>
+      <li><a href="admin.html" class="home-sub-item">Admin</a></li>
+      <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+      <li><a href="signIn.html">Signup</a></li>
+    </ul>
+    <div class="mobile-controls">
+      <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i><span>Dark Mode</span></button>
+      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-exchange-alt"></i><span>RTL</span></button>
+    </div>
+  </div>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero">
+    <img src="Images/pexels-aysenurhamra-68268085-8717989.jpg" alt="">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Our <span>Services</span></h1>
+      <p>Discover the range of premium services we offer to make your electric scooter experience seamless and enjoyable.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">Explore Services</a>
+        <a href="#" class="btn btn-secondary">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-column">
+          <a href="index.html" class="logo"><i class="fas fa-bolt"></i><span class="logo-text">SparkRide</span></a>
+          <p style="margin-top:30px">Your ultimate destination for premium electric scooters and gear. Join our community of riders today.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="service.html">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="models.html">Models</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Safety Tips</a></li>
+            <li><a href="#">Riding Guides</a></li>
+            <li><a href="#">Battery Care</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Social Links</h3>
+          <ul>
+            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-middle">
+        <h3 style="color:var(--secondary)">Building a Community of Riders</h3>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="copyright">© 2026 SparkRide. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    (function() {
+      const h = document.getElementById('hamburger'),
+            o = document.getElementById('mobileOverlay'),
+            m = document.getElementById('mobileNavMenu');
+      if (!h || !o || !m) return;
+
+      function toggle() {
+        const a = m.classList.contains('active');
+        m.classList.toggle('active');
+        o.classList.toggle('active');
+        document.body.style.overflow = a ? '' : 'hidden';
+        h.innerHTML = a ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+      }
+      h.addEventListener('click', toggle);
+      o.addEventListener('click', toggle);
+      document.querySelectorAll('.mobile-nav-menu a').forEach(l =>
+        l.addEventListener('click', e => {
+          if (!e.target.closest('a')?.querySelector('.fa-caret-down')) toggle();
+        })
+      );
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && m.classList.contains('active')) toggle();
+      });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1280 && m.classList.contains('active')) toggle();
+      });
+
+      function theme() {
+        document.body.classList.toggle('dark-mode');
+        const d = document.body.classList.contains('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        const s = document.querySelector('#mobileThemeToggle span');
+        if (s) s.textContent = d ? 'Light Mode' : 'Dark Mode';
+        localStorage.setItem('theme', d ? 'dark' : 'light');
+      }
+      function rtl() {
+        const doc = document.documentElement,
+              r = doc.getAttribute('dir') === 'rtl';
+        doc.setAttribute('dir', r ? 'ltr' : 'rtl');
+        const s = document.querySelector('#mobileRtlToggle span');
+        if (s) s.textContent = r ? 'RTL' : 'LTR';
+        localStorage.setItem('direction', r ? 'ltr' : 'rtl');
+      }
+      document.getElementById('themeToggle')?.addEventListener('click', theme);
+      document.getElementById('mobileThemeToggle')?.addEventListener('click', theme);
+      document.getElementById('rtlToggle')?.addEventListener('click', rtl);
+      document.getElementById('mobileRtlToggle')?.addEventListener('click', rtl);
+
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        const s = document.querySelector('#mobileThemeToggle span');
+        if (s) s.textContent = 'Light Mode';
+      }
+      if (localStorage.getItem('direction') === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        const s = document.querySelector('#mobileRtlToggle span');
+        if (s) s.textContent = 'LTR';
+      }
+    })();
+  </script>
+</body>
+</html>

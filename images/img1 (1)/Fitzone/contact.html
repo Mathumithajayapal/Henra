@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Groww FitZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* SIMPLE RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            color: #1f2937;
+        }
+        
+        /* DARK MODE - simple class */
+        body.dark {
+            background: black;
+            color: white;
+        }
+        
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+        
+        /* ========== HEADER / NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        
+        body.dark .navbar {
+            background: rgba(17, 24, 39, 0.95);
+        }
+        
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        
+        /* LOGO */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            color: #ff6b35;
+            font-size: 24px;
+        }
+        
+        .logo-text small {
+            font-size: 10px;
+            color: #6b7280;
+            display: block;
+            line-height: 1.2;
+        }
+        
+        body.dark .logo-text small {
+            color: #9ca3af;
+        }
+        
+        .logo-text strong {
+            font-size: 18px;
+            color: #ff6b35;
+        }
+        
+        /* DESKTOP MENU */
+        .desktop-menu {
+            display: none;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        @media (min-width: 1024px) {
+            .desktop-menu {
+                display: flex;
+            }
+        }
+        
+        .desktop-menu a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        body.dark .desktop-menu a {
+            color: white;
+        }
+        
+        .desktop-menu a:hover, .desktop-menu a.active {
+            color: #ff6b35;
+        }
+        
+        /* SIMPLE DROPDOWN */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            background: white;
+            min-width: 180px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+            z-index: 10;
+        }
+        
+        body.dark .dropdown-menu {
+            background: #1f2937;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: #4b5563;
+        }
+        
+        body.dark .dropdown-menu a {
+            color: #d1d5db;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #f3f4f6;
+            color: #ff6b35;
+            padding-left: 20px;
+        }
+        
+        body.dark .dropdown-menu a:hover {
+            background: #374151;
+        }
+        
+        /* RIGHT BUTTONS */
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .theme-btn, .rtl-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        
+        .theme-btn:hover, .rtl-btn:hover {
+            background: #e5e7eb;
+        }
+        
+        body.dark .theme-btn:hover, body.dark .rtl-btn:hover {
+            background: #374151;
+        }
+        
+        .login-btn {
+            display: none;
+            background: #ff6b35;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        @media (min-width: 1024px) {
+            .login-btn {
+                display: block;
+            }
+        }
+        
+        .hamburger {
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #1f2937;
+        }
+        
+        body.dark .hamburger {
+            color: white;
+        }
+        
+        @media (min-width: 1024px) {
+            .hamburger {
+                display: none;
+            }
+        }
+        
+        /* MOBILE MENU */
+        .mobile-menu {
+            display: none;
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        body.dark .mobile-menu {
+            border-top-color: #374151;
+        }
+        
+        .mobile-menu.show {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 12px 0;
+            text-decoration: none;
+            color: #1f2937;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        body.dark .mobile-menu a {
+            color: white;
+            border-bottom-color: #2d2d2d;
+        }
+        
+        .mobile-menu a.active {
+            color: #ff6b35;
+            font-weight: 600;
+        }
+        
+        /* ========== HERO SECTION ========== */
+        .hero {
+            padding-top: 100px;
+            padding-bottom: 60px;
+            background-image: url('images/WhatsApp Image 2025-12-07 at 20.54.20_bfefd816.jpg');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+        }
+        
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .hero { padding-top: 80px; padding-bottom: 40px; }
+        }
+        
+        /* ========== CONTACT SECTION ========== */
+        .contact-section {
+            padding: 60px 0;
+            background: #f9fafb;
+        }
+        
+        body.dark .contact-section {
+            background: black;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        @media (min-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* SECTION TITLE */
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        body.dark .section-title {
+            color: white;
+        }
+        
+        .section-title span {
+            color: #ff6b35;
+        }
+        
+        .section-desc {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        
+        body.dark .section-desc {
+            color: #9ca3af;
+        }
+        
+        /* CONTACT CARDS */
+        .contact-card {
+            display: flex;
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+            transition: 0.2s;
+        }
+        
+        body.dark .contact-card {
+            background: #111827;
+            border-color: #1f2937;
+        }
+        
+        .contact-card:hover {
+            background: #f3f4f6;
+        }
+        
+        body.dark .contact-card:hover {
+            background: #1f2937;
+        }
+        
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            background: rgba(255, 107, 53, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .card-icon i {
+            font-size: 24px;
+            color: #ff6b35;
+        }
+        
+        .card-content h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #1f2937;
+        }
+        
+        body.dark .card-content h3 {
+            color: white;
+        }
+        
+        .card-content p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        body.dark .card-content p {
+            color: #9ca3af;
+        }
+        
+        /* SOCIAL LINKS */
+        .social-heading {
+            font-size: 18px;
+            margin: 30px 0 15px;
+            color: #1f2937;
+        }
+        
+        body.dark .social-heading {
+            color: white;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #1f2937;
+            transition: 0.2s;
+        }
+        
+        body.dark .social-icon {
+            background: #111827;
+            border-color: #1f2937;
+            color: white;
+        }
+        
+        .social-icon:hover {
+            background: #ff6b35;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        /* FORM */
+        .form-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        body.dark .form-card {
+            background: #111827;
+            border-color: #1f2937;
+        }
+        
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+        
+        body.dark .form-title {
+            color: white;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        body.dark .form-group label {
+            color: #d1d5db;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background: #f9fafb;
+        }
+        
+        body.dark .form-group input,
+        body.dark .form-group select,
+        body.dark .form-group textarea {
+            background: black;
+            border-color: #374151;
+            color: white;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: #ff6b35;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background: #e55a2a;
+            transform: scale(1.02);
+        }
+        
+        /* ========== MAP SECTION ========== */
+        .map-section {
+            padding: 60px 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        body.dark .map-section {
+            background: black;
+            border-top-color: #1f2937;
+        }
+        
+        .map-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #1f2937;
+        }
+        
+        body.dark .map-title {
+            color: white;
+        }
+        
+        .map-title span {
+            color: #ff6b35;
+        }
+        
+        .map-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 3px solid #ff6b35;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .map-wrapper iframe {
+            width: 100%;
+            height: 350px;
+            display: block;
+        }
+        
+        @media (min-width: 768px) {
+            .map-wrapper iframe {
+                height: 450px;
+            }
+        }
+        
+        .map-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .open-map {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .open-map:hover {
+            background: #e55a2a;
+        }
+        
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #111827;
+            color: white;
+            padding: 50px 0 30px;
+        }
+        
+        body.dark .footer {
+            background: black;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+            margin-bottom: 40px;
+        }
+        
+        @media (min-width: 640px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo i {
+            font-size: 28px;
+            color: #ff6b35;
+        }
+        
+        .footer-desc {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #9ca3af;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .footer-contact i {
+            color: #ff6b35;
+            width: 20px;
+        }
+        
+        .footer h4 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b35;
+            padding-left: 5px;
+        }
+        
+        .hours-list {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+        
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2d2d2d;
+        }
+        
+        .hours-item span:last-child {
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .footer-social a {
+            width: 45px;
+            height: 45px;
+            background: #1f2937;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .footer-social a:hover {
+            background: #ff6b35;
+            transform: scale(1.05);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #2d2d2d;
+            padding-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-bottom {
+                display: flex;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+        
+        .footer-links-bottom {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-links-bottom {
+                margin-top: 0;
+            }
+        }
+        
+        .footer-links-bottom a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+        
+        .footer-links-bottom a:hover {
+            color: #ff6b35;
+        }
+        
+        .heart {
+            color: #ff6b35;
+            display: inline-block;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* UTILITIES */
+        .mr-2 {
+            margin-right: 8px;
+        }
+        
+        .text-xs {
+            font-size: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container nav-inner">
+            <a href="#" class="logo">
+                <i class="fas fa-dumbbell"></i>
+                <div class="logo-text">
+                    <small>Groww</small>
+                    <strong>FitZone</strong>
+                </div>
+            </a>
+            
+            <ul class="desktop-menu">
+                <li class="dropdown">
+                    <a href="#">Home <i class="fas fa-chevron-down text-xs"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#">Home Page 1</a>
+                        <a href="#">Home Page 2</a>
+                    </div>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Classes</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#" class="active">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#">Dashboard <i class="fas fa-chevron-down text-xs"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="#">Admin Dashboard</a>
+                        <a href="#">User Dashboard</a>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="nav-buttons">
+                <button class="theme-btn" id="themeBtn">🌙</button>
+                <button class="rtl-btn" id="rtlBtn">🌐 LTR</button>
+                <a href="#" class="login-btn">Login</a>
+                <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+        
+        <!-- MOBILE MENU -->
+        <div class="mobile-menu container" id="mobileMenu">
+            <a href="#">Home Page 1</a>
+            <a href="#">Home Page 2</a>
+            <a href="#">About</a>
+            <a href="#">Pricing</a>
+            <a href="#">Classes</a>
+            <a href="#">Blog</a>
+            <a href="#">FAQ</a>
+            <a href="#" class="active">Contact</a>
+            <a href="#">Admin Dashboard</a>
+            <a href="#">User Dashboard</a>
+            <a href="#">Login</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>Contact</h1>
+            <p>We'd love to hear from you</p>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section">
+        <div class="container contact-grid">
+            <!-- LEFT SIDE -->
+            <div>
+                <h2 class="section-title">Get in <span>Touch</span></h2>
+                <p class="section-desc">Have questions? We're here to help! Reach out to us through any of the following channels.</p>
+                
+                <div class="contact-card">
+                    <div class="card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="card-content">
+                        <h3>Visit Us</h3>
+                        <p>123 Fitness Street, Mumbai, Maharashtra 400001, India</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="card-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="card-content">
+                        <h3>Call Us</h3>
+                        <p>+91 98765 43210<br>Mon-Sat: 6AM - 10PM</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="card-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="card-content">
+                        <h3>Email Us</h3>
+                        <p>info@growwfitzone.com<br>support@growwfitzone.com</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="card-icon"><i class="fas fa-clock"></i></div>
+                    <div class="card-content">
+                        <h3>Working Hours</h3>
+                        <p>Mon-Fri: 5AM - 11PM<br>Sat-Sun: 6AM - 10PM</p>
+                    </div>
+                </div>
+                
+                <h3 class="social-heading">Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <!-- RIGHT SIDE - FORM -->
+            <div class="form-card">
+                <h2 class="form-title">Send Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="+91 98765 43210">
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <select required>
+                            <option>Select a subject</option>
+                            <option>Membership Inquiry</option>
+                            <option>Class Information</option>
+                            <option>Personal Training</option>
+                            <option>Feedback</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea rows="5" placeholder="Write your message here..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn"><i class="fas fa-paper-plane mr-2"></i>Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAP SECTION -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="map-title">Find Us on <span>Map</span></h2>
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241316.64284062736!2d72.71637408489584!3d19.082502006819868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1733490000000!5m2!1sen!2sin" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="map-btn">
+                <a href="https://maps.google.com/?q=Mumbai,Maharashtra,India" target="_blank" class="open-map"><i class="fas fa-map-marked-alt mr-2"></i>Open in Google Maps</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-dumbbell"></i>
+                        <div>
+                            <small style="color:#9ca3af; display:block;">Groww</small>
+                            <strong style="color:#ff6b35; font-size:20px;">FitZone</strong>
+                        </div>
+                    </div>
+                    <p class="footer-desc">Transform your body and mind with our expert guidance. Join our fitness community today!</p>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                        <p><i class="fas fa-envelope"></i> info@growwfitzone.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Fitness Street, India</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home 1</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home 2</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Classes</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Register</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Login</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Admin Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> User Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Opening Hours</h4>
+                    <div class="hours-list">
+                        <div class="hours-item"><span>Monday - Friday:</span><span>6AM - 10PM</span></div>
+                        <div class="hours-item"><span>Saturday:</span><span>7AM - 9PM</span></div>
+                        <div class="hours-item"><span>Sunday:</span><span>8AM - 6PM</span></div>
+                    </div>
+                    <h4 style="margin-top: 20px;">Follow Us</h4>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <span>&copy; 2025 Groww FitZone. All Rights Reserved. Made with <i class="fas fa-heart heart"></i> in India</span>
+                <div class="footer-links-bottom">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DARK MODE - simple
+        const themeBtn = document.getElementById('themeBtn');
+        if (localStorage.theme === 'dark') {
+            document.body.classList.add('dark');
+            themeBtn.innerHTML = '☀️';
+        }
+        
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.theme = isDark ? 'dark' : 'light';
+            themeBtn.innerHTML = isDark ? '☀️' : '🌙';
+        });
+        
+        // RTL MODE
+        const rtlBtn = document.getElementById('rtlBtn');
+        const savedDir = localStorage.getItem('dir');
+        if (savedDir === 'rtl') {
+            document.documentElement.setAttribute('dir', 'rtl');
+            rtlBtn.innerHTML = '🌐 RTL';
+        }
+        
+        rtlBtn.addEventListener('click', () => {
+            const dir = document.documentElement.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl';
+            document.documentElement.setAttribute('dir', dir);
+            localStorage.setItem('dir', dir);
+            rtlBtn.innerHTML = dir === 'rtl' ? '🌐 RTL' : '🌐 LTR';
+        });
+        
+        // MOBILE MENU
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('show');
+        });
+        
+        // FORM SUBMIT
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for contacting us! We will get back to you soon.');
+            form.reset();
+        });
+    </script>
+</body>
+</html>

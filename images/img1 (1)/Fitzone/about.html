@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Groww FitZone | About Us</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* -------------------- RESET & GLOBAL -------------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f9fc;
+      color: #1e2a32;
+      line-height: 1.5;
+    }
+
+    /* ========== FIXED HEADER ========== */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      padding: 0.8rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Logo */
+    .site-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .site-logo i {
+      font-size: 28px;
+      color: #ff6b35;
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .logo-text small {
+      font-size: 10px;
+      color: #6b7280;
+      letter-spacing: 1px;
+    }
+    .logo-text strong {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ff6b35;
+    }
+
+    /* Desktop Navigation */
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-menu li a {
+      text-decoration: none;
+      color: #1e2a32;
+      font-weight: 600;
+      transition: color 0.2s;
+      font-size: 0.95rem;
+    }
+    .nav-menu li a:hover,
+    .nav-menu li a.active {
+      color: #ff6b35;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      background: white;
+      min-width: 200px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s;
+      z-index: 100;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      top: 30px;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 18px;
+      color: #4b5563;
+      font-weight: 500;
+    }
+    .dropdown-menu a:hover {
+      background: #fff5ed;
+      color: #ff6b35;
+      padding-left: 24px;
+    }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .theme-toggle, .rtl-toggle {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: 0.2s;
+      color: #1e2a32;
+    }
+    .theme-toggle:hover, .rtl-toggle:hover {
+      background: #f0f0f0;
+    }
+    .login-btn-header {
+      background: #ff6b35;
+      color: white;
+      padding: 8px 24px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .login-btn-header:hover {
+      background: #e55a2a;
+      transform: translateY(-2px);
+    }
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #1e2a32;
+    }
+
+    /* Mobile Menu */
+    .mobile-nav {
+      display: none;
+      background: white;
+      padding: 1rem 2rem;
+      border-top: 1px solid #eee;
+    }
+    .mobile-nav.show {
+      display: block;
+    }
+    .mobile-nav a {
+      display: block;
+      padding: 12px 0;
+      text-decoration: none;
+      color: #1e2a32;
+      font-weight: 500;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .mobile-nav a.active {
+      color: #ff6b35;
+    }
+
+    @media (max-width: 1024px) {
+      .nav-menu {
+        display: none;
+      }
+      .mobile-toggle {
+        display: block;
+      }
+      .header-container {
+        padding: 0 1.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .login-btn-header {
+        display: none;
+      }
+    }
+
+    /* ========== HERO SECTION (with margin-top for fixed header) ========== */
+    .about-hero {
+      position: relative;
+      height: 420px;
+      width: 100%;
+      background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&auto=format') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-top: 70px;
+    }
+    .about-hero .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+    }
+    .about-hero .content {
+      position: relative;
+      color: #fff;
+      z-index: 2;
+    }
+    .about-hero h1 {
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+    .breadcrumb {
+      font-size: 16px;
+      color: #ddd;
+    }
+    .breadcrumb .home {
+      color: #fff;
+    }
+    .breadcrumb .arrow {
+      margin: 0 10px;
+      color: #aaa;
+    }
+    .breadcrumb .active {
+      color: #ff6a00;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .about-hero {
+        height: 320px;
+        margin-top: 65px;
+      }
+      .about-hero h1 {
+        font-size: 40px;
+      }
+    }
+
+    /* -------------------- WHY CHOOSE US -------------------- */
+    .why-choose-us {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-choose-us::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -10%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255, 95, 26, 0.2) 0%, rgba(255, 95, 26, 0) 70%);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .why-choose-us::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      right: -5%;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255, 75, 30, 0.15) 0%, rgba(255, 75, 30, 0) 70%);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      z-index: 2;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: rgba(255, 95, 26, 0.18);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      color: #ff7b3a;
+      backdrop-filter: blur(2px);
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(255, 95, 26, 0.3);
+    }
+    .section-title {
+      font-size: clamp(2.2rem, 7vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e2f32 0%, #2b3b3e 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .feature-card {
+      background: rgba(18, 22, 35, 0.75);
+      backdrop-filter: blur(4px);
+      border-radius: 28px;
+      padding: 2rem 1.5rem;
+      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.35);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      background: rgba(26, 31, 48, 0.9);
+      border-color: rgba(255, 95, 26, 0.4);
+      box-shadow: 0 28px 40px -16px rgba(255, 70, 20, 0.25);
+    }
+    .card-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, rgba(255, 95, 26, 0.2) 0%, rgba(255, 55, 0, 0.1) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.6rem;
+      border: 1px solid rgba(255, 95, 26, 0.3);
+    }
+    .card-icon i {
+      font-size: 2.2rem;
+      color: #ff7b3a;
+      transition: transform 0.2s;
+    }
+    .feature-card:hover .card-icon i {
+      transform: scale(1.05);
+      color: #ff944d;
+    }
+    .feature-card h3 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    .feature-card p {
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: #cdd6f4;
+      font-weight: 400;
+      flex: 1;
+    }
+    @media (max-width: 1100px) {
+      .features-grid { gap: 1.5rem; }
+      .feature-card { padding: 1.6rem 1.3rem; }
+      .feature-card h3 { font-size: 1.4rem; }
+    }
+    @media (max-width: 900px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); gap: 1.8rem; }
+      .why-choose-us { padding: 4rem 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card { padding: 1.5rem; }
+    }
+
+    /* -------------------- WHAT WE HAVE DONE -------------------- */
+    .achievements-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 5rem 1.8rem;
+      position: relative;
+      isolation: isolate;
+    }
+    .achievements-section .section-header h2 {
+      font-size: clamp(2.2rem, 7vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #1e2f32 0%, #2b3b3e 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+    .achievements-section .description {
+      max-width: 880px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: #2c3e3f;
+      font-weight: 400;
+      background: #fef9ef;
+      padding: 1.5rem 2rem;
+      border-radius: 2rem;
+      border: 1px solid #ffedd5;
+      text-align: center;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    .stat-card {
+      background: #ffffff;
+      border-radius: 2rem;
+      padding: 1.8rem 1.6rem 2rem;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid rgba(249, 115, 22, 0.15);
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.08);
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      border-color: #f97316;
+      box-shadow: 0 28px 40px -18px rgba(255, 70, 20, 0.2);
+    }
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .stat-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: #1e2a32;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stat-title i {
+      font-size: 1.4rem;
+      color: #f97316;
+    }
+    .stat-percent {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(145deg, #FF8A4F, #FF5A1A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .progress-wrapper {
+      margin-top: 0.8rem;
+    }
+    .progress-bar-bg {
+      background: #e9ecef;
+      border-radius: 60px;
+      height: 12px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #FF5F1A, #FF943A);
+      border-radius: 60px;
+      transition: width 0.9s cubic-bezier(0.22, 0.97, 0.36, 1);
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
+    }
+
+    /* Story Card, Services, Gym Showcase, CTA (keeping original styles) */
+    .story-card {
+      max-width: 1280px;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
+      margin: 2rem auto;
+    }
+    .story-inner { padding: 3rem 2.5rem; }
+    .story-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: #ffefe5;
+      color: #c2410c;
+      padding: 0.25rem 0.9rem;
+      border-radius: 40px;
+      margin-bottom: 1.25rem;
+    }
+    .story-card h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(125deg, #1a2a3a 0%, #2c3e44 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .title-accent {
+      height: 4px;
+      width: 80px;
+      background: linear-gradient(90deg, #f97316, #facc15);
+      border-radius: 4px;
+      margin-top: 0.75rem;
+    }
+    .story-description p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      background: #fefcf8;
+      padding: 1.25rem 1.5rem;
+      border-radius: 1.5rem;
+      border-left: 4px solid #f97316;
+      margin: 1.8rem 0;
+    }
+    .feature-list { list-style: none; }
+    .feature-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding: 0.5rem 0.75rem;
+    }
+    .feature-icon {
+      width: 2rem;
+      height: 2rem;
+      background: #fff1e6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f97316;
+    }
+    .highlight-number {
+      font-weight: 800;
+      color: #c2410c;
+      background: #ffedd5;
+      padding: 0.1rem 0.3rem;
+      border-radius: 12px;
+    }
+    .services-grid {
+      max-width: 1280px;
+      margin: 3rem auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8rem;
+      padding: 0 1rem;
+    }
+    .service-card {
+      background: #ffffff;
+      border-radius: 1.75rem;
+      padding: 1.9rem 1.6rem;
+      transition: all 0.3s;
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(249, 115, 22, 0.08);
+    }
+    .service-card:hover { transform: translateY(-6px); }
+    .service-card .card-icon {
+      background: #fff5ed;
+      width: fit-content;
+      padding: 0.85rem;
+      border-radius: 1.25rem;
+    }
+    .service-card:hover .card-icon { background: #f97316; }
+    .service-card:hover .card-icon i { color: white; }
+    .service-card h3 { font-size: 1.7rem; font-weight: 800; margin-bottom: 0.9rem; color: #1a2c2e; }
+    .card-accent { width: 40px; height: 3px; background: #facc15; margin-top: 1rem; }
+    .gym-showcase {
+      max-width: 1300px;
+      margin: 3rem auto;
+      background: #ffffff;
+      border-radius: 2.5rem;
+      overflow: hidden;
+      box-shadow: 0 25px 45px -15px rgba(0, 0, 0, 0.12);
+    }
+    .content-padding { padding: 3rem 2.5rem; }
+    .brand-headline h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(125deg, #c2410c, #f97316);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-align: center;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8rem;
+      margin-top: 2rem;
+    }
+    .feature-grid .feature-card {
+      background: white;
+      padding: 0;
+      border-radius: 1.6rem;
+      overflow: hidden;
+    }
+    .card-img { height: 220px; overflow: hidden; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+    .feature-grid .feature-card:hover .card-img img { transform: scale(1.05); }
+    .feature-grid .feature-card h3 {
+      padding: 1.1rem;
+      text-align: center;
+      background: white;
+      color: #1f2f34;
+      margin: 0;
+    }
+    .cta-container {
+      max-width: 880px;
+      margin: 3rem auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 30px 45px -20px rgba(0, 0, 0, 0.2);
+    }
+    .cta-inner { padding: 3rem 2.8rem; text-align: center; }
+    .cta-heading {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(125deg, #e25c1c, #f97316);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      padding: 0.9rem 2rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      font-weight: 700;
+      margin: 0.5rem;
+    }
+    .btn-primary { background: #f97316; color: white; }
+    .btn-secondary { border: 2px solid #f97316; color: #f97316; }
+    @media (max-width: 1024px) {
+      .services-grid, .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .services-grid, .feature-grid { grid-template-columns: 1fr; }
+      .cta-heading { font-size: 2rem; }
+    }
+
+    /* ========== FIXED FOOTER ========== */
+    .footer {
+      background: #0f1c2e;
+      color: #cbd5e1;
+      padding-top: 60px;
+      margin-top: 60px;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      padding: 0 20px;
+    }
+    .footer .logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+    }
+    .footer .logo span { color: #ff6b35; }
+    .footer-text { margin: 15px 0; line-height: 1.6; }
+    .footer-col h3 { color: white; margin-bottom: 15px; font-size: 16px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { text-decoration: none; color: #cbd5e1; transition: 0.3s; }
+    .footer-col ul li a:hover { color: #ff6b35; padding-left: 5px; }
+    .footer-col span { color: #ff6b35; font-weight: 600; }
+    .socials { margin-top: 15px; }
+    .socials a {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      background: #1e293b;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      color: white;
+      transition: 0.3s;
+    }
+    .socials a:hover { background: #ff6b35; }
+    .footer-bottom {
+      border-top: 1px solid #1e293b;
+      margin-top: 40px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+    .footer-links a { margin-left: 15px; text-decoration: none; color: #cbd5e1; }
+    .footer-links a:hover { color: #ff6b35; }
+    @media (max-width: 992px) {
+      .footer-container { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 576px) {
+      .footer-container { grid-template-columns: 1fr; text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .footer-links a { margin: 0 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED HEADER -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="#" class="site-logo">
+        <i class="fas fa-dumbbell"></i>
+        <div class="logo-text">
+          <small>Groww</small>
+          <strong>FitZone</strong>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li class="dropdown">
+          <a href="#">Home <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="#">Home Page 1</a>
+            <a href="#">Home Page 2</a>
+          </div>
+        </li>
+        <li><a href="#" class="active">About</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Classes</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+        <li class="dropdown">
+          <a href="#">Dashboard <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-menu">
+            <a href="#">Admin Dashboard</a>
+            <a href="#">User Dashboard</a>
+          </div>
+        </li>
+      </ul>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="rtl-toggle" id="rtlToggle">🌐 LTR</button>
+        <a href="#" class="login-btn-header">Login</a>
+        <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#">Home Page 1</a>
+      <a href="#">Home Page 2</a>
+      <a href="#" class="active">About</a>
+      <a href="#">Pricing</a>
+      <a href="#">Classes</a>
+      <a href="#">Blog</a>
+      <a href="#">FAQ</a>
+      <a href="#">Contact</a>
+      <a href="#">Admin Dashboard</a>
+      <a href="#">User Dashboard</a>
+      <a href="#">Login</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="about-hero">
+    <div class="overlay"></div>
+    <div class="content">
+      <h1>ABOUT US</h1>
+      <div class="breadcrumb">
+        <span class="home">Home</span>
+        <span class="arrow">›</span>
+        <span class="active">About</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-choose-us">
+    <div class="section-header">
+      <div class="section-tag">WHY CHOSE US?</div>
+      <h2 class="section-title">PUSH YOUR LIMITS FORWARD</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="card-icon"><i class="fas fa-dumbbell"></i></div><h3>Modern equipment</h3><p>State-of-the-art facility with cutting-edge equipment and expert trainers dedicated to your goals.</p></div>
+      <div class="feature-card"><div class="card-icon"><i class="fas fa-apple-alt"></i></div><h3>Healthy nutrition plan</h3><p>Personalized training programs tailored to your needs, ensuring maximum results.</p></div>
+      <div class="feature-card"><div class="card-icon"><i class="fas fa-chalkboard-user"></i></div><h3>Professional training plan</h3><p>Expert guidance with certified trainers to help you achieve sustainable progress.</p></div>
+      <div class="feature-card"><div class="card-icon"><i class="fas fa-hand-sparkles"></i></div><h3>Unique to your needs</h3><p>Flexible membership plans designed for every lifestyle and budget.</p></div>
+    </div>
+  </section>
+
+  <!-- WHAT WE HAVE DONE -->
+  <section class="achievements-section">
+    <div class="section-header">
+      <h2>WHAT WE HAVE DONE</h2>
+      <div class="description">
+        At <strong>Groww FitZone</strong>, we believe fitness is more than just exercise—it's a lifestyle transformation. Founded with a passion for health and wellness, our mission is to empower individuals to reach their full potential through expert guidance, premium facilities, and unwavering support.
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-header"><div class="stat-title"><i class="fas fa-dumbbell"></i> Body building</div><div class="stat-percent">80%</div></div><div class="progress-wrapper"><div class="progress-bar-bg"><div class="progress-fill" style="width: 80%;"></div></div></div></div>
+      <div class="stat-card"><div class="stat-header"><div class="stat-title"><i class="fas fa-person-running"></i> Training</div><div class="stat-percent">85%</div></div><div class="progress-wrapper"><div class="progress-bar-bg"><div class="progress-fill" style="width: 85%;"></div></div></div></div>
+      <div class="stat-card"><div class="stat-header"><div class="stat-title"><i class="fas fa-heartbeat"></i> Fitness</div><div class="stat-percent">75%</div></div><div class="progress-wrapper"><div class="progress-bar-bg"><div class="progress-fill" style="width: 75%;"></div></div></div></div>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <div class="story-card">
+    <div class="story-inner">
+      <span class="story-badge"><i class="fas fa-dumbbell"></i> SINCE 2015</span>
+      <h1>OUR STORY</h1>
+      <div class="title-accent"></div>
+      <div class="story-description"><p>With years of experience in the fitness industry, our certified trainers bring expertise across multiple disciplines including strength training, cardio conditioning, yoga, and nutrition. We continuously invest in the latest equipment and training methodologies to ensure our members receive world-class service.</p></div>
+      <ul class="feature-list">
+        <li class="feature-item"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><div class="feature-text">Started with <span class="highlight-number">50 members</span>, now serving <span class="highlight-number">400+ active fitness enthusiasts</span></div></li>
+        <li class="feature-item"><div class="feature-icon"><i class="fas fa-user-check"></i></div><div class="feature-text">Certified trainers with over <span class="highlight-number">10 years of combined experience</span></div></li>
+        <li class="feature-item"><div class="feature-icon"><i class="fas fa-dumbbell"></i></div><div class="feature-text">State-of-the-art equipment updated annually for best results</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SERVICES GRID -->
+  <div class="services-grid">
+    <div class="service-card"><div class="card-icon"><i class="fas fa-dumbbell"></i></div><h3>STRENGTH TRAINING</h3><p>Build muscle and increase strength with professional programs.</p><div class="card-accent"></div></div>
+    <div class="service-card"><div class="card-icon"><i class="fas fa-heartbeat"></i></div><h3>CARDIO FITNESS</h3><p>Improve endurance and burn calories with high-energy sessions.</p><div class="card-accent"></div></div>
+    <div class="service-card"><div class="card-icon"><i class="fas fa-apple-alt"></i></div><h3>NUTRITION GUIDANCE</h3><p>Personalized meal plans to fuel your fitness goals.</p><div class="card-accent"></div></div>
+    <div class="service-card"><div class="card-icon"><i class="fas fa-users"></i></div><h3>GROUP CLASSES</h3><p>Join energetic group sessions with motivated enthusiasts.</p><div class="card-accent"></div></div>
+  </div>
+
+  <!-- EVERYBODY WELCOME -->
+  <div class="gym-showcase">
+    <div class="content-padding">
+      <div class="brand-headline"><h1>EVERYBODY WELCOME FAVOURITE GYM</h1></div>
+      <div class="feature-grid">
+        <div class="feature-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&auto=format" alt="Modern gym"></div><h3>Modern Equipment</h3></div>
+        <div class="feature-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&auto=format" alt="Expert trainer"></div><h3>Expert Trainers</h3></div>
+        <div class="feature-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=500&auto=format" alt="Group class"></div><h3>Group Classes</h3></div>
+        <div class="feature-card"><div class="card-img"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=500&auto=format" alt="Personal training"></div><h3>Personal Training</h3></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-container">
+    <div class="cta-inner">
+      <h1 class="cta-heading">Ready to Start Your Journey?</h1>
+      <p class="cta-description" style="margin: 1rem auto; max-width: 600px;">Join Groww FitZone today and become part of a community that's committed to transforming lives through fitness</p>
+      <div class="button-group"><a href="#" class="btn-primary"><span>+</span> Join Now</a><a href="#" class="btn-secondary">Contact</a></div>
+    </div>
+  </div>
+
+  <!-- FIXED FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h2 class="logo">Groww <span>FitZone</span></h2>
+        <p class="footer-text">Transform your body and mind with our expert guidance. Join our fitness community today!</p>
+        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+        <p><i class="fas fa-envelope"></i> info@growwfitzone.com</p>
+        <p><i class="fas fa-map-marker-alt"></i> 123 Fitness Street, India</p>
+      </div>
+      <div class="footer-col"><h3>QUICK LINKS</h3><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Classes</a></li><li><a href="#">Pricing</a></li><li><a href="#">Blog</a></li></ul></div>
+      <div class="footer-col"><h3>SUPPORT</h3><ul><li><a href="#">FAQ</a></li><li><a href="#">Contact</a></li><li><a href="#">Register</a></li><li><a href="#">Login</a></li><li><a href="#">Dashboard</a></li></ul></div>
+      <div class="footer-col"><h3>OPENING HOURS</h3><p>Monday - Friday: <span>6AM - 10PM</span></p><p>Saturday: <span>7AM - 9PM</span></p><p>Sunday: <span>8AM - 6PM</span></p><h3 class="follow" style="margin-top: 20px;">FOLLOW US</h3><div class="socials"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Groww FitZone. All Rights Reserved.</p><div class="footer-links"><a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a><a href="#">Sitemap</a></div></div>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    mobileToggle.addEventListener('click', () => mobileNav.classList.toggle('show'));
+
+    // Dark Mode Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const icon = themeToggle.querySelector('i');
+      if (document.body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+        document.body.style.background = '#0a0a0a';
+        document.body.style.color = '#e5e5e5';
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+        document.body.style.background = '#f9f9fc';
+        document.body.style.color = '#1e2a32';
+      }
+    });
+
+    // RTL Toggle
+    const rtlToggle = document.getElementById('rtlToggle');
+    let isRTL = false;
+    rtlToggle.addEventListener('click', () => {
+      isRTL = !isRTL;
+      document.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+      rtlToggle.innerHTML = isRTL ? '🌐 RTL' : '🌐 LTR';
+    });
+
+    // Progress bar animation on load
+    window.addEventListener('load', () => {
+      const fills = document.querySelectorAll('.progress-fill');
+      fills.forEach(fill => {
+        const width = fill.style.width;
+        fill.style.width = '0%';
+        setTimeout(() => { fill.style.width = width; }, 100);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Henra - About Us</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #000000;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #000000;
+      --text-light: #333333;
+      --bg: #FFFFFF;
+      --bg-light: #F5F0EB;
+      --border: #D4B8A0;
+      --shadow: 0 4px 12px rgba(139,94,60,0.1);
+      --shadow-lg: 0 20px 40px rgba(139,94,60,0.15);
+      --transition: all 0.4s ease;
+      --footer-bg: #FFFFFF;
+      --footer-text: #000000;
+    }
+    .dark-mode {
+      --primary: #C8956A;
+      --secondary: #8B5E3C;
+      --secondary-light: #A97C58;
+      --secondary-dark: #6B4226;
+      --text: #FFFFFF;
+      --text-light: #CCCCCC;
+      --bg: #1A1008;
+      --bg-light: #251608;
+      --border: #5C3D1E;
+      --footer-bg: #1A1008;
+      --footer-text: #FFFFFF;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s;
+    }
+    h1,h2,h3,h4,h5,h6,.logo-text,.hero h1 { font-family:'Playfair Display',serif; font-weight:700; }
+    .dark-mode h1,.dark-mode h2,.dark-mode h3 { color:#FFFFFF !important; }
+
+    /* ===== HEADER - Clean navbar ===== */
+    header {
+      background: var(--bg);
+      box-shadow: 0 2px 10px rgba(139,94,60,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo i { color: var(--secondary); font-size: 28px; }
+    .logo-text {
+      font-size: 25px;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--secondary-dark), var(--secondary-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .nav-links li {
+      display: flex;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 30px;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--secondary);
+      background: rgba(139,94,60,0.08);
+    }
+    .dropdown { 
+      position: relative; 
+      display: flex;
+      align-items: center;
+    }
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--bg);
+      list-style: none;
+      padding: 12px 0;
+      min-width: 210px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      display: none;
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 22px;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      font-weight: 500;
+      gap: 0;
+    }
+    .dropdown-menu a:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      padding-left: 28px;
+    }
+    .dropdown:hover .dropdown-menu { display: block; }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .control-btn {
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      padding: 8px 12px;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+      gap: 6px;
+    }
+    .control-btn:hover {
+      color: var(--secondary);
+      transform: scale(1.05);
+      background: rgba(139,94,60,0.08);
+    }
+    .rtl-btn {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      min-width: 70px;
+    }
+    .rtl-btn i { font-size: 0.9rem; }
+    .nav-btn { 
+      padding: 8px 22px !important; 
+      border-radius: 50px !important; 
+      font-weight: 600; 
+    }
+    .login-btn { 
+      border: 2px solid var(--secondary); 
+      color: var(--secondary) !important; 
+      background: transparent;
+    }
+    .login-btn:hover { 
+      background: var(--secondary); 
+      color: #ec6c10 !important; 
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      display: none;
+      background: none;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 8px 12px;
+      color: var(--text);
+    }
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 998;
+      display: none;
+    }
+    .mobile-overlay.active { display: block; }
+    .mobile-nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 320px;
+      height: 100vh;
+      background: var(--bg-light);
+      z-index: 999;
+      transition: right 0.4s;
+      padding: 90px 1.5rem 2rem;
+      border-left: 3px solid var(--secondary);
+      overflow-y: auto;
+    }
+    .mobile-nav-menu.active { right: 0; }
+    
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    .mobile-nav-links {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      list-style: none !important;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 30px 0;
+    }
+    .mobile-nav-links li {
+      width: 100%;
+      list-style: none;
+    }
+    .mobile-nav-links a {
+      display: flex !important;
+      align-items: center !important;
+      padding: 14px 20px !important;
+      border-radius: 16px !important;
+      background: var(--bg) !important;
+      text-decoration: none !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+      text-align: left;
+      border: 2px solid var(--border);
+      transition: all 0.25s ease;
+      gap: 12px;
+      width: 100%;
+    }
+    .mobile-nav-links a i {
+      width: 24px;
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+      background: var(--secondary) !important;
+      color: #ffffff !important;
+      border-color: var(--secondary) !important;
+    }
+    .mobile-nav-links a:hover i,
+    .mobile-nav-links a.active i {
+      color: #ffffff !important;
+    }
+    
+    /* Home sub-items - same consistent styling */
+    .mobile-sub-item {
+      margin-left: 36px !important;
+      padding: 12px 20px !important;
+      background: var(--bg-light) !important;
+      border-style: solid !important;
+      font-size: 0.9rem !important;
+    }
+    .mobile-sub-item i {
+      width: 24px;
+      font-size: 0.9rem;
+    }
+    
+    /* Mobile controls section */
+    .mobile-controls {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 2px solid var(--border);
+      padding-top: 25px;
+    }
+    .mobile-controls .control-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 20px;
+      background: var(--bg);
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    .mobile-controls .control-btn i {
+      font-size: 1.1rem;
+      color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover {
+      background: var(--secondary);
+      color: #ffffff;
+      border-color: var(--secondary);
+    }
+    .mobile-controls .control-btn:hover i {
+      color: #ffffff;
+    }
+
+    /* ===== HERO ===== */
+    .hero { position:relative; height:95vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
+    .hero img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+    .hero-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(60,30,10,0.65); z-index:2; }
+    .hero-content { position:relative; z-index:3; max-width:900px; padding:0 20px; }
+    .hero-content h1 { font-size:4rem; color:#ffffff; margin-bottom:20px; }
+    .hero-content h1 span { color:var(--secondary-light); }
+    .hero-content p { font-size:1.2rem; color:#e8d5c4; margin-bottom:35px; }
+    .hero-buttons { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .btn { padding:14px 32px; border-radius:50px; font-weight:600; text-decoration:none; transition:0.3s ease; display:inline-block; }
+    .btn-primary { background:var(--secondary); color:#fff; }
+    .btn-primary:hover { background:var(--secondary-dark); }
+    .btn-secondary { border:2px solid var(--secondary-light); color:var(--secondary-light); }
+    .btn-secondary:hover { background:var(--secondary); color:#fff; border-color:var(--secondary); }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background:var(--footer-bg); color:var(--footer-text); padding:70px 0 40px; margin-top:auto; }
+    .dark-mode .site-footer { background:#1A1008 !important; }
+    .footer-content { max-width:1300px; margin:0 auto; padding:0 2rem; }
+    .footer-top { display:grid; grid-template-columns:repeat(4,1fr); gap:50px; margin-bottom:50px; }
+    .footer-column h3 { color:var(--secondary); font-size:1rem; font-weight:700; margin-bottom:25px; text-transform:uppercase; letter-spacing:2px; padding-bottom:12px; border-bottom:2px solid var(--secondary); }
+    .footer-column ul { list-style:none; }
+    .footer-column li { margin-bottom:12px; }
+    .footer-column a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; transition:var(--transition); }
+    .footer-column a:hover { color:var(--secondary); transform:translateX(8px); }
+    .footer-links { display:flex; gap:35px; }
+    .footer-links a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; }
+    .footer-links a:hover { color:var(--secondary); }
+    .footer-bottom { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--secondary); padding-top:20px; }
+    .copyright { color:var(--footer-text); font-size:0.9rem; opacity:0.8; }
+
+    /* ===== RTL ===== */
+    [dir="rtl"] .dropdown-menu { left:auto; right:0; }
+    [dir="rtl"] .footer-column a:hover { transform:translateX(-8px); }
+    [dir="rtl"] .mobile-nav-menu { left:-100%; right:auto; border-left:none; border-right:3px solid var(--secondary); }
+    [dir="rtl"] .mobile-nav-menu.active { left:0; }
+    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:1280px) { 
+      .nav-links:not(.mobile-nav-links) { display: none !important; } 
+      .hamburger { display: block !important; } 
+      
+      /* Hide desktop toggle buttons on mobile/tablet */
+      #themeToggle, 
+      #rtlToggle { 
+        display: none !important; 
+      }
+    }
+    @media (min-width:1281px) { 
+      .nav-links:not(.mobile-nav-links) { display: flex !important; } 
+      .hamburger { display: none !important; } 
+    }
+    @media (max-width:900px) { 
+      .footer-top { grid-template-columns:repeat(2,1fr); } 
+      .footer-middle,.footer-bottom { flex-direction:column; gap:20px; text-align:center; } 
+      .hero h1 { font-size:3rem; } 
+    }
+    @media (max-width:768px) { 
+      .hero-content h1 { font-size:2.5rem; } 
+      .hero-content p { font-size:1rem; } 
+      .hero { height:60vh; } 
+    }
+    @media (max-width:600px) { 
+      .hero h1 { font-size:2.2rem; } 
+      .btn { padding:12px 24px; } 
+      .footer-top { grid-template-columns:1fr; } 
+      .navbar { padding:1rem; } 
+      .logo-text { font-size:20px; } 
+    }
+
+    /* ===== SHARED SECTION STYLES ===== */
+    .section-label { display:inline-block; font-size:0.78rem; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--secondary); margin-bottom:14px; }
+    .section-title { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:700; color:var(--text); line-height:1.2; margin-bottom:18px; }
+    .section-title span { color:var(--secondary); font-style:italic; }
+    .section-desc { font-size:1rem; color:var(--text-light); max-width:580px; line-height:1.85; }
+    .fade-up { opacity:0; transform:translateY(40px); transition:opacity 0.7s ease,transform 0.7s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+
+    /* ===== STORY SECTION ===== */
+    .story-section { padding:110px 2rem; max-width:1300px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:90px; align-items:center; }
+    .story-images { position:relative; height:580px; }
+    .story-img-main { position:absolute; top:0; left:0; width:70%; height:80%; object-fit:cover; border-radius:4px 70px 4px 70px; box-shadow:var(--shadow-lg); }
+    .story-img-accent { position:absolute; bottom:0; right:0; width:56%; height:52%; object-fit:cover; border-radius:70px 4px 70px 4px; box-shadow:var(--shadow-lg); border:6px solid var(--bg); }
+    .story-year-badge { position:absolute; top:48%; left:50%; transform:translate(-50%,-50%); background:var(--secondary); color:#fff; width:120px; height:120px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; z-index:5; box-shadow:0 10px 35px rgba(139,94,60,0.45); }
+    .story-year-badge strong { font-family:'Playfair Display',serif; font-size:2rem; line-height:1; }
+    .story-year-badge span { font-size:0.63rem; letter-spacing:1.5px; text-transform:uppercase; margin-top:4px; }
+    .story-text { display:flex; flex-direction:column; gap:22px; }
+    .story-text p { font-size:0.97rem; color:var(--text-light); line-height:1.9; }
+    .story-pillars { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px; }
+    .pillar { background:var(--bg-light); border:1px solid var(--border); border-radius:16px; padding:20px 18px; display:flex; align-items:flex-start; gap:14px; transition:0.3s; }
+    .pillar:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
+    .pillar-icon { width:46px; height:46px; background:rgba(139,94,60,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .pillar-icon i { color:var(--secondary); font-size:20px; }
+    .pillar h4 { font-size:0.95rem; margin-bottom:4px; }
+    .pillar p { font-size:0.82rem; color:var(--text-light); line-height:1.6; }
+
+    /* ===== STATS STRIP ===== */
+    .stats-strip { background:var(--secondary); padding:60px 2rem; }
+    .stats-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:30px; }
+    .stat-item { text-align:center; }
+    .stat-item strong { display:block; font-family:'Playfair Display',serif; font-size:3rem; color:#fff; line-height:1; margin-bottom:8px; }
+    .stat-item span { font-size:0.88rem; color:rgba(255,255,255,0.8); letter-spacing:1px; text-transform:uppercase; }
+
+    /* ===== MISSION VISION ===== */
+    .mv-section { padding:110px 2rem; background:var(--bg-light); }
+    .mv-inner { max-width:1300px; margin:0 auto; }
+    .mv-header { text-align:center; margin-bottom:60px; }
+    .mv-header .section-desc { margin:0 auto; }
+    .mv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+    .mv-card { background:var(--bg); border:1px solid var(--border); border-radius:26px; padding:44px 34px; text-align:center; transition:0.4s; position:relative; overflow:hidden; }
+    .mv-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--secondary-dark),var(--secondary-light)); }
+    .mv-card:hover { transform:translateY(-10px); box-shadow:var(--shadow-lg); }
+    .mv-icon { width:72px; height:72px; background:rgba(139,94,60,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; }
+    .mv-icon i { color:var(--secondary); font-size:28px; }
+    .mv-card h3 { font-size:1.3rem; margin-bottom:14px; }
+    .mv-card p { font-size:0.92rem; color:var(--text-light); line-height:1.8; }
+
+    /* ===== TEAM ===== */
+    .team-section { padding:110px 2rem; max-width:1300px; margin:0 auto; }
+    .team-header { text-align:center; margin-bottom:60px; }
+    .team-header .section-desc { margin:0 auto; }
+    .team-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:28px; }
+    .team-card { background:var(--bg-light); border:1px solid var(--border); border-radius:24px; overflow:hidden; transition:0.4s; text-align:center; }
+    .team-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
+    .team-img-wrap { position:relative; overflow:hidden; }
+    .team-img { width:100%; height:280px; object-fit:cover; display:block; transition:transform 0.5s; }
+    .team-card:hover .team-img { transform:scale(1.07); }
+    .team-social { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(60,20,5,0.8)); padding:30px 16px 16px; display:flex; justify-content:center; gap:12px; opacity:0; transform:translateY(10px); transition:0.4s; }
+    .team-card:hover .team-social { opacity:1; transform:translateY(0); }
+    .team-social a { width:36px; height:36px; background:var(--secondary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; text-decoration:none; transition:0.3s; }
+    .team-social a:hover { background:var(--secondary-dark); transform:scale(1.1); }
+    .team-info { padding:22px 18px; }
+    .team-info h4 { font-size:1.05rem; margin-bottom:6px; }
+    .team-info span { font-size:0.82rem; color:var(--secondary); font-weight:600; letter-spacing:0.5px; }
+
+    /* ===== CTA BANNER ===== */
+    .cta-wrap { padding:0 2rem 110px; max-width:1340px; margin:0 auto; }
+    .cta-banner { border-radius:32px; overflow:hidden; position:relative; }
+    .cta-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+    .cta-overlay { position:absolute; inset:0; background:linear-gradient(120deg,rgba(60,20,5,0.92) 40%,rgba(139,94,60,0.75)); }
+    .cta-content { position:relative; z-index:2; padding:90px 80px; max-width:660px; }
+    .cta-content .section-label { color:#e8c9a8; }
+    .cta-content .section-title { color:#fff; }
+    .cta-content .section-title span { color:var(--secondary-light); }
+    .cta-content p { color:#e8d5c4; font-size:1rem; margin-bottom:36px; line-height:1.8; }
+    .cta-buttons { display:flex; gap:18px; flex-wrap:wrap; }
+
+    @media(max-width:1024px){
+      .story-section { grid-template-columns:1fr; gap:50px; }
+      .story-images { height:400px; }
+      .stats-inner { grid-template-columns:repeat(2,1fr); }
+      .mv-grid { grid-template-columns:1fr 1fr; }
+      .team-grid { grid-template-columns:repeat(2,1fr); }
+    }
+    @media(max-width:768px){
+      .section-title { font-size:2.2rem; }
+      .mv-grid { grid-template-columns:1fr; }
+      .team-grid { grid-template-columns:1fr; }
+      .story-pillars { grid-template-columns:1fr; }
+      .cta-content { padding:60px 36px; }
+    }
+    @media(max-width:600px){
+      .stats-inner { grid-template-columns:1fr 1fr; }
+      .cta-content { padding:50px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- ===== HEADER ===== -->
+ <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">
+        <i class="fas fa-leaf"></i>
+        <span class="logo-text">Henra</span>
+      </a>
+      <ul class="nav-links">
+        <li class="dropdown">
+          <a href="#" class="active">Home <i class="fas fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="index.html">Home 1</a></li>
+            <li><a href="home2.html">Home 2</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="artist.html">Artist</a></li>
+        <li><a href="aftercareoil.html">Aftercare</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="trends.html">Trends</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
+      </ul>
+      <div class="controls">
+        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
+        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION MENU - ALL LINKS SAME SIZE, SAME BACKGROUND ===== -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html"> Home 1</a></li>
+      <li><a href="home2.html"> Home 2</a></li>
+
+      <li><a href="about.html"> About</a></li>
+      <li><a href="service.html"> Service</a></li>
+      <li><a href="artist.html"> Artist</a></li>
+      <li><a href="aftercareoil.html"> Aftercare</a></li>
+      <li><a href="gallery.html"> Gallery</a></li>
+      <li><a href="trends.html"> Trends</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html"> Login</a></li>
+    </ul>
+    <div class="mobile-controls">
+      <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+    </div>
+  </div>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero">
+    <img src="images/img (7).jpg" alt="About Henra">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>About <span>Henra</span></h1>
+      <p>Rooted in tradition, refined by passion. We bring the timeless art of henna to every celebration, one brushstroke at a time.</p>
+      <div class="hero-buttons">
+        <a href="service.html" class="btn btn-primary">Our Services</a>
+        <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR STORY ===== -->
+  <div style="max-width:1300px;margin:0 auto;padding:0 2rem;">
+    <div class="story-section" style="padding:110px 0;">
+      <div class="story-images fade-up">
+        <img class="story-img-main" src="images/img (8).jpg" alt="Henna artist crafting">
+        <img class="story-img-accent" src="images/img (9).jpg" alt="Henna hand art">
+        <div class="story-year-badge">
+          <strong>2012</strong>
+          <span>Est. Year</span>
+        </div>
+      </div>
+      <div class="story-text fade-up">
+        <span class="section-label">Our Story</span>
+        <h2 class="section-title">Born from a Love of <span>Ancient Art</span></h2>
+        <p>Henra was founded in 2012 by master mehndi artist Layla Nair, who grew up watching her grandmother apply henna at every family gathering. What started as a small studio in Chennai quickly grew into one of the region's most trusted names in henna artistry.</p>
+        <p>Today, our team of certified artists serves hundreds of brides, families, and event planners every year. We believe henna is more than decoration — it is a language of celebration, identity, and love.</p>
+        <div class="story-pillars">
+          <div class="pillar"><div class="pillar-icon"><i class="fas fa-seedling"></i></div><div><h4>100% Natural</h4><p>We use only pure, chemical-free henna sourced directly from trusted farms.</p></div></div>
+          <div class="pillar"><div class="pillar-icon"><i class="fas fa-certificate"></i></div><div><h4>Certified Artists</h4><p>Every artist on our team undergoes rigorous training and certification.</p></div></div>
+          <div class="pillar"><div class="pillar-icon"><i class="fas fa-heart"></i></div><div><h4>Made with Love</h4><p>Each design is handcrafted with genuine care and full creative attention.</p></div></div>
+          <div class="pillar"><div class="pillar-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>We Come to You</h4><p>Studio or on-location — we travel across Tamil Nadu and beyond.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STATS STRIP ===== -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item fade-up"><strong>4800+</strong><span>Happy Clients</span></div>
+      <div class="stat-item fade-up"><strong>380+</strong><span>Bridal Designs</span></div>
+      <div class="stat-item fade-up"><strong>12+</strong><span>Years of Artistry</span></div>
+      <div class="stat-item fade-up"><strong>18</strong><span>Expert Artists</span></div>
+    </div>
+  </div>
+
+  <!-- ===== MISSION, VISION, VALUES ===== -->
+  <section class="mv-section">
+    <div class="mv-inner">
+      <div class="mv-header fade-up">
+        <span class="section-label">What Drives Us</span>
+        <h2 class="section-title">Our Mission, Vision &amp; <span>Values</span></h2>
+        <p class="section-desc">Every design we create is guided by a deep commitment to artistry, integrity, and community.</p>
+      </div>
+      <div class="mv-grid">
+        <div class="mv-card fade-up"><div class="mv-icon"><i class="fas fa-bullseye"></i></div><h3>Our Mission</h3><p>To preserve the timeless art of mehndi by delivering exceptional, handcrafted henna experiences that honor cultural roots while embracing modern creativity.</p></div>
+        <div class="mv-card fade-up"><div class="mv-icon"><i class="fas fa-eye"></i></div><h3>Our Vision</h3><p>To become the most trusted henna brand in South Asia, recognized for the purity of our materials, the mastery of our artists, and the warmth of our service.</p></div>
+        <div class="mv-card fade-up"><div class="mv-icon"><i class="fas fa-gem"></i></div><h3>Our Values</h3><p>Authenticity, craftsmanship, cultural respect, and customer delight are the pillars on which Henra stands. We never compromise on quality.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TEAM ===== -->
+  <section class="team-section">
+    <div class="team-header fade-up">
+      <span class="section-label">The People Behind the Art</span>
+      <h2 class="section-title">Meet Our <span>Expert Artists</span></h2>
+      <p class="section-desc">Our talented team brings together traditional mastery and fresh creative vision to serve you with excellence.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up"><div class="team-img-wrap"><img class="team-img" src="images/img (10).jpg" alt="Layla Nair"><div class="team-social"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a></div></div><div class="team-info"><h4>Layla Nair</h4><span>Founder &amp; Lead Artist</span></div></div>
+      <div class="team-card fade-up"><div class="team-img-wrap"><img class="team-img" src="images/img1 (1).jpg" alt="Amira Hassan"><div class="team-social"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a></div></div><div class="team-info"><h4>Amira Hassan</h4><span>Arabic Mehndi Specialist</span></div></div>
+      <div class="team-card fade-up"><div class="team-img-wrap"><img class="team-img" src="images/img1 (2).jpg" alt="Priya Rao"><div class="team-social"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a></div></div><div class="team-info"><h4>Priya Rao</h4><span>Bridal Design Artist</span></div></div>
+      <div class="team-card fade-up"><div class="team-img-wrap"><img class="team-img" src="images/img1 (3).jpg" alt="Sara Mehta"><div class="team-social"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a></div></div><div class="team-info"><h4>Sara Mehta</h4><span>Contemporary Fusion Artist</span></div></div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BANNER ===== -->
+  <div class="cta-wrap">
+    <div class="cta-banner fade-up">
+      <img class="cta-bg" src="images/img1 (5).jpg" alt="Book Henra">
+      <div class="cta-overlay"></div>
+      <div class="cta-content">
+        <span class="section-label">Let Us Create for You</span>
+        <h2 class="section-title">Ready to Wear <span>Beautiful Art?</span></h2>
+        <p>Book a session with one of our expert artists and experience the Henra difference for yourself. We serve bridal, event, and walk-in clients across Tamil Nadu.</p>
+        <div class="cta-buttons"><a href="contact.html" class="btn btn-primary">Book a Session</a><a href="service.html" class="btn btn-secondary">View Services</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-top">
+        <div class="footer-column"><a href="index.html" class="logo"><i class="fas fa-leaf"></i><span class="logo-text">Henra</span></a><p style="margin-top:30px">Your ultimate destination for premium henna art and services. Join our community today.</p></div>
+        <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="contact.html">Contact</a></li><li><a href="service.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="models.html">Models</a></li></ul></div>
+        <div class="footer-column"><h3>Resources</h3><ul><li><a href="#">Safety Tips</a></li><li><a href="#">Guides</a></li><li><a href="#">Care Tips</a></li></ul></div>
+        <div class="footer-column"><h3>Social Links</h3><ul><li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><div class="copyright">© 2026 Henra. All rights reserved.</div></div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const h = document.getElementById('hamburger'), o = document.getElementById('mobileOverlay'), m = document.getElementById('mobileNavMenu');
+      if (h && o && m) {
+        function toggle() { 
+          const a = m.classList.contains('active'); 
+          m.classList.toggle('active'); 
+          o.classList.toggle('active'); 
+          document.body.style.overflow = a ? '' : 'hidden'; 
+          h.innerHTML = a ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>'; 
+        }
+        h.addEventListener('click', toggle); 
+        o.addEventListener('click', toggle);
+        document.querySelectorAll('.mobile-nav-links a').forEach(l => l.addEventListener('click', function() { if (m.classList.contains('active')) toggle(); }));
+        document.addEventListener('keydown', e => { if (e.key==='Escape' && m.classList.contains('active')) toggle(); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 1280 && m.classList.contains('active')) toggle(); });
+      }
+
+      function theme() {
+        document.body.classList.toggle('dark-mode');
+        const d = document.body.classList.contains('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+        localStorage.setItem('theme', d ? 'dark' : 'light');
+      }
+      function rtl() {
+        const doc = document.documentElement, r = doc.getAttribute('dir')==='rtl';
+        doc.setAttribute('dir', r ? 'ltr' : 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = r ? 'RTL' : 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = r ? 'RTL Mode' : 'LTR Mode';
+        localStorage.setItem('direction', r ? 'ltr' : 'rtl');
+      }
+      document.getElementById('themeToggle')?.addEventListener('click', theme);
+      document.getElementById('mobileThemeToggle')?.addEventListener('click', theme);
+      document.getElementById('rtlToggle')?.addEventListener('click', rtl);
+      document.getElementById('mobileRtlToggle')?.addEventListener('click', rtl);
+
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        const s = document.querySelector('#mobileThemeToggle');
+        if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+      }
+      const savedDir = localStorage.getItem('direction');
+      if (savedDir === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        const rtlSpan = document.getElementById('rtlButtonText');
+        const mobileRtlSpan = document.getElementById('mobileRtlButtonText');
+        if (rtlSpan) rtlSpan.textContent = 'LTR';
+        if (mobileRtlSpan) mobileRtlSpan.textContent = 'LTR Mode';
+      }
+
+      const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>
