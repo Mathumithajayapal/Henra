@@ -1015,6 +1015,26 @@
       .footer-middle, .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
       .palette-grid { grid-template-columns: repeat(2, 1fr); }
     }
+    @media (max-width: 600px) {
+  .styles-grid {
+    grid-template-columns: 1fr; /* ONE CARD PER ROW */
+  }
+}
+@media (max-width: 768px) {
+  .tip-card {
+    flex-direction: column;   /* stack vertically */
+    align-items: center;      /* center everything */
+    text-align: center;       /* center text */
+  }
+
+  .tip-icon {
+    margin-bottom: 12px;      /* space between icon & text */
+  }
+
+  .tip-content {
+    text-align: center;
+  }
+}
   </style>
 </head>
 <body>
