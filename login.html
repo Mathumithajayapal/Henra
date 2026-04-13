@@ -6,8 +6,7 @@
   <title>Henra - Elegant Login</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
-
+  <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -194,12 +193,38 @@
       align-items: center;
     }
 
-    .input-wrapper i {
+    /* shared style for both icons inside input-wrapper */
+    .input-wrapper i:not(.toggle-password) {
       position: absolute;
       left: 16px;
       color: var(--secondary);
       font-size: 0.9rem;
       pointer-events: none;
+      z-index: 1;
+    }
+
+    /* eye icon styling (toggle button) */
+    .toggle-password {
+      position: absolute;
+      right: 16px;
+      color: var(--secondary);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      z-index: 2;
+    }
+
+    .toggle-password:hover {
+      color: var(--secondary-dark);
+      transform: scale(1.05);
     }
 
     .input-wrapper input {
@@ -212,6 +237,22 @@
       background: var(--bg);
       color: var(--text);
       transition: var(--transition);
+    }
+
+    /* RTL support for password eye and email icon */
+    [dir="rtl"] .input-wrapper i:not(.toggle-password) {
+      left: auto;
+      right: 16px;
+    }
+
+    [dir="rtl"] .toggle-password {
+      right: auto;
+      left: 16px;
+    }
+
+    [dir="rtl"] .input-wrapper input {
+      padding-left: 16px;
+      padding-right: 44px;
     }
 
     .input-wrapper input:focus {
@@ -352,17 +393,7 @@
       text-decoration: underline;
     }
 
-    /* RTL alignment fix — perfect spacing */
-    [dir="rtl"] .input-wrapper i {
-      left: auto;
-      right: 16px;
-    }
-
-    [dir="rtl"] .input-wrapper input {
-      padding-left: 16px;
-      padding-right: 44px;
-    }
-
+    /* RTL alignment fixes for form-options and social */
     [dir="rtl"] .checkbox-label {
       flex-direction: row-reverse;
     }
@@ -443,7 +474,7 @@
       <div class="login-header">
         <div class="logo" style="justify-content: center; display: flex;">
           <i class="fas fa-leaf"></i>
-         <a href="index.html" style="text-decoration: none;"> <span class="logo-text">Henra</span></a>
+          <a href="index.html" style="text-decoration: none;"><span class="logo-text">Henra</span></a>
         </div>
         <h2>Welcome Back</h2>
         <p>Sign in to your account</p>
@@ -460,9 +491,13 @@
 
         <div class="input-group">
           <label for="password">Password</label>
-          <div class="input-wrapper">
+          <div class="input-wrapper" id="passwordWrapper">
             <i class="fas fa-lock"></i>
             <input type="password" id="password" name="password" placeholder="••••••••" required>
+            <!-- Eye icon button for toggling password visibility -->
+            <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Show password">
+              <i class="far fa-eye-slash"></i>
+            </button>
           </div>
         </div>
 
@@ -506,8 +541,6 @@
       function setTheme(isDark) {
         if (isDark) {
           document.body.classList.add('dark-mode');
-          // The dark-mode class now sets body background to pure black (#000000 to #0a0a0a)
-          // through CSS variables --body-bg-start and --body-bg-end
         } else {
           document.body.classList.remove('dark-mode');
         }
@@ -529,14 +562,12 @@
       }
 
       // DEFAULT: LIGHT MODE (no dark class)
-      // Check stored theme, but ensure default is LIGHT if nothing stored
       const storedTheme = localStorage.getItem('henra_theme');
       if (storedTheme === 'dark') {
-        setTheme(true);  // User had dark mode saved
+        setTheme(true);
       } else if (storedTheme === 'light') {
-        setTheme(false); // User had light mode saved
+        setTheme(false);
       } else {
-        // Default to LIGHT mode (no dark class)
         setTheme(false);
       }
       
@@ -574,11 +605,49 @@
       } else if (savedDir === 'ltr') {
         setDirection(false);
       } else {
-        // default LTR
         setDirection(false);
       }
 
       if (rtlBtn) rtlBtn.addEventListener('click', toggleRTL);
+
+      // ---- PASSWORD TOGGLE (EYE ICON) IMPLEMENTATION ----
+      const passwordField = document.getElementById('password');
+      const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+      
+      if (passwordField && togglePasswordBtn) {
+        // Get the icon element inside the button
+        const eyeIcon = togglePasswordBtn.querySelector('i');
+        
+        // Function to update icon and input type based on visibility state
+        function updatePasswordVisibility() {
+          const isPasswordVisible = passwordField.type === 'text';
+          if (isPasswordVisible) {
+            // Currently showing plain text, switching to password mode
+            passwordField.type = 'password';
+            if (eyeIcon) {
+              eyeIcon.className = 'far fa-eye-slash';
+            }
+            togglePasswordBtn.setAttribute('aria-label', 'Show password');
+          } else {
+            // Currently hidden, switching to visible text
+            passwordField.type = 'text';
+            if (eyeIcon) {
+              eyeIcon.className = 'far fa-eye';
+            }
+            togglePasswordBtn.setAttribute('aria-label', 'Hide password');
+          }
+        }
+        
+        // Add click event listener to toggle button
+        togglePasswordBtn.addEventListener('click', function(e) {
+          e.preventDefault();  // Prevent any form submission or weird behavior
+          updatePasswordVisibility();
+        });
+        
+        // Optional: Ensure that when form is submitted we don't interfere; we keep it natural
+        // Also, if needed, keep the icon consistent when page loads (default is password hidden)
+        // Already default type="password" and eye-slash icon.
+      }
 
       // ---- LOGIN FORM HANDLER with demo feedback ----
       const loginForm = document.getElementById('loginForm');
@@ -633,10 +702,17 @@
       // The body background uses var(--body-bg-start) and var(--body-bg-end)
       // So when dark-mode class is added, background transitions to pure black gradient
       
-      // Additional note: For users who prefer a fully black background, the gradient is nearly black (#000000 to #0a0a0a)
-      // making it appear completely black/dark charcoal.
+      // Additional check: if the eye icon styling might conflict with any theme change, but it's dynamic via CSS variables.
+      // Also update any potential cross-browser quirks: no additional action needed.
       
-      // Optional: Add a small indicator that dark mode is active (already handled by button icon)
+      // For extra safety: If password manager autofills, the eye icon still works.
+      // Also, ensure that in RTL mode, the eye button placement is correct (left side). CSS handles left/right based on dir attribute.
+      
+      // Optional micro fix: If the user toggles RTL after page load, the eye button remains functional.
+      // No extra steps needed, DOM references are stable.
+      
+      // Edge case: When theme toggles, the eye icon color respects --secondary variable.
+      // Perfect.
     })();
   </script>
 </body>

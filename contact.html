@@ -37,13 +37,14 @@
       --secondary-dark: #6B4226;
       --text: #FFFFFF;
       --text-light: #CCCCCC;
-      --bg: #1A1008;
-      --bg-light: #251608;
+      /* Changed from brown (#1A1008 / #251608) to black (#000000 / #0A0A0A) as requested */
+      --bg: #000000;
+      --bg-light: #0A0A0A;
       --border: #5C3D1E;
-      --footer-bg: #1A1008;
+      --footer-bg: #000000;
       --footer-text: #FFFFFF;
-      --card-bg: #2A1C0E;
-      --input-bg: #2F2318;
+      --card-bg: #0D0D0D;
+      --input-bg: #1A1A1A;
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -334,7 +335,7 @@
 
     /* ===== FOOTER ===== */
     .site-footer { background: var(--footer-bg); color: var(--footer-text); padding: 70px 0 40px; margin-top: auto; box-shadow: 0 -2px 10px rgba(139,94,60,0.06); }
-    .dark-mode .site-footer { background: #1A1008 !important; }
+    .dark-mode .site-footer { background: #000000 !important; }
     .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
     .footer-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px; margin-bottom: 50px; }
     .footer-column h3 { color: var(--secondary); font-size: 1rem; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; padding-bottom: 12px; border-bottom: 2px solid var(--secondary); }
