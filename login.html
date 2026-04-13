@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Henra - Elegant Login</title>
+  <title>Henra - Elegant Login & Sign Up</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
@@ -44,14 +44,15 @@
       --bg: #1E150E;
       --bg-light: #2B2017;
       --border: #5C3D1E;
+      /* Pure black backgrounds for dark mode */
       --body-bg-start: #000000;
-      --body-bg-end: #0a0a0a;
+      --body-bg-end: #000000;
     }
 
     body {
       font-family: 'Poppins', sans-serif;
       color: var(--text);
-      background: linear-gradient(125deg, var(--body-bg-start) 0%, var(--body-bg-end) 100%);
+      background: linear-gradient(135deg, var(--body-bg-start) 0%, var(--body-bg-end) 100%);
       line-height: 1.5;
       min-height: 100vh;
       display: flex;
@@ -117,7 +118,7 @@
     }
 
     .login-container {
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
       background: var(--bg);
       border-radius: 36px;
@@ -193,7 +194,6 @@
       align-items: center;
     }
 
-    /* shared style for both icons inside input-wrapper */
     .input-wrapper i:not(.toggle-password) {
       position: absolute;
       left: 16px;
@@ -203,7 +203,6 @@
       z-index: 1;
     }
 
-    /* eye icon styling (toggle button) */
     .toggle-password {
       position: absolute;
       right: 16px;
@@ -239,7 +238,6 @@
       transition: var(--transition);
     }
 
-    /* RTL support for password eye and email icon */
     [dir="rtl"] .input-wrapper i:not(.toggle-password) {
       left: auto;
       right: 16px;
@@ -342,10 +340,12 @@
       display: flex;
       gap: 12px;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     .social-btn {
       flex: 1;
+      min-width: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -365,6 +365,11 @@
     .social-btn i {
       font-size: 1rem;
       color: var(--secondary);
+    }
+
+    .social-btn.apple-btn i {
+      font-size: 1.1rem;
+      color: var(--text);
     }
 
     .social-btn:hover {
@@ -393,7 +398,7 @@
       text-decoration: underline;
     }
 
-    /* RTL alignment fixes for form-options and social */
+    /* RTL adjustments */
     [dir="rtl"] .checkbox-label {
       flex-direction: row-reverse;
     }
@@ -407,7 +412,7 @@
       margin-right: 0;
     }
 
-    /* responsive: stack toggles on very small screens but still neat */
+    /* responsive */
     @media (max-width: 520px) {
       .toggle-bar {
         top: 12px;
@@ -459,7 +464,6 @@
 </head>
 <body>
 
-  <!-- Unified toggle bar: both buttons perfectly aligned in a flex row -->
   <div class="toggle-bar">
     <button class="toggle-btn" id="themeToggleBtn">
       <i class="fas fa-moon"></i> <span id="themeText">Dark</span>
@@ -470,7 +474,8 @@
   </div>
 
   <div class="login-card-wrapper">
-    <div class="login-container">
+    <!-- LOGIN CARD -->
+    <div class="login-container" id="loginCard">
       <div class="login-header">
         <div class="logo" style="justify-content: center; display: flex;">
           <i class="fas fa-leaf"></i>
@@ -494,7 +499,6 @@
           <div class="input-wrapper" id="passwordWrapper">
             <i class="fas fa-lock"></i>
             <input type="password" id="password" name="password" placeholder="••••••••" required>
-            <!-- Eye icon button for toggling password visibility -->
             <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Show password">
               <i class="far fa-eye-slash"></i>
             </button>
@@ -516,24 +520,95 @@
       </div>
 
       <div class="social-login">
-        <a href="#" class="social-btn">
+        <a href="#" class="social-btn" id="googleLoginBtn">
           <i class="fab fa-google"></i> Google
         </a>
-        <a href="#" class="social-btn">
+        <a href="#" class="social-btn" id="facebookLoginBtn">
           <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+        <!-- APPLE LOGIN BUTTON ADDED -->
+        <a href="#" class="social-btn apple-btn" id="appleLoginBtn">
+          <i class="fab fa-apple"></i> Apple
         </a>
       </div>
 
       <div class="signup-prompt">
         Don't have an account?
-        <a href="signup.html">Create Account</a>
+        <a href="#" id="showSignupLink">Create Account</a>
+      </div>
+    </div>
+
+    <!-- SIGNUP CARD (initially hidden) -->
+    <div class="login-container" id="signupCard" style="display: none;">
+      <div class="login-header">
+        <div class="logo" style="justify-content: center; display: flex;">
+          <i class="fas fa-leaf"></i>
+          <span class="logo-text">Henra</span>
+        </div>
+        <h2>Join Henra</h2>
+        <p>Start your journey with us</p>
+      </div>
+
+      <form class="login-form" id="signupForm">
+        <div class="input-group">
+          <label for="signupName">Full Name</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user"></i>
+            <input type="text" id="signupName" name="name" placeholder="Alex Morgan" required>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="signupEmail">Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="signupEmail" name="email" placeholder="hello@henra.com" required>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="signupPassword">Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="signupPassword" name="password" placeholder="Create a password" required>
+            <button type="button" class="toggle-password" id="toggleSignupPasswordBtn" aria-label="Show password">
+              <i class="far fa-eye-slash"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="agreeTerms" required> <span>I agree to the Terms & Privacy</span>
+          </label>
+        </div>
+        <button type="submit" class="login-btn-submit">Create Account</button>
+      </form>
+
+      <div class="divider">
+        <span>OR SIGN UP WITH</span>
+      </div>
+
+      <div class="social-login">
+        <a href="#" class="social-btn" id="googleSignupBtn">
+          <i class="fab fa-google"></i> Google
+        </a>
+        <a href="#" class="social-btn" id="facebookSignupBtn">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </a>
+        <!-- APPLE SIGNUP BUTTON -->
+        <a href="#" class="social-btn apple-btn" id="appleSignupBtn">
+          <i class="fab fa-apple"></i> Apple
+        </a>
+      </div>
+
+      <div class="signup-prompt">
+        Already have an account?
+        <a href="#" id="showLoginLink">Sign In</a>
       </div>
     </div>
   </div>
 
   <script>
     (function() {
-      // ----- THEME (Dark/Light) - DEFAULT LIGHT MODE, DARK MODE TURNS BACKGROUND BLACK -----
+      // ----- THEME (Dark/Light) - Dark mode uses pure black backgrounds via CSS variables -----
       const themeBtn = document.getElementById('themeToggleBtn');
       const themeIconSpan = themeBtn?.querySelector('i');
       const themeTextSpan = document.getElementById('themeText');
@@ -544,15 +619,12 @@
         } else {
           document.body.classList.remove('dark-mode');
         }
-        
-        // Update button icon and text
         if (themeIconSpan) {
           themeIconSpan.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
         if (themeTextSpan) {
           themeTextSpan.textContent = isDark ? 'Light' : 'Dark';
         }
-        
         localStorage.setItem('henra_theme', isDark ? 'dark' : 'light');
       }
 
@@ -561,7 +633,6 @@
         setTheme(isDarkNow);
       }
 
-      // DEFAULT: LIGHT MODE (no dark class)
       const storedTheme = localStorage.getItem('henra_theme');
       if (storedTheme === 'dark') {
         setTheme(true);
@@ -570,10 +641,9 @@
       } else {
         setTheme(false);
       }
-      
       if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
 
-      // ----- RTL TOGGLE (perfect alignment & proper icon/text update) -----
+      // ----- RTL TOGGLE -----
       const rtlBtn = document.getElementById('rtlToggleBtn');
       const rtlTextSpan = document.getElementById('rtlText');
       const rtlIcon = rtlBtn?.querySelector('i');
@@ -598,7 +668,6 @@
         setDirection(newIsRTL);
       }
 
-      // Load saved direction preference (default LTR)
       const savedDir = localStorage.getItem('henra_dir');
       if (savedDir === 'rtl') {
         setDirection(true);
@@ -607,58 +676,100 @@
       } else {
         setDirection(false);
       }
-
       if (rtlBtn) rtlBtn.addEventListener('click', toggleRTL);
 
-      // ---- PASSWORD TOGGLE (EYE ICON) IMPLEMENTATION ----
+      // ---- PASSWORD TOGGLE for LOGIN ----
       const passwordField = document.getElementById('password');
       const togglePasswordBtn = document.getElementById('togglePasswordBtn');
-      
       if (passwordField && togglePasswordBtn) {
-        // Get the icon element inside the button
         const eyeIcon = togglePasswordBtn.querySelector('i');
-        
-        // Function to update icon and input type based on visibility state
-        function updatePasswordVisibility() {
-          const isPasswordVisible = passwordField.type === 'text';
-          if (isPasswordVisible) {
-            // Currently showing plain text, switching to password mode
+        function updateLoginVisibility() {
+          const isVisible = passwordField.type === 'text';
+          if (isVisible) {
             passwordField.type = 'password';
-            if (eyeIcon) {
-              eyeIcon.className = 'far fa-eye-slash';
-            }
+            if (eyeIcon) eyeIcon.className = 'far fa-eye-slash';
             togglePasswordBtn.setAttribute('aria-label', 'Show password');
           } else {
-            // Currently hidden, switching to visible text
             passwordField.type = 'text';
-            if (eyeIcon) {
-              eyeIcon.className = 'far fa-eye';
-            }
+            if (eyeIcon) eyeIcon.className = 'far fa-eye';
             togglePasswordBtn.setAttribute('aria-label', 'Hide password');
           }
         }
-        
-        // Add click event listener to toggle button
-        togglePasswordBtn.addEventListener('click', function(e) {
-          e.preventDefault();  // Prevent any form submission or weird behavior
-          updatePasswordVisibility();
+        togglePasswordBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          updateLoginVisibility();
         });
-        
-        // Optional: Ensure that when form is submitted we don't interfere; we keep it natural
-        // Also, if needed, keep the icon consistent when page loads (default is password hidden)
-        // Already default type="password" and eye-slash icon.
       }
 
-      // ---- LOGIN FORM HANDLER with demo feedback ----
-      const loginForm = document.getElementById('loginForm');
-      if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+      // Password toggle for signup
+      const signupPasswordField = document.getElementById('signupPassword');
+      const toggleSignupBtn = document.getElementById('toggleSignupPasswordBtn');
+      if (signupPasswordField && toggleSignupBtn) {
+        const signupEye = toggleSignupBtn.querySelector('i');
+        toggleSignupBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isVisible = signupPasswordField.type === 'text';
+          if (isVisible) {
+            signupPasswordField.type = 'password';
+            if (signupEye) signupEye.className = 'far fa-eye-slash';
+            toggleSignupBtn.setAttribute('aria-label', 'Show password');
+          } else {
+            signupPasswordField.type = 'text';
+            if (signupEye) signupEye.className = 'far fa-eye';
+            toggleSignupBtn.setAttribute('aria-label', 'Hide password');
+          }
+        });
+      }
+
+      // Toggle between Login and Signup cards
+      const loginCard = document.getElementById('loginCard');
+      const signupCard = document.getElementById('signupCard');
+      const showSignupLink = document.getElementById('showSignupLink');
+      const showLoginLink = document.getElementById('showLoginLink');
+
+      function showLogin() {
+        if (loginCard && signupCard) {
+          loginCard.style.display = 'block';
+          signupCard.style.display = 'none';
+          // re-trigger entrance animation
+          loginCard.style.opacity = '0';
+          setTimeout(() => {
+            loginCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            loginCard.style.opacity = '1';
+          }, 20);
+        }
+      }
+
+      function showSignup() {
+        if (loginCard && signupCard) {
+          loginCard.style.display = 'none';
+          signupCard.style.display = 'block';
+          signupCard.style.opacity = '0';
+          setTimeout(() => {
+            signupCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            signupCard.style.opacity = '1';
+          }, 20);
+        }
+      }
+
+      if (showSignupLink) showSignupLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showSignup();
+      });
+      if (showLoginLink) showLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showLogin();
+      });
+
+      // ----- LOGIN FORM HANDLER -----
+      const loginFormElem = document.getElementById('loginForm');
+      if (loginFormElem) {
+        loginFormElem.addEventListener('submit', function(e) {
           e.preventDefault();
           const emailInput = document.getElementById('email');
           const passwordInput = document.getElementById('password');
           const email = emailInput?.value.trim();
           const password = passwordInput?.value;
-          
           if (!email || !password) {
             alert('Please enter both email and password.');
             return;
@@ -667,24 +778,96 @@
             alert('Please enter a valid email address.');
             return;
           }
-          // Demo success alert
           alert(`✨ Welcome back, ${email}! (Demo sign-in successful)`);
         });
       }
 
-      // smooth entrance animation after a short micro delay
+      // ----- SIGNUP FORM HANDLER -----
+      const signupFormElem = document.getElementById('signupForm');
+      if (signupFormElem) {
+        signupFormElem.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const name = document.getElementById('signupName')?.value.trim();
+          const email = document.getElementById('signupEmail')?.value.trim();
+          const password = document.getElementById('signupPassword')?.value;
+          const terms = document.getElementById('agreeTerms')?.checked;
+          if (!name || !email || !password) {
+            alert('Please fill all fields.');
+            return;
+          }
+          if (!email.includes('@')) {
+            alert('Enter a valid email address.');
+            return;
+          }
+          if (password.length < 6) {
+            alert('Password must be at least 6 characters.');
+            return;
+          }
+          if (!terms) {
+            alert('You must agree to the Terms & Privacy.');
+            return;
+          }
+          alert(`🎉 Welcome to Henra, ${name}! Your account has been created. (Demo)`);
+        });
+      }
+
+      // ----- APPLE LOGIN (both login & signup pages) with demo feedback -----
+      const appleLoginBtn = document.getElementById('appleLoginBtn');
+      const appleSignupBtn = document.getElementById('appleSignupBtn');
+
+      function handleAppleLogin(flow) {
+        // Simulate Apple ID authorization flow
+        // In a real implementation this would redirect to Apple's auth endpoint
+        alert(`🍎 Continue with Apple (${flow}):\nThis would redirect to Apple ID authorization.\nDemo: Successfully authenticated via Apple.`);
+      }
+
+      if (appleLoginBtn) {
+        appleLoginBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          handleAppleLogin('Sign In');
+        });
+      }
+      if (appleSignupBtn) {
+        appleSignupBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          handleAppleLogin('Sign Up');
+        });
+      }
+
+      // Google & Facebook handlers for demo consistency (preserve elegance)
+      const googleLogin = document.getElementById('googleLoginBtn');
+      const facebookLogin = document.getElementById('facebookLoginBtn');
+      const googleSignup = document.getElementById('googleSignupBtn');
+      const facebookSignup = document.getElementById('facebookSignupBtn');
+
+      if (googleLogin) googleLogin.addEventListener('click', (e) => { e.preventDefault(); alert('Google Sign-In (Demo)'); });
+      if (facebookLogin) facebookLogin.addEventListener('click', (e) => { e.preventDefault(); alert('Facebook Sign-In (Demo)'); });
+      if (googleSignup) googleSignup.addEventListener('click', (e) => { e.preventDefault(); alert('Google Sign-Up (Demo)'); });
+      if (facebookSignup) facebookSignup.addEventListener('click', (e) => { e.preventDefault(); alert('Facebook Sign-Up (Demo)'); });
+      
+      // Additional Apple sign-up already handled above
+
+      // Forgot password demo
+      const forgotLinks = document.querySelectorAll('.forgot-link');
+      forgotLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert('Password reset link would be sent to your email (Demo).');
+        });
+      });
+
+      // Smooth entrance animation for initial card
       const container = document.querySelector('.login-container');
       if (container) {
         container.style.opacity = '0';
-        container.style.transform = 'translateY(12px)';
         setTimeout(() => {
           container.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
           container.style.opacity = '1';
           container.style.transform = 'translateY(0)';
         }, 60);
       }
-      
-      // handle any dynamic resizing for toggle-bar clean
+
+      // Responsive toggle bar adjustments
       function handleToggleBarResponsive() {
         const toggleBar = document.querySelector('.toggle-bar');
         if (!toggleBar) return;
@@ -696,23 +879,9 @@
       }
       handleToggleBarResponsive();
       window.addEventListener('resize', handleToggleBarResponsive);
-      
-      // Ensure that when dark mode is active, the entire background becomes black/dark
-      // This is already handled by CSS variables: .dark-mode sets --body-bg-start: #000000 and --body-bg-end: #0a0a0a
-      // The body background uses var(--body-bg-start) and var(--body-bg-end)
-      // So when dark-mode class is added, background transitions to pure black gradient
-      
-      // Additional check: if the eye icon styling might conflict with any theme change, but it's dynamic via CSS variables.
-      // Also update any potential cross-browser quirks: no additional action needed.
-      
-      // For extra safety: If password manager autofills, the eye icon still works.
-      // Also, ensure that in RTL mode, the eye button placement is correct (left side). CSS handles left/right based on dir attribute.
-      
-      // Optional micro fix: If the user toggles RTL after page load, the eye button remains functional.
-      // No extra steps needed, DOM references are stable.
-      
-      // Edge case: When theme toggles, the eye icon color respects --secondary variable.
-      // Perfect.
+
+      // Ensure that if dark mode is active, backgrounds become pure black (--body-bg-start and end: #000)
+      // Already set in .dark-mode variables, no extra action needed.
     })();
   </script>
 </body>

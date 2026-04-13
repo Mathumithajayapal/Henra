@@ -6,7 +6,7 @@
   <title>Henra - About Us</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+  <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,6 +29,7 @@
       --footer-bg: #FFFFFF;
       --footer-text: #000000;
     }
+    /* Dark Mode - Using black and dark grey backgrounds as requested */
     .dark-mode {
       --primary: #C8956A;
       --secondary: #8B5E3C;
@@ -36,10 +37,11 @@
       --secondary-dark: #6B4226;
       --text: #FFFFFF;
       --text-light: #CCCCCC;
-      /* Changed from brown (#1A1008) to black (#000000) as requested */
+      /* Pure black background for body and footer */
       --bg: #000000;
-      --bg-light: #0A0A0A;
-      --border: #5C3D1E;
+      /* Dark grey for card backgrounds and light sections */
+      --bg-light: #1A1A1A;
+      --border: #333333;
       --footer-bg: #000000;
       --footer-text: #FFFFFF;
     }
@@ -186,6 +188,7 @@
       border-radius: 50px !important; 
       font-weight: 600; 
     }
+    /* Login button - kept at the end of header */
     .login-btn { 
       border: 2px solid var(--secondary); 
       color: var(--secondary) !important; 
@@ -193,7 +196,7 @@
     }
     .login-btn:hover { 
       background: var(--secondary); 
-      color: #ec6c10 !important; 
+      color: #ffffff !important; 
     }
 
     /* ===== HAMBURGER ===== */
@@ -233,7 +236,7 @@
     }
     .mobile-nav-menu.active { right: 0; }
     
-    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    /* ===== MOBILE MENU LINKS ===== */
     .mobile-nav-links {
       display: flex !important;
       flex-direction: column !important;
@@ -279,19 +282,6 @@
       color: #ffffff !important;
     }
     
-    /* Home sub-items - same consistent styling */
-    .mobile-sub-item {
-      margin-left: 36px !important;
-      padding: 12px 20px !important;
-      background: var(--bg-light) !important;
-      border-style: solid !important;
-      font-size: 0.9rem !important;
-    }
-    .mobile-sub-item i {
-      width: 24px;
-      font-size: 0.9rem;
-    }
-    
     /* Mobile controls section */
     .mobile-controls {
       margin-top: 20px;
@@ -333,7 +323,7 @@
     /* ===== HERO ===== */
     .hero { position:relative; height:95vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
     .hero img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; }
-    .hero-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(60,30,10,0.65); z-index:2; }
+    .hero-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:2; }
     .hero-content { position:relative; z-index:3; max-width:900px; padding:0 20px; }
     .hero-content h1 { font-size:4rem; color:#ffffff; margin-bottom:20px; }
     .hero-content h1 span { color:var(--secondary-light); }
@@ -347,7 +337,6 @@
 
     /* ===== FOOTER ===== */
     .site-footer { background:var(--footer-bg); color:var(--footer-text); padding:70px 0 40px; margin-top:auto; }
-    .dark-mode .site-footer { background:#000000 !important; }
     .footer-content { max-width:1300px; margin:0 auto; padding:0 2rem; }
     .footer-top { display:grid; grid-template-columns:repeat(4,1fr); gap:50px; margin-bottom:50px; }
     .footer-column h3 { color:var(--secondary); font-size:1rem; font-weight:700; margin-bottom:25px; text-transform:uppercase; letter-spacing:2px; padding-bottom:12px; border-bottom:2px solid var(--secondary); }
@@ -355,9 +344,6 @@
     .footer-column li { margin-bottom:12px; }
     .footer-column a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; transition:var(--transition); }
     .footer-column a:hover { color:var(--secondary); transform:translateX(8px); }
-    .footer-links { display:flex; gap:35px; }
-    .footer-links a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; }
-    .footer-links a:hover { color:var(--secondary); }
     .footer-bottom { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--secondary); padding-top:20px; }
     .copyright { color:var(--footer-text); font-size:0.9rem; opacity:0.8; }
 
@@ -366,18 +352,12 @@
     [dir="rtl"] .footer-column a:hover { transform:translateX(-8px); }
     [dir="rtl"] .mobile-nav-menu { left:-100%; right:auto; border-left:none; border-right:3px solid var(--secondary); }
     [dir="rtl"] .mobile-nav-menu.active { left:0; }
-    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width:1280px) { 
       .nav-links:not(.mobile-nav-links) { display: none !important; } 
       .hamburger { display: block !important; } 
-      
-      /* Hide desktop toggle buttons on mobile/tablet */
-      #themeToggle, 
-      #rtlToggle { 
-        display: none !important; 
-      }
+      #themeToggle, #rtlToggle { display: none !important; }
     }
     @media (min-width:1281px) { 
       .nav-links:not(.mobile-nav-links) { display: flex !important; } 
@@ -385,20 +365,15 @@
     }
     @media (max-width:900px) { 
       .footer-top { grid-template-columns:repeat(2,1fr); } 
-      .footer-middle,.footer-bottom { flex-direction:column; gap:20px; text-align:center; } 
       .hero h1 { font-size:3rem; } 
     }
     @media (max-width:768px) { 
       .hero-content h1 { font-size:2.5rem; } 
-      .hero-content p { font-size:1rem; } 
       .hero { height:60vh; } 
     }
     @media (max-width:600px) { 
-      .hero h1 { font-size:2.2rem; } 
-      .btn { padding:12px 24px; } 
       .footer-top { grid-template-columns:1fr; } 
       .navbar { padding:1rem; } 
-      .logo-text { font-size:20px; } 
     }
 
     /* ===== SHARED SECTION STYLES ===== */
@@ -424,7 +399,7 @@
     .pillar:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
     .pillar-icon { width:46px; height:46px; background:rgba(139,94,60,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
     .pillar-icon i { color:var(--secondary); font-size:20px; }
-    .pillar h4 { font-size:0.95rem; margin-bottom:4px; }
+    .pillar h4 { font-size:0.95rem; margin-bottom:4px; color:var(--text); }
     .pillar p { font-size:0.82rem; color:var(--text-light); line-height:1.6; }
 
     /* ===== STATS STRIP ===== */
@@ -445,7 +420,7 @@
     .mv-card:hover { transform:translateY(-10px); box-shadow:var(--shadow-lg); }
     .mv-icon { width:72px; height:72px; background:rgba(139,94,60,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; }
     .mv-icon i { color:var(--secondary); font-size:28px; }
-    .mv-card h3 { font-size:1.3rem; margin-bottom:14px; }
+    .mv-card h3 { font-size:1.3rem; margin-bottom:14px; color:var(--text); }
     .mv-card p { font-size:0.92rem; color:var(--text-light); line-height:1.8; }
 
     /* ===== TEAM ===== */
@@ -458,19 +433,19 @@
     .team-img-wrap { position:relative; overflow:hidden; }
     .team-img { width:100%; height:280px; object-fit:cover; display:block; transition:transform 0.5s; }
     .team-card:hover .team-img { transform:scale(1.07); }
-    .team-social { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(60,20,5,0.8)); padding:30px 16px 16px; display:flex; justify-content:center; gap:12px; opacity:0; transform:translateY(10px); transition:0.4s; }
+    .team-social { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent,rgba(0,0,0,0.8)); padding:30px 16px 16px; display:flex; justify-content:center; gap:12px; opacity:0; transform:translateY(10px); transition:0.4s; }
     .team-card:hover .team-social { opacity:1; transform:translateY(0); }
     .team-social a { width:36px; height:36px; background:var(--secondary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; text-decoration:none; transition:0.3s; }
     .team-social a:hover { background:var(--secondary-dark); transform:scale(1.1); }
     .team-info { padding:22px 18px; }
-    .team-info h4 { font-size:1.05rem; margin-bottom:6px; }
+    .team-info h4 { font-size:1.05rem; margin-bottom:6px; color:var(--text); }
     .team-info span { font-size:0.82rem; color:var(--secondary); font-weight:600; letter-spacing:0.5px; }
 
     /* ===== CTA BANNER ===== */
     .cta-wrap { padding:0 2rem 110px; max-width:1340px; margin:0 auto; }
     .cta-banner { border-radius:32px; overflow:hidden; position:relative; }
     .cta-bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-    .cta-overlay { position:absolute; inset:0; background:linear-gradient(120deg,rgba(60,20,5,0.92) 40%,rgba(139,94,60,0.75)); }
+    .cta-overlay { position:absolute; inset:0; background:linear-gradient(120deg,rgba(0,0,0,0.9) 40%,rgba(139,94,60,0.75)); }
     .cta-content { position:relative; z-index:2; padding:90px 80px; max-width:660px; }
     .cta-content .section-label { color:#e8c9a8; }
     .cta-content .section-title { color:#fff; }
@@ -496,6 +471,16 @@
       .stats-inner { grid-template-columns:1fr 1fr; }
       .cta-content { padding:50px 24px; }
     }
+        .controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.login-btn {
+  margin-left: 10px;
+  text-decoration: none;
+}
   </style>
 </head>
 <body>
@@ -503,43 +488,48 @@
   <div class="mobile-overlay" id="mobileOverlay"></div>
 
   <!-- ===== HEADER ===== -->
- <header>
+  <header>
     <nav class="navbar">
       <a href="index.html" class="logo">
         <i class="fas fa-leaf"></i>
         <span class="logo-text">Henra</span>
       </a>
-      <ul class="nav-links">
-        <li class="dropdown">
-          <a href="#">Home <i class="fas fa-caret-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="index.html">Home 1</a></li>
-            <li><a href="home2.html">Home 2</a></li>
-          </ul>
-        </li>
-        <li><a href="about.html"  class="active">About</a></li>
-        <li><a href="service.html">Services</a></li>
-        <li><a href="artist.html">Artist</a></li>
-        <li><a href="aftercareoil.html">Aftercare</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="trends.html">Trends</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
-      </ul>
-      <div class="controls">
-        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
-        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
-      </div>
+    <ul class="nav-links">
+  <li class="dropdown">
+    <a href="#" class="active">Home <i class="fas fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+    </ul>
+  </li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="service.html">Services</a></li>
+  <li><a href="artist.html">Artist</a></li>
+  <li><a href="aftercareoil.html">Aftercare</a></li>
+  <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="trends.html">Trends</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="controls">
+  <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+  <button class="control-btn rtl-btn" id="rtlToggle">
+    <i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span>
+  </button>
+
+  <!-- ✅ LOGIN BUTTON AT THE END -->
+  <a href="login.html" class="nav-btn login-btn">Login</a>
+
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+</div>
     </nav>
   </header>
 
-  <!-- ===== MOBILE NAVIGATION MENU - ALL LINKS SAME SIZE, SAME BACKGROUND ===== -->
+  <!-- ===== MOBILE NAVIGATION MENU ===== -->
   <div class="mobile-nav-menu" id="mobileNavMenu">
     <ul class="mobile-nav-links">
       <li><a href="index.html"> Home 1</a></li>
       <li><a href="home2.html"> Home 2</a></li>
-
       <li><a href="about.html" class="active"> About</a></li>
       <li><a href="service.html"> Service</a></li>
       <li><a href="artist.html"> Artist</a></li>
@@ -684,7 +674,7 @@
       function theme() {
         document.body.classList.toggle('dark-mode');
         const d = document.body.classList.contains('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = d ? 'fas fa-sun' : 'fas fa-moon'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
         localStorage.setItem('theme', d ? 'dark' : 'light');
@@ -705,7 +695,7 @@
 
       if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = 'fas fa-sun'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
       }

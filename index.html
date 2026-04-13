@@ -6,7 +6,7 @@
   <title>Henra - Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+  <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,17 +29,18 @@
       --footer-bg: #FFFFFF;
       --footer-text: #000000;
     }
+    /* Dark Mode - Strict Black Backgrounds as requested */
     .dark-mode {
       --primary: #C8956A;
       --secondary: #8B5E3C;
       --secondary-light: #A97C58;
       --secondary-dark: #6B4226;
       --text: #FFFFFF;
-      --text-light: #CCCCCC;
-      --bg: #1A1008;
-      --bg-light: #251608;
-      --border: #5C3D1E;
-      --footer-bg: #1A1008;
+      --text-light: #E0E0E0;
+      --bg: #000000;          /* Pure black background for body */
+      --bg-light: #0A0A0A;    /* Almost black for light sections */
+      --border: #2A2A2A;      /* Dark border */
+      --footer-bg: #000000;   /* Black footer */
       --footer-text: #FFFFFF;
     }
     body {
@@ -65,6 +66,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
+      transition: background 0.3s;
     }
     .navbar {
       display: flex;
@@ -187,7 +189,7 @@
     .rtl-btn i {
       font-size: 0.9rem;
     }
-    /* Only login button - signup removed */
+    /* Login button - kept at the end of header as requested */
     .nav-btn { 
       padding: 8px 22px !important; 
       border-radius: 50px !important; 
@@ -200,7 +202,7 @@
     }
     .login-btn:hover { 
       background: var(--secondary); 
-      color: #ec6c10 !important; 
+      color: #ffffff !important; 
     }
 
     /* ===== HAMBURGER ===== */
@@ -286,19 +288,6 @@
       color: #ffffff !important;
     }
     
-    /* Home sub-items - same size, consistent styling */
-    .mobile-home-sub {
-      margin-left: 36px !important;
-      padding: 12px 20px !important;
-      background: var(--bg-light) !important;
-      border-style: solid !important;
-      font-size: 0.9rem !important;
-    }
-    .mobile-home-sub i {
-      width: 24px;
-      font-size: 0.9rem;
-    }
-    
     /* Mobile controls section - consistent button styling */
     .mobile-controls {
       margin-top: 20px;
@@ -362,7 +351,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(60, 30, 10, 0.65);
+      background: rgba(0, 0, 0, 0.7); /* Darker overlay for better text contrast */
       z-index: 2;
     }
     .hero-content {
@@ -613,7 +602,7 @@
     .portfolio-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(60,30,10,0.92) 0%, rgba(60,30,10,0.3) 50%, transparent 100%);
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
       opacity: 0;
       transition: opacity 0.4s ease;
       display: flex;
@@ -793,7 +782,6 @@
       border-right: 3px solid var(--secondary);
     }
     [dir="rtl"] .mobile-nav-menu.active { left: 0; }
-    [dir="rtl"] .mobile-home-sub { margin-left: 0 !important; margin-right: 36px !important; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1280px) {
@@ -844,29 +832,35 @@
       transform: translateY(0);
     }
     @media (max-width: 480px) {
-  .stats-inner {
-    grid-template-columns: 1fr !important;
-    gap: 25px;
-  }
-
-  .band-stat {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUpMobile 0.6s ease forwards;
-  }
-
-  /* Stagger (one by one) */
-  .band-stat:nth-child(1) { animation-delay: 0.2s; }
-  .band-stat:nth-child(2) { animation-delay: 0.6s; }
-  .band-stat:nth-child(3) { animation-delay: 1s; }
-  .band-stat:nth-child(4) { animation-delay: 1.4s; }
-
-  @keyframes fadeUpMobile {
-    to {
-      opacity: 1;
-      transform: translateY(0);
+      .stats-inner {
+        grid-template-columns: 1fr !important;
+        gap: 25px;
+      }
+      .band-stat {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeUpMobile 0.6s ease forwards;
+      }
+      .band-stat:nth-child(1) { animation-delay: 0.2s; }
+      .band-stat:nth-child(2) { animation-delay: 0.6s; }
+      .band-stat:nth-child(3) { animation-delay: 1s; }
+      .band-stat:nth-child(4) { animation-delay: 1.4s; }
+      @keyframes fadeUpMobile {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     }
-  }
+    .controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.login-btn {
+  margin-left: 10px;
+  text-decoration: none;
 }
   </style>
 </head>
@@ -881,28 +875,34 @@
         <i class="fas fa-leaf"></i>
         <span class="logo-text">Henra</span>
       </a>
-      <ul class="nav-links">
-        <li class="dropdown">
-          <a href="#" class="active">Home <i class="fas fa-caret-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="index.html">Home 1</a></li>
-            <li><a href="home2.html">Home 2</a></li>
-          </ul>
-        </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="service.html">Services</a></li>
-        <li><a href="artist.html">Artist</a></li>
-        <li><a href="aftercareoil.html">Aftercare</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="trends.html">Trends</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
-      </ul>
-      <div class="controls">
-        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
-        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
-      </div>
+     <ul class="nav-links">
+  <li class="dropdown">
+    <a href="#" class="active">Home <i class="fas fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+    </ul>
+  </li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="service.html">Services</a></li>
+  <li><a href="artist.html">Artist</a></li>
+  <li><a href="aftercareoil.html">Aftercare</a></li>
+  <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="trends.html">Trends</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="controls">
+  <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+  <button class="control-btn rtl-btn" id="rtlToggle">
+    <i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span>
+  </button>
+
+  <!-- ✅ LOGIN BUTTON AT THE END -->
+  <a href="login.html" class="nav-btn login-btn">Login</a>
+
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+</div>
     </nav>
   </header>
 
@@ -911,7 +911,6 @@
     <ul class="mobile-nav-links">
       <li><a href="index.html"> Home 1</a></li>
       <li><a href="home2.html"> Home 2</a></li>
-
       <li><a href="about.html"> About</a></li>
       <li><a href="service.html"> Service</a></li>
       <li><a href="artist.html"> Artist</a></li>
