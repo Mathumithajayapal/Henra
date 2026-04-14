@@ -6,7 +6,7 @@
   <title>Henra - Services</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+  <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,7 +28,9 @@
       --transition: all 0.4s ease;
       --footer-bg: #FFFFFF;
       --footer-text: #000000;
+      --card-bg: #ffffff;
     }
+    /* Dark Mode - Using pure black and dark grey backgrounds as requested */
     .dark-mode {
       --primary: #C8956A;
       --secondary: #8B5E3C;
@@ -36,11 +38,12 @@
       --secondary-dark: #6B4226;
       --text: #FFFFFF;
       --text-light: #CCCCCC;
-      --bg: #1A1008;
-      --bg-light: #251608;
-      --border: #5C3D1E;
-      --footer-bg: #1A1008;
+      --bg: #000000;
+      --bg-light: #1A1A1A;
+      --border: #333333;
+      --footer-bg: #000000;
       --footer-text: #FFFFFF;
+      --card-bg: #0D0D0D;
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -55,7 +58,7 @@
     h1,h2,h3,h4,h5,h6,.logo-text,.hero h1 { font-family: 'Playfair Display', serif; font-weight: 700; }
     .dark-mode h1,.dark-mode h2,.dark-mode h3 { color: #FFFFFF !important; }
 
-    /* ===== HEADER - Clean navbar with proper spacing, only login button ===== */
+    /* ===== HEADER - Clean navbar ===== */
     header { background: var(--bg); box-shadow: 0 2px 10px rgba(139,94,60,0.08); position: sticky; top: 0; z-index: 1000; }
     .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; max-width: 1400px; margin: 0 auto; }
     .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
@@ -76,16 +79,16 @@
     .rtl-btn { font-size: 0.85rem; font-weight: 600; padding: 8px 14px; min-width: 70px; }
     .rtl-btn i { font-size: 0.9rem; }
     .nav-btn { padding: 8px 22px !important; border-radius: 50px !important; font-weight: 600; }
+    /* Login button - kept at the end of header */
     .login-btn { border: 2px solid var(--secondary); color: var(--secondary) !important; background: transparent; }
-    .login-btn:hover { background: var(--secondary);       color: #ec6c10 !important; 
-}
+    .login-btn:hover { background: var(--secondary); color: #ffffff !important; }
     .hamburger { display: none; background: none; border: 2px solid var(--border); border-radius: 8px; font-size: 20px; cursor: pointer; padding: 8px 12px; color: var(--text); }
     .mobile-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 998; display: none; }
     .mobile-overlay.active { display: block; }
     .mobile-nav-menu { position: fixed; top: 0; right: -100%; width: 320px; height: 100vh; background: var(--bg-light); z-index: 999; transition: right 0.4s; padding: 90px 1.5rem 2rem; border-left: 3px solid var(--secondary); overflow-y: auto; }
     .mobile-nav-menu.active { right: 0; }
     
-    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    /* ===== MOBILE MENU LINKS ===== */
     .mobile-nav-links {
       display: flex !important;
       flex-direction: column !important;
@@ -131,19 +134,6 @@
       color: #ffffff !important;
     }
     
-    /* Home sub-items - same consistent styling */
-    .mobile-sub-item {
-      margin-left: 36px !important;
-      padding: 12px 20px !important;
-      background: var(--bg-light) !important;
-      border-style: solid !important;
-      font-size: 0.9rem !important;
-    }
-    .mobile-sub-item i {
-      width: 24px;
-      font-size: 0.9rem;
-    }
-    
     /* Mobile controls section */
     .mobile-controls {
       margin-top: 20px;
@@ -185,7 +175,7 @@
     /* ===== HERO ===== */
     .hero { position: relative; height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
     .hero img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(60,30,10,0.68); z-index: 2; }
+    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.68); z-index: 2; }
     .hero-content { position: relative; z-index: 3; max-width: 900px; padding: 0 20px; }
     .hero-content .hero-tag { display: inline-block; background: rgba(169,124,88,0.25); border: 1px solid var(--secondary-light); color: var(--secondary-light); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 20px; border-radius: 50px; margin-bottom: 18px; }
     .hero-content h1 { font-size: 4rem; color: #ffffff; margin-bottom: 20px; line-height: 1.15; }
@@ -216,7 +206,7 @@
     .tab-btn { padding: 11px 26px; border-radius: 50px; border: 2px solid var(--border); background: transparent; color: var(--text); font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: var(--transition); }
     .tab-btn:hover, .tab-btn.active { background: var(--secondary); border-color: var(--secondary); color: #fff; }
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-    .svc-card { background: var(--bg); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; transition: var(--transition); position: relative; }
+    .svc-card { background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; transition: var(--transition); position: relative; }
     .svc-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
     .svc-card-top { height: 220px; position: relative; overflow: hidden; }
     .svc-card-top img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
@@ -240,7 +230,7 @@
     .featured-img-wrap img { width: 100%; height: 480px; object-fit: cover; display: block; border-radius: 24px; transition: transform 0.5s ease; }
     .featured-img-wrap:hover img { transform: scale(1.03); }
     .featured-label { position: absolute; top: 20px; left: 20px; background: var(--secondary); color: #fff; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 50px; z-index: 2; }
-    .featured-badge { position: absolute; bottom: -16px; right: 24px; background: var(--bg); border: 2px solid var(--border); border-radius: 16px; padding: 16px 20px; text-align: center; box-shadow: var(--shadow-lg); z-index: 2; }
+    .featured-badge { position: absolute; bottom: -16px; right: 24px; background: var(--card-bg); border: 2px solid var(--border); border-radius: 16px; padding: 16px 20px; text-align: center; box-shadow: var(--shadow-lg); z-index: 2; }
     .featured-badge .b-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 800; color: var(--secondary); line-height: 1; }
     .featured-badge .b-lbl { font-size: 0.72rem; color: var(--text-light); }
     .featured-text .tag { display: inline-block; background: rgba(139,94,60,0.12); color: var(--secondary); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 18px; border-radius: 50px; margin-bottom: 16px; }
@@ -260,8 +250,8 @@
     .celeb-card { border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 3/4; cursor: pointer; box-shadow: var(--shadow); }
     .celeb-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
     .celeb-card:hover img { transform: scale(1.05); }
-    .celeb-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(60,30,10,0.92) 0%, transparent 100%); padding: 24px 18px 18px; }
-    .celeb-info .occasion { font-size: 0.72rem; color:#000000; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .celeb-info { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, transparent 100%); padding: 24px 18px 18px; }
+    .celeb-info .occasion { font-size: 0.72rem; color: var(--secondary-light); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
     .celeb-info h4 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1rem; }
     .celeb-recreate-banner { background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 50%, var(--secondary-light) 100%); border-radius: 24px; padding: 50px 50px; display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
     .celeb-recreate-banner h3 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; margin-bottom: 10px; }
@@ -287,8 +277,7 @@
     .cta-band .btn-outline-white:hover { background: #fff; color: var(--secondary-dark); }
 
     /* ===== FOOTER ===== */
-    .site-footer { background: var(--footer-bg); color: var(--footer-text); padding: 70px 0 40px; margin-top: auto; box-shadow: 0 -2px 10px rgba(139,94,60,0.06); }
-    .dark-mode .site-footer { background: #1A1008 !important; }
+    .site-footer { background: var(--footer-bg); color: var(--footer-text); padding: 70px 0 40px; margin-top: auto; }
     .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
     .footer-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px; margin-bottom: 50px; }
     .footer-column h3 { color: var(--secondary); font-size: 1rem; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; padding-bottom: 12px; border-bottom: 2px solid var(--secondary); }
@@ -296,9 +285,6 @@
     .footer-column li { margin-bottom: 12px; }
     .footer-column a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; transition: var(--transition); }
     .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
-    .footer-links { display: flex; gap: 35px; }
-    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
-    .footer-links a:hover { color: var(--secondary); }
     .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--secondary); padding-top: 20px; }
     .copyright { color: var(--footer-text); font-size: 0.9rem; opacity: 0.8; }
 
@@ -307,7 +293,6 @@
     [dir="rtl"] .footer-column a:hover { transform: translateX(-8px); }
     [dir="rtl"] .mobile-nav-menu { left: -100%; right: auto; border-left: none; border-right: 3px solid var(--secondary); }
     [dir="rtl"] .mobile-nav-menu.active { left: 0; }
-    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
     [dir="rtl"] .featured-service.reverse { direction: ltr; }
     [dir="rtl"] .featured-service.reverse > * { direction: rtl; }
 
@@ -317,12 +302,7 @@
       .hamburger { display: block !important; }
       .celeb-showcase { grid-template-columns: repeat(2, 1fr); }
       .process-steps::before { display: none; }
-      
-      /* Hide desktop toggle buttons on mobile/tablet */
-      #themeToggle, 
-      #rtlToggle { 
-        display: none !important; 
-      }
+      #themeToggle, #rtlToggle { display: none !important; }
     }
     @media (min-width: 1281px) {
       .nav-links:not(.mobile-nav-links) { display: flex !important; }
@@ -341,7 +321,6 @@
       .celeb-showcase { grid-template-columns: 1fr 1fr; }
       .celeb-recreate-banner { text-align: center; flex-direction: column; padding: 36px 24px; }
       .footer-top { grid-template-columns: repeat(2, 1fr); }
-      .footer-middle,.footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
       .feature-list { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
@@ -352,25 +331,36 @@
       .logo-text { font-size: 20px; }
       .section-header h2 { font-size: 2rem; }
       .celeb-showcase { grid-template-columns: 1fr; }
-      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .cta-band div { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+      .cta-band a { width: 100%; max-width: 280px; text-align: center; margin: 0; }
     }
-    .cta-band div {
+             .controls {
   display: flex;
-  justify-content: center;
-  gap: 16px; /* space between buttons */
-  flex-wrap: wrap; /* allows stacking on small screens */
+  gap: 12px;
+  align-items: center;
 }
-    @media (max-width: 600px) {
-  .cta-band div {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px; /* vertical gap */
+
+.login-btn {
+  margin-left: 10px;
+  text-decoration: none;
+}
+@media (max-width:1280px) {
+  .nav-links:not(.mobile-nav-links) { 
+    display: none !important; 
   }
 
-  .cta-band a {
-    width: 100%;
-    max-width: 280px; /* nice button width */
-    text-align: center;
+  .hamburger { 
+    display: block !important; 
+  }
+
+  #themeToggle, #rtlToggle { 
+    display: none !important; 
+  }
+
+  /* ✅ HIDE LOGIN BUTTON IN MOBILE */
+  .login-btn {
+    display: none !important;
   }
 }
   </style>
@@ -379,46 +369,52 @@
 
   <div class="mobile-overlay" id="mobileOverlay"></div>
 
-  <!-- ===== HEADER - Only Login button, SignUp removed ===== -->
+  <!-- ===== HEADER - Login button at the end ===== -->
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">
         <i class="fas fa-leaf"></i>
         <span class="logo-text">Henra</span>
       </a>
-      <ul class="nav-links">
-        <li class="dropdown">
-          <a href="#">Home <i class="fas fa-caret-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="index.html">Home 1</a></li>
-            <li><a href="home2.html">Home 2</a></li>
-          </ul>
-        </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="service.html" class="active">Services</a></li>
-        <li><a href="artist.html">Artist</a></li>
-        <li><a href="aftercareoil.html" >Aftercare</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="trends.html">Trends</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
-      </ul>
-      <div class="controls">
-        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
-        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
-      </div>
+     <ul class="nav-links">
+  <li class="dropdown">
+    <a href="#">Home <i class="fas fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+    </ul>
+  </li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="service.html"  class="active">Services</a></li>
+  <li><a href="artist.html">Artist</a></li>
+  <li><a href="aftercareoil.html">Aftercare</a></li>
+  <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="trends.html">Trends</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="controls">
+  <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+  <button class="control-btn rtl-btn" id="rtlToggle">
+    <span id="rtlButtonText">RTL</span>
+  </button>
+
+  <!-- ✅ LOGIN BUTTON AT THE END -->
+  <a href="login.html" class="nav-btn login-btn">Login</a>
+
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+</div>
     </nav>
   </header>
 
-  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+
+  <!-- ===== MOBILE NAVIGATION MENU ===== -->
   <div class="mobile-nav-menu" id="mobileNavMenu">
     <ul class="mobile-nav-links">
       <li><a href="index.html"> Home 1</a></li>
       <li><a href="home2.html"> Home 2</a></li>
-
       <li><a href="about.html"> About</a></li>
-      <li><a href="service.html"  class="active"> Service</a></li>
+      <li><a href="service.html" class="active"> Service</a></li>
       <li><a href="artist.html"> Artist</a></li>
       <li><a href="aftercareoil.html"> Aftercare</a></li>
       <li><a href="gallery.html"> Gallery</a></li>
@@ -492,7 +488,7 @@
   <section class="celebrity-section">
     <div class="celeb-inner">
       <div class="section-header fade-up"><span class="tag">Celebrity Inspired</span><h2>Celebrity Marriage <span>Henna Recreation</span></h2><p>Obsessed with the mehendi from a star-studded wedding? We study, recreate, and personalize iconic celebrity henna looks.</p></div>
-      <div class="celeb-showcase fade-up"><div class="celeb-card"><img src="images/img (15).jpg" alt="Rajasthani Royal Style"><div class="celeb-info"><div class="occasion">Bollywood Wedding</div><h4>Rajasthani Royal Style</h4></div></div><div class="celeb-card"><img src="images/img (16).jpg" alt="Kerala Temple Motifs"><div class="celeb-info"><div class="occasion">South Indian Wedding</div><h4>Kerala Temple Motifs</h4></div></div><div class="celeb-card"><img src="images/img (17).jpg" alt="Mughal Inspired"><div class="celeb-info"><div class="occasion">Mughal Inspired</div><h4>Intricate Lattice Work</h4></div></div><div class="celeb-card"><img src="images/img (18).jpg" alt="Modern Floral Fusion"><div class="celeb-info"><div class="occasion">Arabic Style</div><h4>Modern Floral Fusion</h4></div></div></div>
+      <div class="celeb-showcase fade-up"><div class="celeb-card"><img src="images/img (15).jpg" alt="Rajasthani Royal Style"><div class="celeb-info"><h4>Rajasthani Royal Style</h4></div></div><div class="celeb-card"><img src="images/img (16).jpg" alt="Kerala Temple Motifs"><div class="celeb-info"><h4>Kerala Temple Motifs</h4></div></div><div class="celeb-card"><img src="images/img (17).jpg" alt="Mughal Inspired"><div class="celeb-info"><h4>Intricate Lattice Work</h4></div></div><div class="celeb-card"><img src="images/img (18).jpg" alt="Modern Floral Fusion"><div class="celeb-info"><h4>Modern Floral Fusion</h4></div></div></div>
       <div class="celeb-recreate-banner fade-up"><div><h3>Seen a Design You Love?</h3><p>Share a photo of any celebrity wedding henna — from Bollywood to Hollywood — and our artists will recreate it faithfully for you.</p></div><a href="contact.html" class="btn-white">Request a Recreation →</a></div>
     </div>
   </section>
@@ -501,7 +497,7 @@
   <section class="section section-bg">
     <div class="container">
       <div class="featured-service reverse fade-up">
-        <div class="featured-text"><span class="tag">Bespoke Service</span><h2>Fully <span>Customized</span> Henna Designs</h2><p>No template. No repeat. Every custom design session begins with a conversation — we listen to your story, your aesthetic, your occasion — and translate it into art on your skin.</p><ul class="feature-list"><li><i class="fas fa-check-circle"></i> Personal design consultation</li><li><i class="fas fa-check-circle"></i> Mood board creation</li><li><i class="fas fa-check-circle"></i> Name & initials integration</li><li><i class="fas fa-check-circle"></i> Cultural motif blending</li><li><i class="fas fa-check-circle"></i> Geometric & modern styles</li><li><i class="fas fa-check-circle"></i> Revision until perfect</li></ul><div><div class="price-tag">From ₹800</div><div class="price-label">Custom design session</div></div><a href="contact.html" class="btn btn-primary">Start Your Design</a></div>
+        <div class="featured-text"><span class="tag">Bespoke Service</span><h2>Fully <span>Customized</span> Henna Designs</h2><p>No template. No repeat. Every custom design session begins with a conversation — we listen to your story, your aesthetic, your occasion — and translate it into art on your skin.</p><ul class="feature-list"><li><i class="fas fa-check-circle"></i> Personal design consultation</li><li><i class="fas fa-check-circle"></i> Mood board creation</li><li><i class="fas fa-check-circle"></i> Name & initials integration</li><li><i class="fas fa-check-circle"></i> Cultural motif blending</li><li><i class="fas fa-check-circle"></i> Geometric & modern styles</li><li><i class="fas fa-check-circle"></i> Revision until perfect</li></ul><div><div class="price-tag">From ₹800</div></div><a href="contact.html" class="btn btn-primary">Start Your Design</a></div>
         <div class="featured-img-wrap"><img src="images/img (19).jpg" alt="Custom Henna Design"><span class="featured-label">✦ Bespoke Art</span><div class="featured-badge"><div class="b-num">∞</div><div class="b-lbl">Unique<br>Designs</div></div></div>
       </div>
     </div>
@@ -556,7 +552,7 @@
       function theme() {
         document.body.classList.toggle('dark-mode');
         const d = document.body.classList.contains('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = d ? 'fas fa-sun' : 'fas fa-moon'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
         localStorage.setItem('theme', d ? 'dark' : 'light');
@@ -577,7 +573,7 @@
 
       if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = 'fas fa-sun'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
       }

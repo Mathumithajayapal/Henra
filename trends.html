@@ -6,7 +6,7 @@
   <title>Henra - Henna Trends 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+  <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,7 +28,9 @@
       --transition: all 0.4s ease;
       --footer-bg: #FFFFFF;
       --footer-text: #000000;
+      --card-bg: #ffffff;
     }
+    /* Dark Mode - Using pure black and dark grey backgrounds as requested */
     .dark-mode {
       --primary: #C8956A;
       --secondary: #8B5E3C;
@@ -36,11 +38,12 @@
       --secondary-dark: #6B4226;
       --text: #FFFFFF;
       --text-light: #CCCCCC;
-      --bg: #1A1008;
-      --bg-light: #251608;
-      --border: #5C3D1E;
-      --footer-bg: #1A1008;
+      --bg: #000000;
+      --bg-light: #1A1A1A;
+      --border: #333333;
+      --footer-bg: #000000;
       --footer-text: #FFFFFF;
+      --card-bg: #0D0D0D;
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -190,6 +193,7 @@
       border-radius: 50px !important; 
       font-weight: 600; 
     }
+    /* Login button - kept at the end of header */
     .login-btn { 
       border: 2px solid var(--secondary); 
       color: var(--secondary) !important; 
@@ -197,7 +201,7 @@
     }
     .login-btn:hover { 
       background: var(--secondary); 
-      color: #ec6c10 !important; 
+      color: #ffffff !important; 
     }
 
     /* ===== HAMBURGER ===== */
@@ -233,7 +237,7 @@
     }
     .mobile-nav-menu.active { right: 0; }
     
-    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND ===== */
     .mobile-nav-links {
       display: flex !important;
       flex-direction: column !important;
@@ -277,19 +281,6 @@
     .mobile-nav-links a:hover i,
     .mobile-nav-links a.active i {
       color: #ffffff !important;
-    }
-    
-    /* Home sub-items - same consistent styling */
-    .mobile-sub-item {
-      margin-left: 36px !important;
-      padding: 12px 20px !important;
-      background: var(--bg-light) !important;
-      border-style: solid !important;
-      font-size: 0.9rem !important;
-    }
-    .mobile-sub-item i {
-      width: 24px;
-      font-size: 0.9rem;
     }
     
     /* Mobile controls section */
@@ -423,7 +414,7 @@
     .page-hero-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(60,30,10,0.70);
+      background: rgba(0,0,0,0.70);
       z-index: 2;
     }
     .page-hero-content {
@@ -599,7 +590,7 @@
       gap: 32px;
     }
     .trend-card {
-      background: var(--bg);
+      background: var(--card-bg);
       border-radius: 24px;
       overflow: hidden;
       box-shadow: var(--shadow);
@@ -747,7 +738,7 @@
       height: 40px;
     }
     .palette-info {
-      background: var(--bg);
+      background: var(--card-bg);
       padding: 18px 16px;
       border: 1px solid var(--border);
       border-top: none;
@@ -827,7 +818,7 @@
       gap: 28px;
     }
     .tip-card {
-      background: var(--bg);
+      background: var(--card-bg);
       border-radius: 22px;
       padding: 36px 32px;
       border: 1px solid var(--border);
@@ -872,7 +863,7 @@
     .cta-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, rgba(60,20,5,0.92) 40%, rgba(139,94,60,0.75));
+      background: linear-gradient(120deg, rgba(0,0,0,0.92) 40%, rgba(139,94,60,0.75));
     }
     .cta-content {
       position: relative;
@@ -924,9 +915,7 @@
       color: var(--footer-text);
       padding: 70px 0 40px;
       margin-top: auto;
-      box-shadow: 0 -2px 10px rgba(139,94,60,0.06);
     }
-    .dark-mode .site-footer { background: #1A1008 !important; }
     .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
     .footer-top {
       display: grid;
@@ -953,10 +942,6 @@
       transition: var(--transition);
     }
     .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
-   
-    .footer-links { display: flex; gap: 35px; }
-    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
-    .footer-links a:hover { color: var(--secondary); }
     .footer-bottom {
       display: flex;
       justify-content: space-between;
@@ -971,18 +956,12 @@
     [dir="rtl"] .footer-column a:hover { transform: translateX(-8px); }
     [dir="rtl"] .mobile-nav-menu { left: -100%; right: auto; border-left: none; border-right: 3px solid var(--secondary); }
     [dir="rtl"] .mobile-nav-menu.active { left: 0; }
-    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1280px) {
       .nav-links:not(.mobile-nav-links) { display: none !important; }
       .hamburger { display: block !important; }
-      
-      /* Hide desktop toggle buttons on mobile/tablet */
-      #themeToggle, 
-      #rtlToggle { 
-        display: none !important; 
-      }
+      #themeToggle, #rtlToggle { display: none !important; }
     }
     @media (min-width: 1281px) {
       .nav-links:not(.mobile-nav-links) { display: flex !important; }
@@ -1004,35 +983,45 @@
       .trends-grid { grid-template-columns: 1fr; }
       .palette-grid { grid-template-columns: repeat(2, 1fr); }
       .cta-content { padding: 60px 40px; }
+      .tip-card { flex-direction: column; align-items: center; text-align: center; }
+      .tip-icon { margin-bottom: 12px; }
     }
     @media (max-width: 600px) {
-      .styles-grid { grid-template-columns: 1fr 1fr; }
+      .styles-grid { grid-template-columns: 1fr; }
       .page-hero { height: 360px; }
       .page-hero-content h1 { font-size: 2rem; }
       .inspo-grid { grid-template-columns: 1fr; }
       .cta-content { padding: 50px 24px; }
       .footer-top { grid-template-columns: 1fr; }
-      .footer-middle, .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
       .palette-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    @media (max-width: 600px) {
-  .styles-grid {
-    grid-template-columns: 1fr; /* ONE CARD PER ROW */
-  }
+                 .controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
-@media (max-width: 768px) {
-  .tip-card {
-    flex-direction: column;   /* stack vertically */
-    align-items: center;      /* center everything */
-    text-align: center;       /* center text */
+
+.login-btn {
+  margin-left: 10px;
+  text-decoration: none;
+}
+@media (max-width:1280px) {
+  .nav-links:not(.mobile-nav-links) { 
+    display: none !important; 
   }
 
-  .tip-icon {
-    margin-bottom: 12px;      /* space between icon & text */
+  .hamburger { 
+    display: block !important; 
   }
 
-  .tip-content {
-    text-align: center;
+  #themeToggle, #rtlToggle { 
+    display: none !important; 
+  }
+
+  /* ✅ HIDE LOGIN BUTTON IN MOBILE */
+  .login-btn {
+    display: none !important;
   }
 }
   </style>
@@ -1041,50 +1030,56 @@
 
   <div class="mobile-overlay" id="mobileOverlay"></div>
 
-  <!-- ===== HEADER ===== -->
- <header>
+  <!-- ===== HEADER - Login button at the end ===== -->
+  <header>
     <nav class="navbar">
       <a href="index.html" class="logo">
         <i class="fas fa-leaf"></i>
         <span class="logo-text">Henra</span>
       </a>
-      <ul class="nav-links">
-        <li class="dropdown">
-          <a href="#">Home <i class="fas fa-caret-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="index.html">Home 1</a></li>
-            <li><a href="home2.html">Home 2</a></li>
-          </ul>
-        </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="service.html">Services</a></li>
-        <li><a href="artist.html">Artist</a></li>
-        <li><a href="aftercareoil.html">Aftercare</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="trends.html"  class="active">Trends</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
-      </ul>
-      <div class="controls">
-        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
-        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
-      </div>
+     <ul class="nav-links">
+  <li class="dropdown">
+    <a href="#">Home <i class="fas fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+    </ul>
+  </li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="service.html" >Services</a></li>
+  <li><a href="artist.html">Artist</a></li>
+  <li><a href="aftercareoil.html">Aftercare</a></li>
+  <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="trends.html"  class="active">Trends</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="controls">
+  <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+  <button class="control-btn rtl-btn" id="rtlToggle">
+    <span id="rtlButtonText">RTL</span>
+  </button>
+
+  <!-- ✅ LOGIN BUTTON AT THE END -->
+  <a href="login.html" class="nav-btn login-btn">Login</a>
+
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+</div>
     </nav>
   </header>
 
-  <!-- ===== MOBILE NAVIGATION MENU - ALL LINKS SAME SIZE, SAME BACKGROUND ===== -->
+
+  <!-- ===== MOBILE NAVIGATION MENU ===== -->
   <div class="mobile-nav-menu" id="mobileNavMenu">
     <ul class="mobile-nav-links">
       <li><a href="index.html"> Home 1</a></li>
       <li><a href="home2.html"> Home 2</a></li>
-
       <li><a href="about.html"> About</a></li>
       <li><a href="service.html"> Service</a></li>
       <li><a href="artist.html"> Artist</a></li>
       <li><a href="aftercareoil.html"> Aftercare</a></li>
       <li><a href="gallery.html"> Gallery</a></li>
-      <li><a href="trends.html"  class="active"> Trends</a></li>
+      <li><a href="trends.html" class="active"> Trends</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="login.html"> Login</a></li>
     </ul>
@@ -1192,7 +1187,7 @@
         <div class="palette-item fade-up"><div class="palette-swatch" style="background: linear-gradient(135deg, #3D1A07, #5C2A0E);"></div><div class="palette-info"><h5>Deep Mahogany</h5><span>Classic bridal stain — rich, dark, and long-lasting</span></div></div>
         <div class="palette-item fade-up"><div class="palette-swatch" style="background: linear-gradient(135deg, #8B4513, #A0522D);"></div><div class="palette-info"><h5>Warm Sienna</h5><span>The natural, earthy tone most associated with fresh henna</span></div></div>
         <div class="palette-item fade-up"><div class="palette-swatch" style="background: linear-gradient(135deg, #C47C3A, #D4944A);"></div><div class="palette-info"><h5>Amber Glow</h5><span>A lighter, golden-brown finish ideal for fair skin tones</span></div></div>
-        <div class="palette-item fade-up"><div class="palette-swatch" style="background: linear-gradient(135deg, #F5F0EB, #EAE0D8); border: 1px solid #D4B8A0;"></div><div class="palette-info"><h5>White Henna</h5><span>A non-staining cosmetic paste for events and photography</span></div></div>
+        <div class="palette-item fade-up"><div class="palette-swatch" style="background: linear-gradient(135deg, #F5F0EB, #EAE0D8); border: 1px solid var(--border);"></div><div class="palette-info"><h5>White Henna</h5><span>A non-staining cosmetic paste for events and photography</span></div></div>
         <div class="palette-item fade-up"><div class="palette-swatch" style="background: linear-gradient(135deg, #B8966A, #C8A87A, #D4B86A);"></div><div class="palette-info"><h5>Rose Gold Glitter</h5><span>Overlay finish for sangeets, receptions, and evening wear</span></div></div>
       </div>
     </div>
@@ -1224,7 +1219,7 @@
   </section>
 
   <!-- ===== CTA / NEWSLETTER ===== -->
-  <div style="padding: 0 2rem 100px; max-width:1340px; margin: 0 auto;">
+  <div style="padding: 2rem 2rem; max-width:1340px; margin: 0 auto;">
     <div class="cta-banner fade-up">
       <img class="cta-bg" src="images/img1 (1).jpg" alt="Newsletter">
       <div class="cta-overlay"></div>
@@ -1273,7 +1268,7 @@
       function theme() {
         document.body.classList.toggle('dark-mode');
         const d = document.body.classList.contains('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = d ? 'fas fa-sun' : 'fas fa-moon'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
         localStorage.setItem('theme', d ? 'dark' : 'light');
@@ -1296,7 +1291,7 @@
 
       if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = 'fas fa-sun'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
       }

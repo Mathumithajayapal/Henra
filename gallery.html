@@ -6,7 +6,7 @@
   <title>Henra - Gallery</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+  <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,7 +28,9 @@
       --transition: all 0.4s ease;
       --footer-bg: #FFFFFF;
       --footer-text: #000000;
+      --card-bg: #ffffff;
     }
+    /* Dark Mode - Using pure black and dark grey backgrounds as requested */
     .dark-mode {
       --primary: #C8956A;
       --secondary: #8B5E3C;
@@ -36,11 +38,12 @@
       --secondary-dark: #6B4226;
       --text: #FFFFFF;
       --text-light: #CCCCCC;
-      --bg: #1A1008;
-      --bg-light: #251608;
-      --border: #5C3D1E;
-      --footer-bg: #1A1008;
+      --bg: #000000;
+      --bg-light: #1A1A1A;
+      --border: #333333;
+      --footer-bg: #000000;
       --footer-text: #FFFFFF;
+      --card-bg: #0D0D0D;
     }
     body { font-family:'Poppins',sans-serif; color:var(--text); background:var(--bg); line-height:1.6; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
     h1,h2,h3,h4,h5,h6,.logo-text,.hero h1 { font-family:'Playfair Display',serif; font-weight:700; }
@@ -67,9 +70,9 @@
     .rtl-btn { font-size:0.85rem; font-weight:600; padding:8px 14px; min-width:70px; }
     .rtl-btn i { font-size:0.9rem; }
     .nav-btn { padding:8px 22px !important; border-radius:50px !important; font-weight:600; }
+    /* Login button - kept at the end of header */
     .login-btn { border:2px solid var(--secondary); color:var(--secondary) !important; background:transparent; }
-    .login-btn:hover { background:var(--secondary);      color: #ec6c10 !important; 
- }
+    .login-btn:hover { background:var(--secondary); color:#ffffff !important; }
 
     /* HAMBURGER */
     .hamburger { display:none; background:none; border:2px solid var(--border); border-radius:8px; font-size:20px; cursor:pointer; padding:8px 12px; color:var(--text); }
@@ -78,7 +81,7 @@
     .mobile-nav-menu { position:fixed; top:0; right:-100%; width:320px; height:100vh; background:var(--bg-light); z-index:999; transition:right 0.4s; padding:90px 1.5rem 2rem; border-left:3px solid var(--secondary); overflow-y:auto; }
     .mobile-nav-menu.active { right:0; }
     
-    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND ===== */
     .mobile-nav-links {
       display: flex !important;
       flex-direction: column !important;
@@ -124,19 +127,6 @@
       color: #ffffff !important;
     }
     
-    /* Home sub-items - same consistent styling */
-    .mobile-sub-item {
-      margin-left: 36px !important;
-      padding: 12px 20px !important;
-      background: var(--bg-light) !important;
-      border-style: solid !important;
-      font-size: 0.9rem !important;
-    }
-    .mobile-sub-item i {
-      width: 24px;
-      font-size: 0.9rem;
-    }
-    
     /* Mobile controls section */
     .mobile-controls {
       margin-top: 20px;
@@ -178,7 +168,7 @@
     /* HERO */
     .hero { position:relative; height:95vh; display:flex; align-items:center; justify-content:center; text-align:center; overflow:hidden; }
     .hero img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; }
-    .hero-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(60,30,10,0.65); z-index:2; }
+    .hero-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.65); z-index:2; }
     .hero-content { position:relative; z-index:3; max-width:900px; padding:0 20px; }
     .hero-content h1 { font-size:4rem; color:#ffffff; margin-bottom:20px; }
     .hero-content h1 span { color:var(--secondary-light); }
@@ -219,7 +209,7 @@
     .gi img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
     .gi:hover img { transform:scale(1.07); }
     .gi.hidden { display:none !important; }
-    .gi-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:22px 20px 18px; background:linear-gradient(to top,rgba(40,18,5,0.88) 0%,rgba(40,18,5,0.2) 45%,transparent 100%); opacity:0; transition:opacity 0.4s ease; }
+    .gi-overlay { position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:22px 20px 18px; background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.2) 45%,transparent 100%); opacity:0; transition:opacity 0.4s ease; }
     .gi:hover .gi-overlay { opacity:1; }
     .gi-overlay-top { position:absolute; top:14px; right:14px; display:flex; gap:8px; align-items:center; }
     .gi-badge { background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.25); color:#fff; font-size:0.68rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:20px; }
@@ -237,7 +227,7 @@
     .stat-item p { font-size:0.88rem; color:var(--text-light); font-weight:500; letter-spacing:0.5px; opacity:0.8; }
 
     /* Lightbox */
-    .lightbox { position:fixed; inset:0; background:rgba(10,5,2,0.97); z-index:9999; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.35s ease; }
+    .lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.97); z-index:9999; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.35s ease; }
     .lightbox.active { opacity:1; pointer-events:all; }
     .lightbox-inner { position:relative; max-width:90vw; max-height:90vh; display:flex; flex-direction:column; align-items:center; }
     .lightbox-inner img { max-width:88vw; max-height:76vh; object-fit:contain; border-radius:10px; box-shadow:0 30px 80px rgba(0,0,0,0.8); transform:scale(0.92); transition:transform 0.35s ease; }
@@ -254,8 +244,7 @@
     .lightbox-counter { position:fixed; top:28px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.45); font-size:0.8rem; letter-spacing:2px; font-weight:600; z-index:10001; }
 
     /* FOOTER */
-    .site-footer { background:var(--footer-bg); color:var(--footer-text); padding:70px 0 40px; margin-top:auto; box-shadow:0 -2px 10px rgba(139,94,60,0.06); }
-    .dark-mode .site-footer { background:#1A1008 !important; }
+    .site-footer { background:var(--footer-bg); color:var(--footer-text); padding:70px 0 40px; margin-top:auto; }
     .footer-content { max-width:1300px; margin:0 auto; padding:0 2rem; }
     .footer-top { display:grid; grid-template-columns:repeat(4,1fr); gap:50px; margin-bottom:50px; }
     .footer-column h3 { color:var(--secondary); font-size:1rem; font-weight:700; margin-bottom:25px; text-transform:uppercase; letter-spacing:2px; padding-bottom:12px; border-bottom:2px solid var(--secondary); }
@@ -263,9 +252,6 @@
     .footer-column li { margin-bottom:12px; }
     .footer-column a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; transition:var(--transition); }
     .footer-column a:hover { color:var(--secondary); transform:translateX(8px); }
-    .footer-links { display:flex; gap:35px; }
-    .footer-links a { color:var(--footer-text); text-decoration:none; font-size:0.95rem; }
-    .footer-links a:hover { color:var(--secondary); }
     .footer-bottom { display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--secondary); padding-top:20px; }
     .copyright { color:var(--footer-text); font-size:0.9rem; opacity:0.8; }
 
@@ -274,7 +260,6 @@
     [dir="rtl"] .footer-column a:hover { transform:translateX(-8px); }
     [dir="rtl"] .mobile-nav-menu { left:-100%; right:auto; border-left:none; border-right:3px solid var(--secondary); }
     [dir="rtl"] .mobile-nav-menu.active { left:0; }
-    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
     [dir="rtl"] .lightbox-prev { left:auto; right:22px; }
     [dir="rtl"] .lightbox-next { right:auto; left:22px; }
 
@@ -282,12 +267,7 @@
     @media (max-width:1280px) {
       .nav-links:not(.mobile-nav-links) { display:none !important; }
       .hamburger { display:block !important; }
-      
-      /* Hide desktop toggle buttons on mobile/tablet */
-      #themeToggle, 
-      #rtlToggle { 
-        display: none !important; 
-      }
+      #themeToggle, #rtlToggle { display: none !important; }
     }
     @media (min-width:1281px) {
       .nav-links:not(.mobile-nav-links) { display:flex !important; }
@@ -302,7 +282,6 @@
     }
     @media (max-width:900px) {
       .footer-top { grid-template-columns:repeat(2,1fr); }
-      .footer-middle,.footer-bottom { flex-direction:column; gap:20px; text-align:center; }
       .hero h1 { font-size:3rem; }
       .grid-trio { grid-template-columns:1fr 1fr; grid-template-rows:240px; }
       .grid-trio .gi:last-child { display:none; }
@@ -327,64 +306,98 @@
     }
     .gi { animation:riseIn 0.55s cubic-bezier(0.22,1,0.36,1) both; }
     @keyframes riseIn { from { opacity:0; transform:translateY(22px) scale(0.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+         .controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.login-btn {
+  margin-left: 10px;
+  text-decoration: none;
+}
+@media (max-width:1280px) {
+  .nav-links:not(.mobile-nav-links) { 
+    display: none !important; 
+  }
+
+  .hamburger { 
+    display: block !important; 
+  }
+
+  #themeToggle, #rtlToggle { 
+    display: none !important; 
+  }
+
+  /* ✅ HIDE LOGIN BUTTON IN MOBILE */
+  .login-btn {
+    display: none !important;
+  }
+}
   </style>
 </head>
 <body>
 
   <div class="mobile-overlay" id="mobileOverlay"></div>
 
-  <!-- HEADER - Only Login button, SignUp removed -->
-    <header>
+  <!-- HEADER - Login button at the end -->
+  <header>
     <nav class="navbar">
       <a href="index.html" class="logo">
         <i class="fas fa-leaf"></i>
         <span class="logo-text">Henra</span>
       </a>
-      <ul class="nav-links">
-        <li class="dropdown">
-          <a href="#">Home <i class="fas fa-caret-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="index.html">Home 1</a></li>
-            <li><a href="home2.html">Home 2</a></li>
-          </ul>
-        </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="service.html">Services</a></li>
-        <li><a href="artist.html">Artist</a></li>
-        <li><a href="aftercareoil.html">Aftercare</a></li>
-        <li><a href="gallery.html"  class="active">Gallery</a></li>
-        <li><a href="trends.html">Trends</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
-      </ul>
-      <div class="controls">
-        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
-        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
-      </div>
+    <ul class="nav-links">
+  <li class="dropdown">
+    <a href="#">Home <i class="fas fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+    </ul>
+  </li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="service.html">Services</a></li>
+  <li><a href="artist.html">Artist</a></li>
+  <li><a href="aftercareoil.html">Aftercare</a></li>
+  <li><a href="gallery.html" class="active">Gallery</a></li>
+  <li><a href="trends.html">Trends</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="controls">
+  <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+  <button class="control-btn rtl-btn" id="rtlToggle">
+   <span id="rtlButtonText">RTL</span>
+  </button>
+
+  <!-- ✅ LOGIN BUTTON AT THE END -->
+  <a href="login.html" class="nav-btn login-btn">Login</a>
+
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+</div>
     </nav>
   </header>
 
-  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+  <!-- ===== MOBILE NAVIGATION MENU ===== -->
   <div class="mobile-nav-menu" id="mobileNavMenu">
     <ul class="mobile-nav-links">
       <li><a href="index.html"> Home 1</a></li>
       <li><a href="home2.html"> Home 2</a></li>
-
       <li><a href="about.html"> About</a></li>
       <li><a href="service.html"> Service</a></li>
       <li><a href="artist.html"> Artist</a></li>
       <li><a href="aftercareoil.html"> Aftercare</a></li>
-      <li><a href="gallery.html"  class="active"> Gallery</a></li>
+      <li><a href="gallery.html" class="active"> Gallery</a></li>
       <li><a href="trends.html"> Trends</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="login.html"> Login</a></li>
     </ul>
     <div class="mobile-controls">
       <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
-      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+      <button class="control-btn" id="mobileRtlToggle"><span id="mobileRtlButtonText">RTL Mode</span></button>
     </div>
   </div>
+
   <!-- HERO -->
   <section class="hero">
     <img src="images/img (10).jpg" alt="Gallery Hero">
@@ -570,7 +583,7 @@
     function theme() {
       document.body.classList.toggle('dark-mode');
       const d = document.body.classList.contains('dark-mode');
-      document.querySelectorAll('#themeToggle i,#mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+      document.querySelectorAll('#themeToggle i,#mobileThemeToggle i').forEach(el => { if (el) el.className = d ? 'fas fa-sun' : 'fas fa-moon'; });
       const s = document.querySelector('#mobileThemeToggle');
       if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
       localStorage.setItem('theme', d ? 'dark' : 'light');
@@ -590,7 +603,7 @@
     document.getElementById('mobileRtlToggle')?.addEventListener('click', rtl);
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark-mode');
-      document.querySelectorAll('#themeToggle i,#mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+      document.querySelectorAll('#themeToggle i,#mobileThemeToggle i').forEach(el => { if (el) el.className = 'fas fa-sun'; });
       const s = document.querySelector('#mobileThemeToggle');
       if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
     }

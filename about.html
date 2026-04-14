@@ -481,6 +481,24 @@
   margin-left: 10px;
   text-decoration: none;
 }
+@media (max-width:1280px) {
+  .nav-links:not(.mobile-nav-links) { 
+    display: none !important; 
+  }
+
+  .hamburger { 
+    display: block !important; 
+  }
+
+  #themeToggle, #rtlToggle { 
+    display: none !important; 
+  }
+
+  /* ✅ HIDE LOGIN BUTTON IN MOBILE */
+  .login-btn {
+    display: none !important;
+  }
+}
   </style>
 </head>
 <body>
@@ -496,13 +514,13 @@
       </a>
     <ul class="nav-links">
   <li class="dropdown">
-    <a href="#" class="active">Home <i class="fas fa-caret-down"></i></a>
+    <a href="#">Home <i class="fas fa-caret-down"></i></a>
     <ul class="dropdown-menu">
       <li><a href="index.html">Home 1</a></li>
       <li><a href="home2.html">Home 2</a></li>
     </ul>
   </li>
-  <li><a href="about.html">About</a></li>
+  <li><a href="about.html"  class="active">About</a></li>
   <li><a href="service.html">Services</a></li>
   <li><a href="artist.html">Artist</a></li>
   <li><a href="aftercareoil.html">Aftercare</a></li>
@@ -514,7 +532,7 @@
 <div class="controls">
   <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
   <button class="control-btn rtl-btn" id="rtlToggle">
-    <i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span>
+   <span id="rtlButtonText">RTL</span>
   </button>
 
   <!-- ✅ LOGIN BUTTON AT THE END -->
@@ -541,7 +559,7 @@
     </ul>
     <div class="mobile-controls">
       <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
-      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+      <button class="control-btn" id="mobileRtlToggle"> <span id="mobileRtlButtonText">RTL </span></button>
     </div>
   </div>
 

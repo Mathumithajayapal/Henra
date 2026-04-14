@@ -852,7 +852,7 @@
         }
       }
     }
-    .controls {
+              .controls {
   display: flex;
   gap: 12px;
   align-items: center;
@@ -861,6 +861,24 @@
 .login-btn {
   margin-left: 10px;
   text-decoration: none;
+}
+@media (max-width:1280px) {
+  .nav-links:not(.mobile-nav-links) { 
+    display: none !important; 
+  }
+
+  .hamburger { 
+    display: block !important; 
+  }
+
+  #themeToggle, #rtlToggle { 
+    display: none !important; 
+  }
+
+  /* ✅ HIDE LOGIN BUTTON IN MOBILE */
+  .login-btn {
+    display: none !important;
+  }
 }
   </style>
 </head>
@@ -895,7 +913,7 @@
 <div class="controls">
   <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
   <button class="control-btn rtl-btn" id="rtlToggle">
-    <i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span>
+    <span id="rtlButtonText">RTL</span>
   </button>
 
   <!-- ✅ LOGIN BUTTON AT THE END -->
@@ -922,7 +940,7 @@
     </ul>
     <div class="mobile-controls">
       <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
-      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+      <button class="control-btn" id="mobileRtlToggle"> <span id="mobileRtlButtonText">RTL Mode</span></button>
     </div>
   </div>
 

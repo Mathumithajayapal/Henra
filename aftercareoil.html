@@ -6,7 +6,7 @@
   <title>Henra - Aftercare Oils</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
+  <link rel="icon" type="image/jpeg" href="images\favicon.jpg">
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -29,6 +29,7 @@
       --footer-bg: #FFFFFF;
       --footer-text: #000000;
     }
+    /* Dark Mode - Using black and dark grey backgrounds as requested */
     .dark-mode {
       --primary: #C8956A;
       --secondary: #8B5E3C;
@@ -36,10 +37,11 @@
       --secondary-dark: #6B4226;
       --text: #FFFFFF;
       --text-light: #CCCCCC;
-      /* Changed from brown (#1A1008 / #251608) to black (#000000 / #0A0A0A) as requested */
+      /* Pure black background for body and footer */
       --bg: #000000;
-      --bg-light: #0A0A0A;
-      --border: #5C3D1E;
+      /* Dark grey for card backgrounds and light sections */
+      --bg-light: #1A1A1A;
+      --border: #333333;
       --footer-bg: #000000;
       --footer-text: #FFFFFF;
     }
@@ -59,7 +61,7 @@
     }
     .dark-mode h1, .dark-mode h2, .dark-mode h3 { color: #FFFFFF !important; }
 
-    /* ===== HEADER - Clean navbar with proper spacing, only login button ===== */
+    /* ===== HEADER - Clean navbar ===== */
     header {
       background: var(--bg);
       box-shadow: 0 2px 10px rgba(139,94,60,0.08);
@@ -117,7 +119,6 @@
       color: var(--secondary);
       background: rgba(139,94,60,0.08);
     }
-    /* Clean dropdown style */
     .dropdown { 
       position: relative; 
       display: flex;
@@ -190,6 +191,7 @@
       border-radius: 50px !important; 
       font-weight: 600; 
     }
+    /* Login button - kept at the end of header */
     .login-btn { 
       border: 2px solid var(--secondary); 
       color: var(--secondary) !important; 
@@ -197,7 +199,7 @@
     }
     .login-btn:hover { 
       background: var(--secondary); 
-      color: #ec6c10 !important; 
+      color: #ffffff !important; 
     }
 
     /* ===== HAMBURGER ===== */
@@ -237,7 +239,7 @@
     }
     .mobile-nav-menu.active { right: 0; }
     
-    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND, WITH ICONS ===== */
+    /* ===== MOBILE MENU LINKS - ALL SAME SIZE, SAME BACKGROUND ===== */
     .mobile-nav-links {
       display: flex !important;
       flex-direction: column !important;
@@ -281,19 +283,6 @@
     .mobile-nav-links a:hover i,
     .mobile-nav-links a.active i {
       color: #ffffff !important;
-    }
-    
-    /* Home sub-items - same consistent styling */
-    .mobile-sub-item {
-      margin-left: 36px !important;
-      padding: 12px 20px !important;
-      background: var(--bg-light) !important;
-      border-style: solid !important;
-      font-size: 0.9rem !important;
-    }
-    .mobile-sub-item i {
-      width: 24px;
-      font-size: 0.9rem;
     }
     
     /* Mobile controls section */
@@ -359,7 +348,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(60, 30, 10, 0.65);
+      background: rgba(0, 0, 0, 0.65);
       z-index: 2;
     }
     .hero-content {
@@ -403,9 +392,7 @@
       color: var(--footer-text);
       padding: 70px 0 40px;
       margin-top: auto;
-      box-shadow: 0 -2px 10px rgba(139,94,60,0.06);
     }
-    .dark-mode .site-footer { background: #000000 !important; }
     .footer-content { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
     .footer-top {
       display: grid;
@@ -432,10 +419,6 @@
       transition: var(--transition);
     }
     .footer-column a:hover { color: var(--secondary); transform: translateX(8px); }
-   
-    .footer-links { display: flex; gap: 35px; }
-    .footer-links a { color: var(--footer-text); text-decoration: none; font-size: 0.95rem; }
-    .footer-links a:hover { color: var(--secondary); }
     .footer-bottom {
       display: flex;
       justify-content: space-between;
@@ -450,18 +433,12 @@
     [dir="rtl"] .footer-column a:hover { transform: translateX(-8px); }
     [dir="rtl"] .mobile-nav-menu { left: -100%; right: auto; border-left: none; border-right: 3px solid var(--secondary); }
     [dir="rtl"] .mobile-nav-menu.active { left: 0; }
-    [dir="rtl"] .mobile-sub-item { margin-left: 0 !important; margin-right: 36px !important; }
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1280px) {
       .nav-links:not(.mobile-nav-links) { display: none !important; }
       .hamburger { display: block !important; }
-      
-      /* Hide desktop toggle buttons on mobile/tablet */
-      #themeToggle, 
-      #rtlToggle { 
-        display: none !important; 
-      }
+      #themeToggle, #rtlToggle { display: none !important; }
     }
     @media (min-width: 1281px) {
       .nav-links:not(.mobile-nav-links) { display: flex !important; }
@@ -469,24 +446,20 @@
     }
     @media (max-width: 900px) {
       .footer-top { grid-template-columns: repeat(2, 1fr); }
-      .footer-middle, .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
       .hero h1 { font-size: 3rem; }
     }
     @media (max-width: 768px) {
       .hero-content h1 { font-size: 2.5rem; }
-      .hero-content p { font-size: 1rem; }
       .hero { height: 60vh; }
     }
     @media (max-width: 600px) {
-      .hero h1 { font-size: 2.2rem; }
-      .btn { padding: 12px 24px; }
       .footer-top { grid-template-columns: 1fr; }
       .navbar { padding: 1rem; }
       .logo-text { font-size: 20px; }
     }
 
     /* ===== AFTERCARE OILS PAGE STYLES ===== */
-    .intro-strip { background: var(--bg-light); padding: 60px 2rem; text-align: center; position: relative; overflow: hidden; }
+    .intro-strip { background: var(--bg-light); padding: 60px 2rem; text-align: center; }
     .intro-strip .eyebrow { display: inline-block; letter-spacing: 4px; text-transform: uppercase; font-size: 0.75rem; font-weight: 700; color: var(--secondary); background: rgba(139,94,60,0.1); padding: 6px 18px; border-radius: 50px; margin-bottom: 18px; }
     .intro-strip h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; color: var(--text); max-width: 700px; margin: 0 auto 18px; line-height: 1.25; }
     .intro-strip h2 em { color: var(--secondary); font-style: italic; }
@@ -567,10 +540,10 @@
     .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--secondary), var(--secondary-dark)); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; flex-shrink: 0; }
     .author-name { font-weight: 600; font-size: 0.92rem; color: var(--text); }
     .author-title { font-size: 0.78rem; color: var(--secondary); }
-    .cta-section { background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 60%, var(--secondary-light) 100%); padding: 80px 2rem; text-align: center; position: relative; overflow: hidden; }
-    .cta-section h2 { font-size: 2.6rem; color: #fff; margin-bottom: 16px; position: relative; }
-    .cta-section p { color: rgba(255,255,255,0.85); font-size: 1.05rem; max-width: 560px; margin: 0 auto 36px; position: relative; }
-    .cta-buttons { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; position: relative; }
+    .cta-section { background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 60%, var(--secondary-light) 100%); padding: 80px 2rem; text-align: center; }
+    .cta-section h2 { font-size: 2.6rem; color: #fff; margin-bottom: 16px; }
+    .cta-section p { color: rgba(255,255,255,0.85); font-size: 1.05rem; max-width: 560px; margin: 0 auto 36px; }
+    .cta-buttons { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
     .btn-white { background: #fff; color: var(--secondary-dark); padding: 14px 34px; border-radius: 50px; font-weight: 700; text-decoration: none; transition: 0.3s; }
     .btn-white:hover { background: var(--bg-light); transform: translateY(-2px); }
     .btn-outline-white { border: 2px solid rgba(255,255,255,0.7); color: #fff; padding: 14px 34px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: 0.3s; }
@@ -600,54 +573,87 @@
       .intro-strip h2 { font-size: 2rem; }
       .why-text h2, .ingredients-text h2, .howto-header h2, .testimonials-header h2, .cta-section h2, .faq-header h2 { font-size: 1.9rem; }
     }
+    .controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.login-btn {
+  margin-left: 10px;
+  text-decoration: none;
+}
+@media (max-width:1280px) {
+  .nav-links:not(.mobile-nav-links) { 
+    display: none !important; 
+  }
+
+  .hamburger { 
+    display: block !important; 
+  }
+
+  #themeToggle, #rtlToggle { 
+    display: none !important; 
+  }
+
+  /* ✅ HIDE LOGIN BUTTON IN MOBILE */
+  .login-btn {
+    display: none !important;
+  }
+}
   </style>
 </head>
 <body>
 
   <div class="mobile-overlay" id="mobileOverlay"></div>
 
-  <!-- ===== HEADER - Only Login button, SignUp removed ===== -->
+  <!-- ===== HEADER - Login button at the end ===== -->
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">
         <i class="fas fa-leaf"></i>
         <span class="logo-text">Henra</span>
       </a>
-      <ul class="nav-links">
-        <li class="dropdown">
-          <a href="#">Home <i class="fas fa-caret-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="index.html">Home 1</a></li>
-            <li><a href="home2.html">Home 2</a></li>
-          </ul>
-        </li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="service.html">Services</a></li>
-        <li><a href="artist.html">Artist</a></li>
-        <li><a href="aftercareoil.html" class="active">Aftercare</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="trends.html">Trends</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="login.html" class="nav-btn login-btn">Login</a></li>
-      </ul>
-      <div class="controls">
-        <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-        <button class="control-btn rtl-btn" id="rtlToggle"><i class="fas fa-language"></i> <span id="rtlButtonText">RTL</span></button>
-        <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
-      </div>
+     <ul class="nav-links">
+  <li class="dropdown">
+    <a href="#" >Home <i class="fas fa-caret-down"></i></a>
+    <ul class="dropdown-menu">
+      <li><a href="index.html">Home 1</a></li>
+      <li><a href="home2.html">Home 2</a></li>
+    </ul>
+  </li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="service.html">Services</a></li>
+  <li><a href="artist.html">Artist</a></li>
+  <li><a href="aftercareoil.html"  class="active">Aftercare</a></li>
+  <li><a href="gallery.html">Gallery</a></li>
+  <li><a href="trends.html">Trends</a></li>
+  <li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="controls">
+  <button class="control-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+  <button class="control-btn rtl-btn" id="rtlToggle">
+   <span id="rtlButtonText">RTL</span>
+  </button>
+
+  <!-- ✅ LOGIN BUTTON AT THE END -->
+  <a href="login.html" class="nav-btn login-btn">Login</a>
+
+  <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+</div>
     </nav>
   </header>
 
-  <!-- ===== MOBILE NAVIGATION - ALL LINKS SAME SIZE, SAME BACKGROUND, WITH ICONS ===== -->
+  <!-- ===== MOBILE NAVIGATION MENU ===== -->
   <div class="mobile-nav-menu" id="mobileNavMenu">
     <ul class="mobile-nav-links">
       <li><a href="index.html"> Home 1</a></li>
       <li><a href="home2.html"> Home 2</a></li>
-
       <li><a href="about.html"> About</a></li>
       <li><a href="service.html"> Service</a></li>
       <li><a href="artist.html"> Artist</a></li>
-      <li><a href="aftercareoil.html"  class="active"> Aftercare</a></li>
+      <li><a href="aftercareoil.html" class="active"> Aftercare</a></li>
       <li><a href="gallery.html"> Gallery</a></li>
       <li><a href="trends.html"> Trends</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -655,7 +661,7 @@
     </ul>
     <div class="mobile-controls">
       <button class="control-btn" id="mobileThemeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
-      <button class="control-btn" id="mobileRtlToggle"><i class="fas fa-language"></i> <span id="mobileRtlButtonText">RTL Mode</span></button>
+      <button class="control-btn" id="mobileRtlToggle"> <span id="mobileRtlButtonText">RTL </span></button>
     </div>
   </div>
 
@@ -714,7 +720,7 @@
     </div>
     <div class="products-grid">
       <div class="product-card fade-in"><div class="product-img"><img src="images/img (18).jpg" alt="Rosehip Recovery Oil"><span class="product-tag">Bestseller</span></div><div class="product-body"><h3>Rosehip Recovery Oil</h3><p>Cold-pressed rosehip seed oil rich in Vitamin A and essential fatty acids.</p><div class="product-meta"><span class="product-price">$38</span><span class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 4.9</span></div><a href="#" class="product-btn">Add to Cart</a></div></div>
-      <div class="product-card featured fade-in"><div class="product-img"><img src="images/img (19).jpg" alt="Jojoba Soothe Oil"><span class="product-tag">Editor's Pick</span></div><div class="product-body"><h3>Jojoba Soothe Oil</h3><p>Perfectly mimics the skin's natural sebum. Non-greasy, antibacterial.</p><div class="product-meta"><span class="product-price">$42</span><span class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 5.0</span></div><a href="#" class="product-btn">Add to Cart</a></div></div>
+      <div class="product-card fade-in"><div class="product-img"><img src="images/img (19).jpg" alt="Jojoba Soothe Oil"><span class="product-tag">Editor's Pick</span></div><div class="product-body"><h3>Jojoba Soothe Oil</h3><p>Perfectly mimics the skin's natural sebum. Non-greasy, antibacterial.</p><div class="product-meta"><span class="product-price">$42</span><span class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 5.0</span></div><a href="#" class="product-btn">Add to Cart</a></div></div>
       <div class="product-card fade-in"><div class="product-img"><img src="images/img (20).jpg" alt="Argan Renewal Oil"><span class="product-tag">New</span></div><div class="product-body"><h3>Argan Renewal Oil</h3><p>Liquid gold from Morocco. High in Vitamin E and polyphenols.</p><div class="product-meta"><span class="product-price">$55</span><span class="product-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.7</span></div><a href="#" class="product-btn">Add to Cart</a></div></div>
     </div>
   </section>
@@ -806,7 +812,7 @@
       function theme() {
         document.body.classList.toggle('dark-mode');
         const d = document.body.classList.contains('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = d ? 'fas fa-sun' : 'fas fa-moon');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = d ? 'fas fa-sun' : 'fas fa-moon'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = d ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
         localStorage.setItem('theme', d ? 'dark' : 'light');
@@ -827,7 +833,7 @@
 
       if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
-        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => el.className = 'fas fa-sun');
+        document.querySelectorAll('#themeToggle i, #mobileThemeToggle i').forEach(el => { if (el) el.className = 'fas fa-sun'; });
         const s = document.querySelector('#mobileThemeToggle');
         if (s) s.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
       }
