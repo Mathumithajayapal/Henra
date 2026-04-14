@@ -880,6 +880,19 @@
     display: none !important;
   }
 }
+.service-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.service-card p {
+  flex-grow: 1; /* pushes button down */
+}
+
+.service-card .learn-more {
+  margin-top: auto; /* aligns all buttons at bottom */
+}
   </style>
 </head>
 <body>
@@ -989,7 +1002,7 @@
         <h2>Our <span>Premium</span> Services</h2>
       </div>
       <div class="services-grid">
-        <div class="service-card fade-up"><div class="service-icon"><i class="fas fa-leaf"></i></div><h3>Natural Wellness</h3><p>Holistic wellness programs rooted in nature, blending ancient wisdom with modern techniques.</p><a href="service.html" class="learn-more">Learn More →</a></div>
+        <div class="service-card fade-up"><div class="service-icon"><i class="fas fa-leaf"></i></div><h3>Natural Wellness</h3><p>Holistic wellness programs rooted in nature, blending ancient wisdom with  techniques.</p><a href="service.html" class="learn-more">Learn More →</a></div>
         <div class="service-card fade-up"><div class="service-icon"><i class="fas fa-spa"></i></div><h3>Luxury Treatments</h3><p>Indulge in our curated selection of premium treatments using the finest natural ingredients.</p><a href="service.html" class="learn-more">Learn More →</a></div>
         <div class="service-card fade-up"><div class="service-icon"><i class="fas fa-seedling"></i></div><h3>Organic Products</h3><p>Sustainably sourced, ethically produced organic products that nourish your body.</p><a href="service.html" class="learn-more">Learn More →</a></div>
         <div class="service-card fade-up"><div class="service-icon"><i class="fas fa-user-tie"></i></div><h3>Personal Coaching</h3><p>One-on-one sessions with certified experts to guide your wellness journey.</p><a href="service.html" class="learn-more">Learn More →</a></div>
